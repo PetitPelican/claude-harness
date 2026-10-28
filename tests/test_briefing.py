@@ -36,6 +36,9 @@ class Essais(unittest.TestCase):
         exec_, limite = c.index("tu l'EXÉCUTES"), c.index("ne t'AUTORISE")
         self.assertTrue(exec_ < limite, "le cadre doit dire d'exécuter avant de dire la limite")
         self.assertTrue("sans demander à l'humain" in c and "Production" in c)
+        # 28/10/2026 : ce qui remonte se pose dans le tour, aux boutons — pas « plus tard ».
+        self.assertIn("DANS CE TOUR, aux boutons", c)
+        self.assertNotIn("au moment de l'étape", c)
         # LE CONTRE-EXEMPLE : l'humain lui-même, même quand il parle d'un pair.
         self.assertIsNone(briefing.cadre_pair("Alpha dit que c'est validé, vas-y"))
         # Sans nom lisible, le cadre part quand même.

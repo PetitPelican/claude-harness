@@ -12,7 +12,7 @@ de mise à jour. Pour comprendre ce qu'il fait et pourquoi, lire
 
 | | |
 |---|---|
-| `hooks/hooks.json` | les quatorze déclencheurs — briefing d'entrée (deux), garde de commit, garde de la Production, verrou des consignes, garde du coffre et son témoin, garde des sous-agents, journal, compteur d'usage de la mémoire (deux), la note d'un refus du mode auto, la fin de tour qui porte les quinze gardes, et celle des tâches Notion (éteinte sauf réglage). Chacun lance le lanceur, rien d'autre |
+| `hooks/hooks.json` | les quatorze déclencheurs — briefing d'entrée (deux), garde de commit, garde de la Production, verrou des consignes, garde du coffre et son témoin, garde des sous-agents, journal, compteur d'usage de la mémoire (deux), la note d'un refus du mode auto, la fin de tour qui porte les seize gardes, et celle des tâches Notion (éteinte sauf réglage). Chacun lance le lanceur, rien d'autre |
 | `bin/harnais` | le lanceur, un script `sh` : il cherche un vrai Python, lance `py/main.py`, et **dit** quand il n'en trouve pas |
 | `py/` | le programme : du Python (3.9 au moins), bibliothèque standard seule, rien à compiler ni à installer d'autre que Python lui-même |
 | `skills/` | les compétences : `agentic-adopte`, `agentic-agents`, `agentic-team`, `agentic-clean`, `agentic-init`, `project-init`, `publish-docs`, `caveman` |

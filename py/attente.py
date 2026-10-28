@@ -1382,12 +1382,47 @@ def aux_boutons(appel):
     for q in qs if isinstance(qs, list) else []:
         if not isinstance(q, dict):
             continue
-        morceau = [q.get("question")]
+        morceau = [BOUTONS, q.get("question")]
         for o in q.get("options") if isinstance(q.get("options"), list) else []:
             if isinstance(o, dict):
                 morceau += [o.get("label"), o.get("description")]
         out.append(" ".join(s for s in morceau if isinstance(s, str)))
     return out
+
+
+# La marque d'une question posée aux boutons dans le texte du tour : invisible,
+# et sans mot porteur, pour ne rien changer à `posee`.
+BOUTONS = "⁣"
+
+
+# UNE DÉCISION ANNONCÉE SANS ÊTRE POSÉE (constat du commanditaire, 28/10/2026,
+# deux fois le même jour : « tes réponses sont attendues », puis « le plan
+# attend toujours ta validation »). La garde des questions ne lisait que les
+# lignes `@user` du todo ; une décision notée en tâche ordinaire puis annoncée
+# en prose lui échappait. Il demandait alors « quelles questions ? ».
+ANNONCE = _re(
+    r"(?i)\b(?:tes|vos|ta|votre) r[ée]ponses?\b[^.\n]{0,160}?\b(?:est|sont|reste|restent) attendue?s?\b"
+    r"|\battend(?:s|ent)?\s+(?:toujours\s+|encore\s+|donc\s+|maintenant\s+)?(?:ta|votre|ton|vos|tes)\s+"
+    r"(?:validation|accord|r[ée]ponses?|d[ée]cisions?|feu vert|arbitrage|choix|retour|go)\b"
+    r"|\ben attente de (?:ta|votre|ton|tes|vos)\s+"
+    r"(?:validation|accord|r[ée]ponses?|d[ée]cisions?|feu vert|arbitrage|choix|retour|go)\b"
+    # Le même jour, troisième forme : la décision rangée « pour plus tard ».
+    r"|\b(?:points?|questions?|d[ée]cisions?)\s+(?:à|a)\s+(?:lui|te|vous)\s+(?:poser|soumettre|faire trancher)\b"
+    r"|\bpour le (?:prochain )?tour qu(?:e |')[^.\n]{0,40}?ouvrira\b")
+# Une question écrite en entier, voies numérotées comprises, est posée en
+# clair : c'est le repli permis quand les boutons manquent.
+VOIE_NUMEROTEE = _re(r"(?m)^[ \t>*-]*(?:\*\*)?[1-4](?:\*\*)?\s*[.)—:-]")
+
+
+def annonces_sans_question(message):
+    """Les phrases qui annoncent une décision attendue alors que le tour n'en
+    pose aucune — ni aux boutons, ni en clair avec ses voies numérotées."""
+    message = message or ""
+    if BOUTONS in message:
+        return []
+    if "?" in message and VOIE_NUMEROTEE.search(message):
+        return []
+    return [m.group(0).strip()[:90] for m in ANNONCE.finditer(message)]
 
 
 def dernier_message(data):
@@ -1794,6 +1829,10 @@ def main(entree):
         if a_taper:
             liste = "\n".join("  ✗ %s" % t for t in a_taper[:3])
             sortie(2, MSG_B17.format(liste), "B17-commande", str(len(a_taper)))
+        # Au même endroit, et pour la même raison : ce que le commanditaire lit.
+        annonces = annonces_sans_question(dernier_message(data))
+        if annonces:
+            sortie(2, MSG_B18.format(annonces[0]), "B18-annonce", str(len(annonces)))
     # LE MÊME ENDROIT RAPPELLE QUE LE MODE AUTO A REFUSÉ UN GESTE : le hook de
     # refus l'a noté (il ne peut pas parler à l'agent, voir `refus_auto`). Le
     # rappel ne part que si le message ne dit pas déjà « mode edit », et le
@@ -2490,6 +2529,18 @@ MSG_B9 = (
     "À toi de trancher : si le constat est bien caduc, coche-le ou retire la ligne. S'il tient encore, c'est ta VÉRIFICATION qui est fausse — corrige-la plutôt que le constat, et demande-toi d'abord de quelle source elle a lu sa réponse.\n"
     "\n"
     "ET DANS LES DEUX CAS, TU AS AFFIRMÉ QUELQUE CHOSE DE FAUX : ou bien le constat, ou bien le contrôle. C'est le seul endroit de la chaîne où on le sait avec certitude. Dans `~/.claude/rechutes.md`, au-dessus de la ligne « ÉCRITURE » (le reste n'est jamais relu) : qu'aurait-il fallu vérifier avant ? Affûte le titre en gras d'une question existante si elle dit déjà à peu près ça, sinon ajoute une question — la même leçon apprise deux fois est une seule règle."
+)
+
+MSG_B18 = (
+    "attente : ton message annonce qu'une décision du commanditaire est attendue, sans la lui poser : « {} ».\n"
+    "\n"
+    "Il doit alors demander laquelle. Une décision qu'on annonce, on la pose : avec les boutons de l'app (AskUserQuestion), question fermée, voies numérotées, ce que chacune déclenche — et tu attends sa réponse. Note-la aussi `@user` dans ton todo, avec son `motif → …`, pour qu'elle ne se perde pas.\n"
+    "\n"
+    "Si elle ne lui revient pas (aucun motif : irréversible, production, argent, données, hors du poste, cap, périmètre), décide toi-même, note l'hypothèse dans les décisions, et retire la phrase.\n"
+    "\n"
+    "Si les boutons te manquent, écris la question en entier dans ton message, voies numérotées comprises — jamais « ta réponse est attendue » seule.\n"
+    "\n"
+    "Je ne te le redemande pas une seconde fois : c'est un avertissement, pas un blocage permanent."
 )
 
 MSG_B17 = (

@@ -155,7 +155,7 @@ flowchart TD
     EX --> J[journal]
     EX --> U1[compteur d'usage]
     W -->|va lire un fichier| U2[compteur d'usage]
-    W --> F([Fin de tour]) --> AT[attente : 15 gardes]
+    W --> F([Fin de tour]) --> AT[attente : 16 gardes]
     AT -->|tout va bien| H([La main revient à l'humain])
     AT -->|il manque quelque chose| W
 ```
@@ -169,7 +169,7 @@ flowchart TD
 | après une commande shell | `compteur d'usage` | note qu'une note de mémoire a été lue |
 | après une lecture de fichier | `compteur d'usage` | idem, par l'autre porte |
 | refus du mode auto | `refus-auto` | note le refus ; la fin de tour le rappelle (voir B17) |
-| fin de tour | `attente` | les quinze gardes |
+| fin de tour | `attente` | les seize gardes |
 
 **Le code de sortie est tout le pouvoir du dispositif :**
 
@@ -187,9 +187,9 @@ garde **rend la main impossible** tant que le défaut est là.
 
 ---
 
-## 5. Les quinze gardes de fin de tour
+## 5. Les seize gardes de fin de tour
 
-C'est le cœur. Au moment où l'agent s'apprête à rendre la main, quinze questions
+C'est le cœur. Au moment où l'agent s'apprête à rendre la main, seize questions
 sont posées à l'état du projet. Chacune peut le renvoyer travailler. (Les numéros
 sautent : B2 et B3 ont été retirées avec les Rappels, B4 n'en garde que la moitié
 `!cible`.)
@@ -201,7 +201,7 @@ sautent : B2 et B3 ont été retirées avec les Rappels, B4 n'en garde que la mo
 | **B5** | un chantier partagé fini sans une ligne au carnet d'équipe |
 | **B6** | un fichier de faits touché sans l'autorisation explicite du commanditaire (levée pour un agent expert : noter les faits est son travail) |
 | **B7** | un constat posé sans de quoi le **rejouer** plus tard |
-| **B8** | une question mal formée : pas fermée, sans dire ce que chaque réponse déclenche |
+| **B8** | une question mal formée : pas fermée, sans dire ce que chaque réponse déclenche ; ou une question pour l'humain sans `motif →` pris dans une liste fermée (irréversible, production, argent, données, hors du poste, cap, périmètre) — sans motif, l'agent décide seul |
 | **B9** | une vérification qui est **tombée** et qu'on s'apprêtait à ignorer |
 | **B10** | une liste de contrôle des rechutes non rejouée avant d'affirmer |
 | **B11** | de l'acharnement : trois fois la même approche sans changer de méthode |
@@ -211,6 +211,7 @@ sautent : B2 et B3 ont été retirées avec les Rappels, B4 n'en garde que la mo
 | **B15** | sur une mémoire partagée (`HARNAIS_SYNCHRO=git`) : le travail de l'autre poste n'a pas pu être intégré — le même passage modifié des deux côtés. Rien n'est écrasé ni envoyé ; l'agent le pose à son humain |
 | **B16** | sur un agent **expert** (`HARNAIS_PROFIL=expert`) : un fait que l'humain vient de donner n'est noté dans aucune fiche, ou un fait qui identifie quelqu'un est rangé dans une fiche partagée. C'est un juge qui le décide, pas des mots-clés (§6 bis) |
 | **B17** | le message final demande à l'humain de **taper une commande** (une ligne ou un bloc qui commence par `!`) — il n'a pas de terminal, il travaille depuis l'app à distance ; ou le mode auto a refusé un geste pendant le tour et le message ne demande pas de passer au **mode edit**. Une seule fois, sans boucle |
+| **B18** | le message final **annonce** une décision attendue de l'humain (« ta réponse est attendue », « attend ta validation », « points à lui poser ») sans la poser — ni aux boutons de l'app, ni en clair avec ses voies numérotées. Une seule fois, sans boucle |
 
 ### La garde B7, pour comprendre l'esprit
 

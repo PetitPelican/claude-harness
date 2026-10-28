@@ -121,6 +121,26 @@ class EssaisPoser(unittest.TestCase):
             h.write("\n".join(lignes))
         self.assertFalse(posee(dernier_message({"transcript_path": f}), titre))
 
+    def test_une_decision_annoncee_sans_etre_posee_est_reperee(self):
+        """28/10/2026, deux fois le même jour : la décision est annoncée, pas posée."""
+        for annonce in ("Tes réponses sur le retrait de l'ancienne couche et sur le rangement du poste sont attendues.",
+                        "Le plan de chantier attend toujours ta validation pour que le PO lance la phase 1.",
+                        "Je reste en attente de ta décision sur la plateforme.",
+                        "Ta réponse est attendue.",
+                        # Troisième forme, le même jour, dans un tour lancé par un pair.
+                        "Pour le tour que le commanditaire ouvrira, voici les points à lui poser, fermés :\n"
+                        "1. Accord pour exporter le modèle publié.\n2. Compte en lecture seule."):
+            self.assertTrue(attente.annonces_sans_question(annonce), annonce)
+        # TÉMOINS : la même annonce, mais la question est posée — aux boutons, ou
+        # en clair avec ses voies ; et une phrase qui n'attend rien de lui.
+        aux_boutons = attente.BOUTONS + " Je valide le plan ? Oui Non\nLe plan attend ta validation."
+        self.assertEqual(attente.annonces_sans_question(aux_boutons), [])
+        en_clair = "Le plan attend ta validation :\n**Je lance la phase 1 ?**\n1. oui\n2. non"
+        self.assertEqual(attente.annonces_sans_question(en_clair), [])
+        for rien in ("J'attends le résultat du test.", "Ta réponse d'hier a suffi : c'est fait.",
+                     "L'OPS attend la base de test."):
+            self.assertEqual(attente.annonces_sans_question(rien), [], rien)
+
     def test_le_motif_est_dans_la_liste_fermee(self):
         mr = attente.motif_re()
         for bon in ("      motif → argent : un encaissement réel", "  - motif → irreversible",
@@ -741,6 +761,15 @@ class EssaisMotif(unittest.TestCase):
         rc, err = self.tour_avec(self.QUESTION + "      motif → périmètre\n" + self.FIN,
                                  "Je range les restes de l'ancien outil aux archives ? 1 oui / 2 non")
         self.assertEqual((rc, err), (0, ""))
+
+    def test_une_annonce_sans_question_est_renvoyee_une_fois(self):
+        rc, err = self.fin_de_tour("Point fait. Le plan de chantier attend toujours ta validation.", session="a1")
+        self.assertEqual(rc, 2, err)
+        self.assertIn("sans la lui poser", err)
+        # Sans boucle : le tour déjà renvoyé passe.
+        rc, _ = self.fin_de_tour("Point fait. Le plan de chantier attend toujours ta validation.",
+                                 session="a1", actif=True)
+        self.assertEqual(rc, 0)
 
     def test_un_constat_reste_un_defaut_de_forme(self):
         rc, err = self.tour_avec("- [ ] !haut @user Les restes de l'ancien outil sont toujours là.\n", "Point fait.")
