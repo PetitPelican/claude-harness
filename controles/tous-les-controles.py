@@ -29,6 +29,28 @@ R = ICI.parent
 # LE PROGRAMME JUGÉ : le lanceur du paquet, pour TOUS les contrôles (12/10/2026).
 # Chacun lit HARNAIS_BIN et retombe sinon sur un ancien chemin de compilation.
 os.environ.setdefault("HARNAIS_BIN", str(R / "bin" / "harnais"))
+
+
+def lanceur_windows():
+    """SOUS WINDOWS, LE LANCEUR N'EST PAS UN EXÉCUTABLE (mesuré sur un poste
+    Windows le 28/10/2026 : WinError 193 au premier appel, le banc s'arrêtait là).
+    `bin/harnais` est un script `sh` : les hooks le passent à `sh`, les
+    contrôles l'appelaient tel quel. On lui donne un relais `.cmd`, que
+    Windows sait lancer, et qui le passe au `sh` de Git — comme les hooks."""
+    import shutil
+    sh = shutil.which("sh")
+    if not sh:
+        return None
+    relais = pathlib.Path(S) / "harnais.cmd"
+    relais.write_text('@"%s" "%s" %%*\r\n' % (sh, os.environ["HARNAIS_BIN"]), encoding="utf-8")
+    return str(relais)
+
+
+if os.name == "nt" and pathlib.Path(os.environ["HARNAIS_BIN"]) == R / "bin" / "harnais":
+    os.environ["HARNAIS_BIN"] = lanceur_windows() or os.environ["HARNAIS_BIN"]
+    # Les contrôles lisent des sorties en UTF-8 ; la page de code de la console
+    # n'est pas un choix du paquet.
+    os.environ.setdefault("PYTHONUTF8", "1")
 T = [("compteur d'usage",      "diff-usage.py"),
      ("journal",               "diff-journal.py"),
      ("résolveur mémoire",     "diff-memoire.py"),
@@ -185,7 +207,8 @@ def binaire_a_jour():
     lanceur = R / "bin" / "harnais"
     if not lanceur.exists():
         return "le lanceur `bin/harnais` n'est pas livré"
-    r = subprocess.run([str(lanceur), "version"], capture_output=True, text=True)
+    appel = ["sh", str(lanceur)] if os.name == "nt" else [str(lanceur)]
+    r = subprocess.run(appel + ["version"], capture_output=True, text=True)
     if r.returncode != 0 or len(r.stdout.split()) < 2:
         return ("le lanceur ne répond pas à `version` (code %d) : %s"
                 % (r.returncode, (r.stderr.strip() or "aucun message")[:140]))

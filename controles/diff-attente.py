@@ -117,16 +117,26 @@ def etat_fichiers(data):
     out = {}
     for p in sorted((data/"attente").rglob("*")):
         if p.is_file():
-            out[str(p.relative_to(data))] = p.read_text(errors="replace")
+            # En `/` partout : sous Windows le nom sortait en `attente\x`, et
+            # tout l'état différait du témoin pour un séparateur (28/10/2026).
+            out[p.relative_to(data).as_posix()] = p.read_text(errors="replace")
     return out
 
+# LE MOTIF (0.19.4) : une question au commanditaire nomme pourquoi elle lui
+# revient. Les questions du banc le portent, pour que les gardes d'après la
+# forme restent traversées ; `TODO_SANS_MOTIF` éprouve celle qui le réclame.
 TODO_OK = ("- [ ] !haut @user **Une question ? oui / non**\n"
            "      oui → on fait ceci.\n"
            "      non → on fait cela.\n"
+           "      motif → périmètre\n"
            "      fini quand → tu vois la page en ligne.\n")
 TODO_CONSTAT_SANS = ("- [ ] !haut @user ?constat **La page manque ? oui / non**\n"
                      "      oui → on la crée.\n      non → on ferme.\n"
+                     "      motif → production\n"
                      "      fini quand → tu la vois.\n")
+TODO_SANS_MOTIF = ("- [ ] !haut @user **Je range les vieux fichiers ? oui / non**\n"
+                   "      oui → je les déplace.\n      non → rien ne bouge.\n"
+                   "      fini quand → le dossier est vide.\n")
 TODO_CONSTAT_KO = (TODO_CONSTAT_SANS.rstrip("\n")
                    + "\n      ↻ machine :: echo rien-du-tout :: ^ATTENDU$\n")
 TODO_CONSTAT_OK = (TODO_CONSTAT_SANS.rstrip("\n")
@@ -157,6 +167,7 @@ def commit_src(d, n=0):
 
 TODO_AUTRE = ("- [ ] !haut @user **Une AUTRE question ? oui / non**\n"
               "      oui → on fait ceci.\n      non → on fait cela.\n"
+              "      motif → cap\n"
               "      fini quand → tu vois la page.\n")
 
 def question(n):
@@ -164,6 +175,7 @@ def question(n):
     rechutes, qui ne compte que les affirmations jamais vues."""
     return ("- [ ] !haut @user **Question numéro %d ? oui / non**\n"
             "      oui → on fait ceci.\n      non → on fait cela.\n"
+            "      motif → cap\n"
             "      fini quand → tu vois la page.\n" % n)
 
 CAS = [
@@ -186,6 +198,7 @@ CAS = [
 # (nom, réglages, fixtures, gestes entre les tours) — un tour de plus par geste.
 CAS_MULTI = [
  ("forme rappelée",   dict(todo=TODO_OK), {}, [remplace(TODO_MAUVAIS)]),
+ ("motif manquant",   dict(todo=TODO_OK), {}, [remplace(TODO_OK + TODO_SANS_MOTIF)]),
  ("constat tombé 2×", dict(todo=TODO_CONSTAT_KO), {}, [touche]),
  ("liste de contrôle",dict(todo=TODO_OK), {}, [remplace(TODO_OK + TODO_AUTRE)]),
  ("acharnement",      dict(todo=TODO_OK, consigne="Zéro page cassée.\n↻ machine :: echo non :: ^oui$"),
@@ -377,7 +390,7 @@ for f in S.glob(COTE + "_*/data/attente/blocages.log"):
 # dénominateur écrit en dur ne peut pas signaler ce qu'il ignore.
 # B2, B3 et B4-demande lisaient les Rappels : retirées avec eux le 08/10/2026.
 TOUTES = {"B1-code-sans-todo","B5-carnet",
-          "B6-faits","B7-constat-sans-rejeu","B8-forme","B9-tombe","B10-rechutes",
+          "B6-faits","B7-constat-sans-rejeu","B8-forme","B8-motif","B9-tombe","B10-rechutes",
           "B11-acharnement","B13-poser"}
 # CE QUE CE BANC N'ÉPROUVE PAS, ET QUI SE DIT AU LIEU DE SE TAIRE. Les deux
 # suivants existent dans le programme et aucun cas ne les déclenche ici. Les
@@ -441,6 +454,27 @@ else:
           f"(divergence Python attendue, voir l'en-tête)")
 
 MASQUE = [(str(S), "<bac>")]
+
+
+def chemins_en_slash(v):
+    """SOUS WINDOWS, UN CHEMIN DU BAC S'ÉCRIT EN `\\` : le masque le remplaçait
+    par `<bac>` mais laissait la suite en `\\rs_x\\data\\…`, et chaque cas qui
+    cite un fichier différait du témoin (mesuré le 28/10/2026). On écrit la
+    suite du chemin en `/`, comme sur le Mac où le témoin est figé. Le masque
+    lui-même ne suffit pas : le témoin passe la sortie en JSON AVANT de
+    masquer, et les `\\` y sont doublés — `<bac>` est donc posé ici."""
+    if isinstance(v, str):
+        return re.sub(re.escape(str(S)) + r"[^\s\"'`»)]*",
+                      lambda m: "<bac>" + m.group(0)[len(str(S)):].replace("\\", "/"), v)
+    if isinstance(v, dict):
+        return {k: chemins_en_slash(x) for k, x in v.items()}
+    if isinstance(v, list):
+        return [chemins_en_slash(x) for x in v]
+    return v
+
+
+if os.name == "nt":
+    produit = {k: chemins_en_slash(v) for k, v in produit.items()}
 if GEL:
     if ecarts or not (bloc and passe):
         # Un gel refusé DIT ce qui manque : sans ces trois chiffres, « témoin
@@ -454,7 +488,10 @@ if GEL:
                      ("code sans todo · tour 1", "todo à jour · tour 1")
                      if "code sans todo · tour 1" in produit and "todo à jour · tour 1" in produit
                      else (list(produit)[0], list(produit)[-1]),
-                     [RS], MASQUE, origine="rust")
+                     # Le relais `.cmd` de Windows n'est qu'un passe-plat :
+                     # la source jugée reste le lanceur du paquet.
+                     [str(pathlib.Path(__file__).resolve().parent.parent / "bin" / "harnais")
+                      if RS.endswith(".cmd") else RS], MASQUE, origine="rust")
     print("témoin figé :", f)
     sys.exit(0)
 

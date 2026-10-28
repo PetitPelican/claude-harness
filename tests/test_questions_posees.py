@@ -46,22 +46,26 @@ class Posees(unittest.TestCase):
 
     def test_rien_de_pose_demande_de_poser_une_fois(self):
         ligne = briefing.ligne_posees(TODO, "/x")
-        self.assertIn("pose-la UNE fois", ligne)
+        self.assertIn("pose-la aux boutons", ligne)
 
     def test_tout_pose_interdit_de_reposer(self):
         titres = [q.titre for q in attente.questions_ouvertes(TODO)]
         self.assertEqual(len(titres), 2)
         self.inscrit(*titres)
         ligne = briefing.ligne_posees(TODO, "/x")
-        self.assertIn("Ne les repose PAS", ligne)
+        self.assertIn("repose-les aux boutons", ligne)
+        self.assertIn("jamais dans un tour lancé par un pair", ligne)
         self.assertNotIn("avant tout le reste", ligne)
+        # 28/10/2026 : la ligne qui annonçait une réponse attendue sans la question.
+        self.assertIn("jamais « ta réponse est attendue » sans la question", ligne)
+        self.assertNotIn("au plus une ligne", ligne)
 
     def test_une_neuve_une_vue(self):
         """TÉMOIN : la neuve reste à poser — un briefing qui tairait tout passerait
         les deux autres essais."""
         self.inscrit(attente.questions_ouvertes(TODO)[0].titre)
         ligne = briefing.ligne_posees(TODO, "/x")
-        self.assertIn("1 nouvelle(s) à poser une fois", ligne)
+        self.assertIn("1 nouvelle(s) à poser aux boutons", ligne)
         self.assertIn("1 autre(s) sont déjà posées", ligne)
 
     def test_meme_titre_que_la_garde(self):

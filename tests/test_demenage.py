@@ -248,7 +248,14 @@ class Banc(unittest.TestCase):
         j = os.path.join
         git(self.P, "worktree", "add", "-q", "--detach", j(self.wt, "emprunte"))
         os.makedirs(j(self.wt, "po", "apps", "node_modules"))
-        os.symlink(j(self.wt, "po", "apps", "node_modules"), j(self.wt, "emprunte", "apps", "node_modules"))
+        try:
+            os.symlink(j(self.wt, "po", "apps", "node_modules"), j(self.wt, "emprunte", "apps", "node_modules"))
+        except OSError as e:
+            # Sous Windows, un lien symbolique demande le mode développeur ou les
+            # droits d'administrateur (WinError 1314, mesuré le 28/10/2026).
+            if getattr(e, "winerror", None) == 1314:
+                self.skipTest("lien symbolique refusé par Windows sans privilège")
+            raise
         code, out = self.complet("--apply", "--agents-arretes")
         self.assertEqual(code, 0, out)
         self.assertTrue(os.path.islink(j(self.wt, "emprunte", "apps", "node_modules")))

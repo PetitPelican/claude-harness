@@ -1,10 +1,10 @@
 {
  "controle": "attente",
- "gele_le": "2026-10-08",
- "commit_depot": "3754fa11a235199d0d71a87bf1c91556266e9dbb",
+ "gele_le": "2026-10-28",
+ "commit_depot": "4ee6c98cf36b140f70c5614d28899d8d7bd91339",
  "origine": "rust",
  "sources": {
-  "harnais/target/release/harnais": "1dbd04419e0fed69"
+  "bin/harnais": "d14387d719123bbd"
  },
  "contre_exemple": [
   "code sans todo · tour 1",
@@ -14,7 +14,7 @@
   {
    "nom": "code sans todo · tour 1",
    "entree": "bac fabriqué",
-   "sortie": "{\"appels\": [], \"code\": 2, \"message\": \"attente : tu as modifié du code (a.ts) sans mettre `<TODO>` à jour. Ce fichier est ce que le commanditaire retrouve quand il n'est pas là. Ce n'est PAS un moyen de ne pas lui demander : il est souvent disponible, et une question rangée sans être posée dort des jours.\\n\\nAvant de rendre la main : coche ce que tu as fini, et écris ce qui l'attend, une entrée par blocage, dans cette forme exacte :\\n\\n- [ ] !haut @user **J'autorise le paiement en ligne ? oui / non**\\n      oui → la boutique encaisse dès lundi ; il me faut ta signature, 20 min.\\n      non → on ouvre sans encaissement, les clients paient à la livraison.\\n      fini quand → tu ouvres la boutique et un paiement d'essai passe.\\n      Ça attend depuis 4 jours ; j'ai continué sur le reste.\\n\\nUNE QUESTION FERMÉE, JAMAIS UN CONSTAT. Un constat lui laisse tout le travail : comprendre ce qu'on lui demande, deviner comment répondre, et mesurer seul ce qu'il risque à ne pas répondre. Il doit trancher d'un mot, sans rien ouvrir.\\n\\nSous la ligne, une ligne par réponse possible — ce qu'elle DÉCLENCHE, pas ce qu'elle signifie. Trois voies : numérote-les, il répond « 2 ». Et si tu ne sais pas quoi faire de l'une des réponses, la question n'est pas prête : elle n'a rien à faire dans sa liste.\\n\\nLe commanditaire est CEO — PAS de nom de fichier, de fonction ni de variable d'environnement.\\n\\nSI TON PROJET A UN GUICHET DES QUESTIONS (un pair qui les reçoit, comme QA), c'est à lui que tu l'adresses (`@QA`) et que tu l'envoies par message, pas à `@user`.\\n\\nET POSE-LA : tout `@user` que tu écris ce tour-ci se pose AUSSI, en clair et sous sa forme fermée, dans ton message de fin de tour. Le todo est le filet pour quand il n'est pas là ; il ne remplace pas la question.\\n\\nTu ne t'arrêtes pas pour autant : si tu peux avancer par un chemin réversible, prends-le, note l'hypothèse, et continue.\\n\\n— — —\\nLe commanditaire a DÉJÀ lu ton message : ne le recopie pas, ni tes conclusions, ni les questions que tu as déjà posées dans ce tour. Fais ce qui est demandé, puis termine par une ou deux lignes qui disent ce que tu as changé.\"}"
+   "sortie": "{\"appels\": [], \"code\": 2, \"message\": \"attente : tu as modifié du code (a.ts) sans mettre `<TODO>` à jour. Ce fichier est ce que le commanditaire retrouve quand il n'est pas là. Ce n'est PAS un moyen de ne pas lui demander : il est souvent disponible, et une question rangée sans être posée dort des jours.\\n\\nAvant de rendre la main : coche ce que tu as fini, et écris ce qui l'attend, une entrée par blocage, dans cette forme exacte :\\n\\n- [ ] !haut @user **J'autorise le paiement en ligne ? oui / non**\\n      oui → la boutique encaisse dès lundi ; il me faut ta signature, 20 min.\\n      non → on ouvre sans encaissement, les clients paient à la livraison.\\n      motif → argent : un encaissement réel sur le compte de la société.\\n      fini quand → tu ouvres la boutique et un paiement d'essai passe.\\n      Ça attend depuis 4 jours ; j'ai continué sur le reste.\\n\\nUNE QUESTION FERMÉE, JAMAIS UN CONSTAT. Un constat lui laisse tout le travail : comprendre ce qu'on lui demande, deviner comment répondre, et mesurer seul ce qu'il risque à ne pas répondre. Il doit trancher d'un mot, sans rien ouvrir.\\n\\nSous la ligne, une ligne par réponse possible — ce qu'elle DÉCLENCHE, pas ce qu'elle signifie. Trois voies : numérote-les, il répond « 2 ». Et si tu ne sais pas quoi faire de l'une des réponses, la question n'est pas prête : elle n'a rien à faire dans sa liste.\\n\\nLe commanditaire est CEO — PAS de nom de fichier, de fonction ni de variable d'environnement.\\n\\nSI TON PROJET A UN GUICHET DES QUESTIONS (un pair qui les reçoit, comme QA), c'est à lui que tu l'adresses (`@QA`) et que tu l'envoies par message, pas à `@user`.\\n\\nLE MOTIF EST OBLIGATOIRE : `motif → …`, un seul mot de cette liste — irréversible, production, argent, données, hors du poste, cap, périmètre. Sans motif, ce n'est pas à lui de trancher : décide, note l'hypothèse dans les décisions, et dis en fin de tour ce que tu as fait et comment le défaire. Une question dont la réponse est un fait que tu peux mesurer ne se pose pas : mesure-le.\\n\\nET POSE-LA AUX BOUTONS : tout `@user` que tu écris ce tour-ci se pose AUSSI avec les boutons de l'app (l'outil AskUserQuestion : quatre questions au plus par appel, deux à quatre voies chacune), et tu attends sa réponse. En clair dans ton message de fin de tour seulement si les boutons te manquent. Le todo est le filet pour quand il n'est pas là ; il ne remplace pas la question.\\n\\nTu ne t'arrêtes pas pour autant : si tu peux avancer par un chemin réversible, prends-le, note l'hypothèse, et continue.\\n\\n— — —\\nLe commanditaire a DÉJÀ lu ton message : ne le recopie pas, ni tes conclusions, ni les questions que tu as déjà posées dans ce tour. Fais ce qui est demandé, puis termine par une ou deux lignes qui disent ce que tu as changé.\"}"
   },
   {
    "nom": "code sans todo · tour 2",
@@ -189,7 +189,7 @@
   {
    "nom": "cible tombée · état",
    "entree": "bac fabriqué",
-   "sortie": "{\"attente/projet.cible\": \"TOMBÉ\\t08/10\\t1\\tZéro page cassée\", \"attente/projet.forme\": \"dfe5ecb425f8\", \"attente/projet.posees\": \"dfe5ecb425f8cff5\", \"attente/projet.pousse\": \"porte la date de son todo\", \"attente/projet.rechutes\": \"dfe5ecb425f8\", \"attente/projet.tombes\": \"\"}"
+   "sortie": "{\"attente/projet.cible\": \"TOMBÉ\\t28/10\\t1\\tZéro page cassée\", \"attente/projet.forme\": \"dfe5ecb425f8\", \"attente/projet.posees\": \"dfe5ecb425f8cff5\", \"attente/projet.pousse\": \"porte la date de son todo\", \"attente/projet.rechutes\": \"dfe5ecb425f8\", \"attente/projet.tombes\": \"\"}"
   },
   {
    "nom": "cible sans mesure · tour 1",
@@ -204,7 +204,7 @@
   {
    "nom": "cible sans mesure · état",
    "entree": "bac fabriqué",
-   "sortie": "{\"attente/projet.cible\": \"SANS\\t08/10\\t1\\tZéro page cassée\", \"attente/projet.forme\": \"dfe5ecb425f8\", \"attente/projet.posees\": \"dfe5ecb425f8cff5\", \"attente/projet.pousse\": \"porte la date de son todo\", \"attente/projet.rechutes\": \"dfe5ecb425f8\", \"attente/projet.tombes\": \"\"}"
+   "sortie": "{\"attente/projet.cible\": \"SANS\\t28/10\\t1\\tZéro page cassée\", \"attente/projet.forme\": \"dfe5ecb425f8\", \"attente/projet.posees\": \"dfe5ecb425f8cff5\", \"attente/projet.pousse\": \"porte la date de son todo\", \"attente/projet.rechutes\": \"dfe5ecb425f8\", \"attente/projet.tombes\": \"\"}"
   },
   {
    "nom": "rappels existants · tour 1",
@@ -229,17 +229,37 @@
   {
    "nom": "forme rappelée · tour 1",
    "entree": "bac fabriqué",
-   "sortie": "{\"appels\": [], \"code\": 2, \"message\": \"attente : 1 ligne(s) qui attend(ent) le commanditaire sont écrites comme des CONSTATS, pas comme des questions : « Le service est cassé ».\\n\\nUn constat lui laisse tout le travail — comprendre ce qu'on lui demande, deviner comment répondre, mesurer seul ce qu'il risque à ne pas répondre. Il doit trancher d'un mot, sans rien ouvrir.\\n\\nRéécris chacune dans cette forme :\\n\\n- [ ] !haut @user **J'autorise le paiement en ligne ? oui / non**\\n      oui → la boutique encaisse dès lundi ; il me faut ta signature, 20 min.\\n      non → on ouvre sans encaissement, les clients paient à la livraison.\\n      fini quand → tu ouvres la boutique et un paiement d'essai passe.\\n      Ça attend depuis 4 jours ; j'ai continué sur le reste.\\n\\nLe libellé porte la question ET les réponses possibles. Dessous, une ligne par réponse : ce qu'elle DÉCLENCHE, pas ce qu'elle signifie. Trois voies : numérote-les, il répond « 2 ».\\n\\nLa dernière ligne est obligatoire : `fini quand → …`, ce que l'HUMAIN doit voir pour considérer la chose réglée. Pas une commande, pas un `↻` : ce qu'il constate, lui, de son côté. Sans elle, il n'a que ta parole.\\n\\nEt si tu ne sais pas quoi faire de l'une des réponses, la question n'est pas prête — elle n'a rien à faire dans sa liste.\\n\\nUne question que tu as déjà posée dans ce tour l'est : ne la recopie pas. Une question que tu n'as pas encore posée, pose-la.\\n\\nJe te le redemanderai au plus une fois encore par ligne : c'est un avertissement, pas un blocage permanent.\\n\\n— — —\\nLe commanditaire a DÉJÀ lu ton message : ne le recopie pas, ni tes conclusions, ni les questions que tu as déjà posées dans ce tour. Fais ce qui est demandé, puis termine par une ou deux lignes qui disent ce que tu as changé.\"}"
+   "sortie": "{\"appels\": [], \"code\": 2, \"message\": \"attente : 1 ligne(s) qui attend(ent) le commanditaire sont écrites comme des CONSTATS, pas comme des questions : « Le service est cassé ».\\n\\nUn constat lui laisse tout le travail — comprendre ce qu'on lui demande, deviner comment répondre, mesurer seul ce qu'il risque à ne pas répondre. Il doit trancher d'un mot, sans rien ouvrir.\\n\\nRéécris chacune dans cette forme :\\n\\n- [ ] !haut @user **J'autorise le paiement en ligne ? oui / non**\\n      oui → la boutique encaisse dès lundi ; il me faut ta signature, 20 min.\\n      non → on ouvre sans encaissement, les clients paient à la livraison.\\n      motif → argent : un encaissement réel sur le compte de la société.\\n      fini quand → tu ouvres la boutique et un paiement d'essai passe.\\n      Ça attend depuis 4 jours ; j'ai continué sur le reste.\\n\\nLe libellé porte la question ET les réponses possibles. Dessous, une ligne par réponse : ce qu'elle DÉCLENCHE, pas ce qu'elle signifie. Trois voies : numérote-les, il répond « 2 ».\\n\\nLa dernière ligne est obligatoire : `fini quand → …`, ce que l'HUMAIN doit voir pour considérer la chose réglée. Pas une commande, pas un `↻` : ce qu'il constate, lui, de son côté. Sans elle, il n'a que ta parole.\\n\\nEt si tu ne sais pas quoi faire de l'une des réponses, la question n'est pas prête — elle n'a rien à faire dans sa liste.\\n\\nLe motif est obligatoire : `motif → …`, un seul mot de cette liste — irréversible, production, argent, données, hors du poste, cap, périmètre.\\n\\nUne question que tu as déjà posée dans ce tour l'est : ne la recopie pas. Une question que tu n'as pas encore posée, pose-la aux boutons de l'app (AskUserQuestion).\\n\\nJe te le redemanderai au plus une fois encore par ligne : c'est un avertissement, pas un blocage permanent.\\n\\n— — —\\nLe commanditaire a DÉJÀ lu ton message : ne le recopie pas, ni tes conclusions, ni les questions que tu as déjà posées dans ce tour. Fais ce qui est demandé, puis termine par une ou deux lignes qui disent ce que tu as changé.\"}"
   },
   {
    "nom": "forme rappelée · tour 2",
    "entree": "bac fabriqué",
-   "sortie": "{\"appels\": [], \"code\": 2, \"message\": \"attente : 1 ligne(s) qui attend(ent) le commanditaire sont écrites comme des CONSTATS, pas comme des questions : « Le service est cassé ».\\n\\nUn constat lui laisse tout le travail — comprendre ce qu'on lui demande, deviner comment répondre, mesurer seul ce qu'il risque à ne pas répondre. Il doit trancher d'un mot, sans rien ouvrir.\\n\\nRéécris chacune dans cette forme :\\n\\n- [ ] !haut @user **J'autorise le paiement en ligne ? oui / non**\\n      oui → la boutique encaisse dès lundi ; il me faut ta signature, 20 min.\\n      non → on ouvre sans encaissement, les clients paient à la livraison.\\n      fini quand → tu ouvres la boutique et un paiement d'essai passe.\\n      Ça attend depuis 4 jours ; j'ai continué sur le reste.\\n\\nLe libellé porte la question ET les réponses possibles. Dessous, une ligne par réponse : ce qu'elle DÉCLENCHE, pas ce qu'elle signifie. Trois voies : numérote-les, il répond « 2 ».\\n\\nLa dernière ligne est obligatoire : `fini quand → …`, ce que l'HUMAIN doit voir pour considérer la chose réglée. Pas une commande, pas un `↻` : ce qu'il constate, lui, de son côté. Sans elle, il n'a que ta parole.\\n\\nEt si tu ne sais pas quoi faire de l'une des réponses, la question n'est pas prête — elle n'a rien à faire dans sa liste.\\n\\nUne question que tu as déjà posée dans ce tour l'est : ne la recopie pas. Une question que tu n'as pas encore posée, pose-la.\\n\\nJe te le redemanderai au plus une fois encore par ligne : c'est un avertissement, pas un blocage permanent.\\n\\n— — —\\nLe commanditaire a DÉJÀ lu ton message : ne le recopie pas, ni tes conclusions, ni les questions que tu as déjà posées dans ce tour. Fais ce qui est demandé, puis termine par une ou deux lignes qui disent ce que tu as changé.\"}"
+   "sortie": "{\"appels\": [], \"code\": 2, \"message\": \"attente : 1 ligne(s) qui attend(ent) le commanditaire sont écrites comme des CONSTATS, pas comme des questions : « Le service est cassé ».\\n\\nUn constat lui laisse tout le travail — comprendre ce qu'on lui demande, deviner comment répondre, mesurer seul ce qu'il risque à ne pas répondre. Il doit trancher d'un mot, sans rien ouvrir.\\n\\nRéécris chacune dans cette forme :\\n\\n- [ ] !haut @user **J'autorise le paiement en ligne ? oui / non**\\n      oui → la boutique encaisse dès lundi ; il me faut ta signature, 20 min.\\n      non → on ouvre sans encaissement, les clients paient à la livraison.\\n      motif → argent : un encaissement réel sur le compte de la société.\\n      fini quand → tu ouvres la boutique et un paiement d'essai passe.\\n      Ça attend depuis 4 jours ; j'ai continué sur le reste.\\n\\nLe libellé porte la question ET les réponses possibles. Dessous, une ligne par réponse : ce qu'elle DÉCLENCHE, pas ce qu'elle signifie. Trois voies : numérote-les, il répond « 2 ».\\n\\nLa dernière ligne est obligatoire : `fini quand → …`, ce que l'HUMAIN doit voir pour considérer la chose réglée. Pas une commande, pas un `↻` : ce qu'il constate, lui, de son côté. Sans elle, il n'a que ta parole.\\n\\nEt si tu ne sais pas quoi faire de l'une des réponses, la question n'est pas prête — elle n'a rien à faire dans sa liste.\\n\\nLe motif est obligatoire : `motif → …`, un seul mot de cette liste — irréversible, production, argent, données, hors du poste, cap, périmètre.\\n\\nUne question que tu as déjà posée dans ce tour l'est : ne la recopie pas. Une question que tu n'as pas encore posée, pose-la aux boutons de l'app (AskUserQuestion).\\n\\nJe te le redemanderai au plus une fois encore par ligne : c'est un avertissement, pas un blocage permanent.\\n\\n— — —\\nLe commanditaire a DÉJÀ lu ton message : ne le recopie pas, ni tes conclusions, ni les questions que tu as déjà posées dans ce tour. Fais ce qui est demandé, puis termine par une ou deux lignes qui disent ce que tu as changé.\"}"
   },
   {
    "nom": "forme rappelée · état",
    "entree": "bac fabriqué",
    "sortie": "{\"attente/blocages.log\": [[\"projet\", \"B8-forme\", \"1\"], [\"projet\", \"B8-forme\", \"1\"]], \"attente/projet.forme\": \"47d1fc24b30c 2\\ndfe5ecb425f8 2\", \"attente/projet.posees\": \"dfe5ecb425f8cff5\", \"attente/projet.pousse\": \"DATE ÉTRANGÈRE : '1700000000'\", \"attente/projet.rechutes\": \"dfe5ecb425f8\", \"attente/projet.tombes\": \"\"}"
+  },
+  {
+   "nom": "motif manquant · tour 0",
+   "entree": "bac fabriqué",
+   "sortie": "{\"appels\": [], \"code\": 0, \"message\": \"\"}"
+  },
+  {
+   "nom": "motif manquant · tour 1",
+   "entree": "bac fabriqué",
+   "sortie": "{\"appels\": [], \"code\": 2, \"message\": \"attente : 1 question(s) pour le commanditaire ne disent pas pourquoi elles lui reviennent : « Je range les vieux fichiers ? oui / non ».\\n\\nIl répond « 1 » à presque tout : une question dont la réponse va de soi lui coûte une décision pour rien, et elle t'arrête. Le socle le dit déjà — réversible : avance, note l'hypothèse.\\n\\nPour chacune, une des deux voies :\\n\\n1. Elle lui revient vraiment → ajoute sous elle `motif → …`, un seul mot de cette liste : irréversible, production, argent, données, hors du poste, cap, périmètre. Puis pose-la aux boutons de l'app (AskUserQuestion) et attends sa réponse.\\n2. Aucun de ces motifs ne tient → elle n'est pas pour lui. Décide toi-même, note l'hypothèse dans les décisions, retire la ligne de sa liste, et dis-lui en fin de tour ce que tu as fait et comment le défaire.\\n\\nSi la réponse est un fait que tu peux mesurer (une revue est-elle soumise ? un fichier existe-t-il ?), ce n'est pas une question : mesure-le.\\n\\nJe te le redemanderai au plus une fois encore par ligne : c'est un avertissement, pas un blocage permanent.\\n\\n— — —\\nLe commanditaire a DÉJÀ lu ton message : ne le recopie pas, ni tes conclusions, ni les questions que tu as déjà posées dans ce tour. Fais ce qui est demandé, puis termine par une ou deux lignes qui disent ce que tu as changé.\"}"
+  },
+  {
+   "nom": "motif manquant · tour 2",
+   "entree": "bac fabriqué",
+   "sortie": "{\"appels\": [], \"code\": 2, \"message\": \"attente : 1 question(s) pour le commanditaire ne disent pas pourquoi elles lui reviennent : « Je range les vieux fichiers ? oui / non ».\\n\\nIl répond « 1 » à presque tout : une question dont la réponse va de soi lui coûte une décision pour rien, et elle t'arrête. Le socle le dit déjà — réversible : avance, note l'hypothèse.\\n\\nPour chacune, une des deux voies :\\n\\n1. Elle lui revient vraiment → ajoute sous elle `motif → …`, un seul mot de cette liste : irréversible, production, argent, données, hors du poste, cap, périmètre. Puis pose-la aux boutons de l'app (AskUserQuestion) et attends sa réponse.\\n2. Aucun de ces motifs ne tient → elle n'est pas pour lui. Décide toi-même, note l'hypothèse dans les décisions, retire la ligne de sa liste, et dis-lui en fin de tour ce que tu as fait et comment le défaire.\\n\\nSi la réponse est un fait que tu peux mesurer (une revue est-elle soumise ? un fichier existe-t-il ?), ce n'est pas une question : mesure-le.\\n\\nJe te le redemanderai au plus une fois encore par ligne : c'est un avertissement, pas un blocage permanent.\\n\\n— — —\\nLe commanditaire a DÉJÀ lu ton message : ne le recopie pas, ni tes conclusions, ni les questions que tu as déjà posées dans ce tour. Fais ce qui est demandé, puis termine par une ou deux lignes qui disent ce que tu as changé.\"}"
+  },
+  {
+   "nom": "motif manquant · état",
+   "entree": "bac fabriqué",
+   "sortie": "{\"attente/blocages.log\": [[\"projet\", \"B8-motif\", \"1\"], [\"projet\", \"B8-motif\", \"1\"]], \"attente/projet.forme\": \"4340f17f4e8b 2\\ndfe5ecb425f8 2\", \"attente/projet.posees\": \"dfe5ecb425f8cff5\", \"attente/projet.pousse\": \"DATE ÉTRANGÈRE : '1700000000'\", \"attente/projet.rechutes\": \"dfe5ecb425f8\", \"attente/projet.tombes\": \"\"}"
   },
   {
    "nom": "constat tombé 2× · tour 0",
@@ -274,7 +294,7 @@
   {
    "nom": "liste de contrôle · tour 2",
    "entree": "bac fabriqué",
-   "sortie": "{\"appels\": [], \"code\": 2, \"message\": \"attente : 1 question(s) NOUVELLE(S) attendent le commanditaire, et ton message ne les pose pas :\\n\\n  · Une AUTRE question ? oui / non\\n\\nPose CELLES-LÀ, en clair et sous leur forme fermée, voies numérotées comprises — pas les autres, qu'il a déjà vues. Le todo est le filet pour quand il n'est pas là ; une question rangée sans être posée dort des jours.\\n\\nTu ne t'arrêtes pas pour autant : ce qui peut avancer par un chemin réversible avance.\\n\\n— — —\\nLe commanditaire a DÉJÀ lu ton message : ne le recopie pas, ni tes conclusions, ni les questions que tu as déjà posées dans ce tour. Fais ce qui est demandé, puis termine par une ou deux lignes qui disent ce que tu as changé.\"}"
+   "sortie": "{\"appels\": [], \"code\": 2, \"message\": \"attente : 1 question(s) NOUVELLE(S) attendent le commanditaire, et ton message ne les pose pas :\\n\\n  · Une AUTRE question ? oui / non\\n\\nPose CELLES-LÀ aux boutons de l'app (AskUserQuestion), et attends sa réponse ; en clair, voies numérotées comprises, seulement si les boutons te manquent — pas les autres, qu'il a déjà vues. Le todo est le filet pour quand il n'est pas là ; une question rangée sans être posée dort des jours.\\n\\nTu ne t'arrêtes pas pour autant : ce qui peut avancer par un chemin réversible avance.\\n\\n— — —\\nLe commanditaire a DÉJÀ lu ton message : ne le recopie pas, ni tes conclusions, ni les questions que tu as déjà posées dans ce tour. Fais ce qui est demandé, puis termine par une ou deux lignes qui disent ce que tu as changé.\"}"
   },
   {
    "nom": "liste de contrôle · état",
@@ -304,7 +324,7 @@
   {
    "nom": "acharnement · état",
    "entree": "bac fabriqué",
-   "sortie": "{\"attente/blocages.log\": [[\"projet\", \"B11-acharnement\", \"3\"]], \"attente/projet.cible\": \"TOMBÉ\\t08/10\\t4\\tZéro page cassée\", \"attente/projet.forme\": \"dfe5ecb425f8 2\", \"attente/projet.posees\": \"dfe5ecb425f8cff5\", \"attente/projet.pousse\": \"porte la date de son todo\", \"attente/projet.rechutes\": \"dfe5ecb425f8\", \"attente/projet.tombes\": \"\"}"
+   "sortie": "{\"attente/blocages.log\": [[\"projet\", \"B11-acharnement\", \"3\"]], \"attente/projet.cible\": \"TOMBÉ\\t28/10\\t4\\tZéro page cassée\", \"attente/projet.forme\": \"dfe5ecb425f8 2\", \"attente/projet.posees\": \"dfe5ecb425f8cff5\", \"attente/projet.pousse\": \"porte la date de son todo\", \"attente/projet.rechutes\": \"dfe5ecb425f8\", \"attente/projet.tombes\": \"\"}"
   },
   {
    "nom": "carnet non versé · tour 0",
@@ -349,7 +369,7 @@
   {
    "nom": "rechutes, le plafond · tour 4",
    "entree": "bac fabriqué",
-   "sortie": "{\"appels\": [], \"code\": 2, \"message\": \"attente : 1 question(s) NOUVELLE(S) attendent le commanditaire, et ton message ne les pose pas :\\n\\n  · Question numéro 5 ? oui / non\\n\\nPose CELLES-LÀ, en clair et sous leur forme fermée, voies numérotées comprises — pas les autres, qu'il a déjà vues. Le todo est le filet pour quand il n'est pas là ; une question rangée sans être posée dort des jours.\\n\\nTu ne t'arrêtes pas pour autant : ce qui peut avancer par un chemin réversible avance.\\n\\n— — —\\nLe commanditaire a DÉJÀ lu ton message : ne le recopie pas, ni tes conclusions, ni les questions que tu as déjà posées dans ce tour. Fais ce qui est demandé, puis termine par une ou deux lignes qui disent ce que tu as changé.\"}"
+   "sortie": "{\"appels\": [], \"code\": 2, \"message\": \"attente : 1 question(s) NOUVELLE(S) attendent le commanditaire, et ton message ne les pose pas :\\n\\n  · Question numéro 5 ? oui / non\\n\\nPose CELLES-LÀ aux boutons de l'app (AskUserQuestion), et attends sa réponse ; en clair, voies numérotées comprises, seulement si les boutons te manquent — pas les autres, qu'il a déjà vues. Le todo est le filet pour quand il n'est pas là ; une question rangée sans être posée dort des jours.\\n\\nTu ne t'arrêtes pas pour autant : ce qui peut avancer par un chemin réversible avance.\\n\\n— — —\\nLe commanditaire a DÉJÀ lu ton message : ne le recopie pas, ni tes conclusions, ni les questions que tu as déjà posées dans ce tour. Fais ce qui est demandé, puis termine par une ou deux lignes qui disent ce que tu as changé.\"}"
   },
   {
    "nom": "rechutes, le plafond · tour 5",
@@ -360,26 +380,6 @@
    "nom": "rechutes, le plafond · état",
    "entree": "bac fabriqué",
    "sortie": "{\"attente/blocages.log\": [[\"projet\", \"B10-rechutes\", \"1\"], [\"projet\", \"B10-rechutes\", \"1\"], [\"projet\", \"B10-rechutes\", \"1\"], [\"projet\", \"B13-poser\", \"1\"]], \"attente/projet.forme\": \"1ecd88cb4bf9 2\\nad504a7a7067 2\\nc65fc7fd2f30 2\\ne0670cb688b1 2\\nf3c5aab0c21b 2\", \"attente/projet.posees\": \"ad504a7a7067f4d7\\nf3c5aab0c21baeae\", \"attente/projet.pousse\": \"porte la date de son todo\", \"attente/projet.rechutes\": \"1ecd88cb4bf9\\nad504a7a7067\\nc65fc7fd2f30\\ne0670cb688b1\\nf3c5aab0c21b\", \"attente/projet.tombes\": \"\", \"attente/sess-1.compteur\": \"3\"}"
-  }
- ],
- "retouches": [
-  {
-   "le": "2026-10-14",
-   "cas": [
-    "constat tombé 2× · tour 1",
-    "liste de contrôle · tour 1",
-    "rechutes, le plafond · tour 1",
-    "rechutes, le plafond · tour 2",
-    "rechutes, le plafond · tour 3"
-   ],
-   "pourquoi": "0.18.1 : la garde sert le carnet que les agents ECRIVENT (~/.claude/rechutes.md, avant : la copie livree), en titres seuls, et nomme le fichier du detail ; la consigne dit ou ecrire pour etre relu. Seules ces phrases changent ; cas retouches a la main ; couvert par tests/test_rechutes.py."
-  },
-  {
-   "le": "2026-10-15",
-   "cas": [
-    "code sans todo · tour 1"
-   ],
-   "pourquoi": "0.19 : le message B1 (code sans todo a jour) nomme le guichet des questions d'une equipe (une équipe : OPS, PO, NXT questionnent QA) ; seule cette phrase change ; cas retouches a la main."
   }
  ]
 }

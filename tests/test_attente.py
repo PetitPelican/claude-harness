@@ -94,6 +94,46 @@ class EssaisPoser(unittest.TestCase):
         self.assertNotIn("version 11", tour, tour)
         shutil.rmtree(d, ignore_errors=True)
 
+    def test_une_question_posee_aux_boutons_est_posee(self):
+        """28/10/2026 : seule la prose comptait, et l'agent qui posait sa question
+        aux boutons de l'app était renvoyé la réécrire."""
+        d = tempfile.mkdtemp()
+        self.addCleanup(shutil.rmtree, d, True)
+        f = os.path.join(d, "harnais-boutons-%d.jsonl" % os.getpid())
+        boutons = {"type": "tool_use", "name": "AskUserQuestion", "input": {"questions": [
+            {"question": "Je retire l'ancienne couche de la branche de travail ?",
+             "options": [{"label": "Oui", "description": "un commit montré avant l'envoi en revue"},
+                         {"label": "Pas maintenant", "description": "rien ne part"}]}]}}
+        lignes = [
+            json.dumps({"type": "user", "message": {"content": "un point ?"}}),
+            json.dumps({"type": "assistant", "message": {"content": [{"type": "text", "text": "Voici."}, boutons]}}),
+            json.dumps({"type": "user", "message": {"content": [{"type": "tool_result", "content": "Oui"}]}}),
+            json.dumps({"type": "assistant", "message": {"content": [{"type": "text", "text": "C'est fait."}]}}),
+        ]
+        with open(f, "w", encoding="utf-8") as h:
+            h.write("\n".join(lignes))
+        titre = "Je retire l'ancienne couche de la branche de travail ? 1 oui / 2 pas maintenant"
+        self.assertTrue(posee(dernier_message({"transcript_path": f}), titre))
+        # TÉMOIN : un autre outil ne pose rien, même s'il porte une question.
+        autre = dict(boutons, name="mcp__ccd_turn__wrap_up")
+        lignes[1] = json.dumps({"type": "assistant", "message": {"content": [{"type": "text", "text": "Voici."}, autre]}})
+        with open(f, "w", encoding="utf-8") as h:
+            h.write("\n".join(lignes))
+        self.assertFalse(posee(dernier_message({"transcript_path": f}), titre))
+
+    def test_le_motif_est_dans_la_liste_fermee(self):
+        mr = attente.motif_re()
+        for bon in ("      motif → argent : un encaissement réel", "  - motif → irreversible",
+                    "motif → hors du poste", "motif → Périmètre"):
+            self.assertTrue(mr.search(bon), bon)
+        # TÉMOINS : un motif libre, un mot qui ne fait que commencer comme un motif.
+        for mauvais in ("motif → parce que c'est mieux", "motif → capital", "le motif → argent"):
+            self.assertFalse(mr.search(mauvais), mauvais)
+        # La ligne de motif ne compte pas comme une voie : sinon une seule voie passerait.
+        corps = "      1 → je publie.\n      motif → argent\n      fini quand → c'est servi."
+        sans = mr.sub("", fini_re().sub("", corps))
+        self.assertEqual(len(reponse_re().findall(sans)), 1)
+
     def test_un_lien_notion_porte_l_identifiant_de_la_page(self):
         self.assertTrue(lien_notion("↳ https://www.notion.so/projet/Ecran-3-0123456789abcdef0123456789abcdef"))
         self.assertTrue(lien_notion("↳ notion.so/0123456789abcdef0123456789abcdef"))
@@ -664,6 +704,49 @@ class Equipe(unittest.TestCase):
         # TÉMOIN : le todo à jour, le tour finit.
         os.utime(os.path.join(po, "todo.md"), None)
         self.assertEqual(fin_de_tour()[0], 0)
+
+
+class EssaisMotif(unittest.TestCase):
+    """28/10/2026 : le commanditaire répondait « 1 » à presque tout. Une question
+    qui ne nomme pas son motif, dans une liste fermée, lui est refusée."""
+
+    # Le décor de B17, sans rejouer ses essais.
+    RACINE = EssaisB17.RACINE
+    setUp, appelle, fin_de_tour = EssaisB17.setUp, EssaisB17.appelle, EssaisB17.fin_de_tour
+
+    QUESTION = ("- [ ] !haut @user **Je range les restes de l'ancien outil aux archives ? 1 oui / 2 non**\n"
+                "      1 → je déplace, rien n'est supprimé.\n"
+                "      2 → rien ne bouge.\n")
+    FIN = "      fini quand → le dossier de l'ancien outil est vide.\n"
+
+    def tour_avec(self, corps_question, message):
+        # Première rencontre : l'arriéré est amnistié, rien ne mord.
+        rc, err = self.fin_de_tour("Rien.", session="m0")
+        self.assertEqual(rc, 0, err)
+        todo = os.path.join(self.p, "brain/mind/todo.md")
+        _ecris(self.p, "brain/mind/todo.md", "# todo\n\n- [>] !moyen  en cours\n" + corps_question)
+        # La garde ne relit le todo que si sa date a bougé, à la seconde près.
+        t = os.path.getmtime(todo) + 5
+        os.utime(todo, (t, t))
+        return self.fin_de_tour(message, session="m1")
+
+    def test_sans_motif_la_question_est_refusee(self):
+        rc, err = self.tour_avec(self.QUESTION + self.FIN, "Je range les restes de l'ancien outil aux archives ? 1 oui / 2 non")
+        self.assertEqual(rc, 2, err)
+        self.assertIn("ne disent pas pourquoi", err)
+        self.assertIn("Décide toi-même", err)
+
+    def test_avec_motif_elle_passe(self):
+        """TÉMOIN : la même question, motif compris, posée dans le message."""
+        rc, err = self.tour_avec(self.QUESTION + "      motif → périmètre\n" + self.FIN,
+                                 "Je range les restes de l'ancien outil aux archives ? 1 oui / 2 non")
+        self.assertEqual((rc, err), (0, ""))
+
+    def test_un_constat_reste_un_defaut_de_forme(self):
+        rc, err = self.tour_avec("- [ ] !haut @user Les restes de l'ancien outil sont toujours là.\n", "Point fait.")
+        self.assertEqual(rc, 2, err)
+        self.assertIn("CONSTATS", err)
+
 
 if __name__ == "__main__":
     unittest.main()

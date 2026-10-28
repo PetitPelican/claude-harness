@@ -299,7 +299,13 @@ def ligne_posees(texte, ici):
     """La consigne qui suit la ligne `attente:`. Elle disait toujours « ça passe
     avant tout le reste dans un point d'avancement », et ce briefing est servi
     avant CHAQUE message, ceux d'un pair compris : chaque tour finissait sur la
-    même question (constat du 14/10/2026 : le commanditaire se la voyait poser 4 fois). Elle lit désormais le registre de la garde de fin de tour."""
+    même question (constat du 14/10/2026 : le commanditaire se la voyait poser 4 fois). Elle lit désormais le registre de la garde de fin de tour.
+
+    LE 28/10/2026, L'EXCÈS INVERSE. « Déjà posée » faisait écrire « ta réponse
+    sur … est attendue » sans la question, et le commanditaire devait demander
+    laquelle. Il veut ses questions aux boutons de l'app, reposées quand il
+    parle lui-même — un tour lancé par un pair ne repose rien, c'était le
+    défaut du 14/10."""
     try:
         import attente
         racine, _ = attente.racine_de(ici)
@@ -308,12 +314,15 @@ def ligne_posees(texte, ici):
         etat = []
     n_deja = sum(1 for _, p in etat if p)
     if etat and n_deja == len(etat):
-        return ("         Déjà posée(s) : il les a vues. Ne les repose PAS en fin de tour ; "
-                "au plus une ligne « ta réponse sur … est attendue » s'il demande un point.")
+        return ("         Déjà posée(s), sans réponse : repose-les aux boutons de l'app (AskUserQuestion) "
+                "dans un tour qu'il lance lui-même, jamais dans un tour lancé par un pair ; "
+                "jamais « ta réponse est attendue » sans la question.")
     if n_deja:
-        return ("         %d nouvelle(s) à poser une fois ; les %d autre(s) sont déjà posées — "
-                "ne les repose pas." % (len(etat) - n_deja, n_deja))
-    return "         Ça passe avant tout le reste dans un point d'avancement : pose-la UNE fois."
+        return ("         %d nouvelle(s) à poser aux boutons de l'app (AskUserQuestion) ; les %d autre(s) "
+                "sont déjà posées — repose-les aux boutons seulement dans un tour qu'il lance lui-même."
+                % (len(etat) - n_deja, n_deja))
+    return ("         Ça passe avant tout le reste : pose-la aux boutons de l'app (AskUserQuestion) "
+            "et attends sa réponse ; en clair seulement si les boutons te manquent.")
 
 
 def attentes(texte, avec_qui=False):

@@ -518,6 +518,19 @@ def fini_re():
     return _re(r"^\s*(?:[-*•]\s+)?fini quand\s*→\s*\S", "im")
 
 
+# LE MOTIF DIT POURQUOI CE N'EST PAS À L'AGENT DE TRANCHER (décision du
+# commanditaire, 28/10/2026 : il répondait « 1 » à presque tout, et le socle
+# disait déjà « réversible : avance »). Liste FERMÉE : un motif libre se
+# trouverait toujours. Accents facultatifs, un tiret de liste admis.
+MOTIFS = ("irréversible", "production", "argent", "données", "hors du poste",
+          "cap", "périmètre")
+
+
+def motif_re():
+    return _re(r"^\s*(?:[-*•]\s+)?motif\s*→\s*(?:irr[ée]versible|production|argent"
+               r"|donn[ée]es|hors du poste|cap|p[ée]rim[èe]tre)\b", "im")
+
+
 def constat_re():
     return _re(r"(?:^|(?<=\s))\?constat\b", "i")
 
@@ -1356,6 +1369,27 @@ def lien_notion(texte):
     return _re(r"notion\.(?:so|site|com)/\S*?[0-9a-f]{32}", "i").search(texte) is not None
 
 
+def aux_boutons(appel):
+    """UNE QUESTION POSÉE AUX BOUTONS EST POSÉE (décision du commanditaire, 28/10/2026).
+    Avant, seul le texte comptait : un agent qui posait sa question avec les
+    boutons de l'app était renvoyé la réécrire en prose. On lit la question et
+    ses voies dans l'appel ; tout autre outil ne pose rien."""
+    if appel.get("name") != "AskUserQuestion":
+        return []
+    entree = appel.get("input")
+    qs = entree.get("questions") if isinstance(entree, dict) else None
+    out = []
+    for q in qs if isinstance(qs, list) else []:
+        if not isinstance(q, dict):
+            continue
+        morceau = [q.get("question")]
+        for o in q.get("options") if isinstance(q.get("options"), list) else []:
+            if isinstance(o, dict):
+                morceau += [o.get("label"), o.get("description")]
+        out.append(" ".join(s for s in morceau if isinstance(s, str)))
+    return out
+
+
 def dernier_message(data):
     """Le texte que l'agent a écrit depuis le dernier message qui n'est pas de lui
     — ce qu'il s'apprête à rendre. Claude Code le donne parfois directement ;
@@ -1393,6 +1427,8 @@ def dernier_message(data):
                         s = x.get("text")
                         if isinstance(s, str):
                             morceaux.append(s)
+                    elif isinstance(x, dict) and x.get("type") == "tool_use":
+                        morceaux.extend(aux_boutons(x))
         elif t == "user":
             resultat_ = isinstance(contenu, list) and all(
                 isinstance(x, dict) and x.get("type") == "tool_result" for x in contenu)
@@ -1945,12 +1981,15 @@ def main(entree):
                 n = _i64(m[1], RAPPELS_FORME) if len(m) > 1 else RAPPELS_FORME
                 deja.pop(m[0], None)
                 deja[m[0]] = n
-        fr, rp = fini_re(), reponse_re()
+        fr, rp, mr = fini_re(), reponse_re(), motif_re()
 
-        def bien(t):
-            sans_fini = fr.sub("", t.corps)       # la fin ne se compte pas
+        def forme(t):
+            sans_fini = mr.sub("", fr.sub("", t.corps))   # ni la fin ni le motif ne se comptent
             return ("?" in t.titre and len(rp.findall(sans_fini)) >= 2
                     and fr.search(t.corps) is not None)
+
+        def bien(t):
+            return forme(t) and mr.search(t.corps) is not None
 
         mauvais = [t for t in attente
                    if not bien(t) and deja.get(sha12(t.titre), 0) < RAPPELS_FORME]
@@ -1971,6 +2010,10 @@ def main(entree):
                 deja[h] = v
         ecrit(vus_f, "\n".join("%s %d" % (h, n) for h, n in sorted(deja.items(), key=lambda a: a[0])))
         if n_mauvais > 0 and not deja_renvoye:
+            # Bien formée mais sans motif : ce n'est pas un défaut de forme,
+            # c'est une décision qui revenait peut-être à l'agent.
+            if all(forme(t) for t in mauvais):
+                sortie(2, MSG_B8_MOTIF.format(n_mauvais, ech), "B8-motif", str(n_mauvais))
             sortie(2, MSG_B8.format(n_mauvais, ech), "B8-forme", str(n_mauvais))
 
     # --- 2 quater. LA LISTE DE CONTRÔLE, JOUÉE AVANT D'AFFIRMER -------------
@@ -2267,6 +2310,7 @@ MSG_B1 = (
     "- [ ] !haut @user **J'autorise le paiement en ligne ? oui / non**\n"
     "      oui → la boutique encaisse dès lundi ; il me faut ta signature, 20 min.\n"
     "      non → on ouvre sans encaissement, les clients paient à la livraison.\n"
+    "      motif → argent : un encaissement réel sur le compte de la société.\n"
     "      fini quand → tu ouvres la boutique et un paiement d'essai passe.\n"
     "      Ça attend depuis 4 jours ; j'ai continué sur le reste.\n"
     "\n"
@@ -2278,7 +2322,9 @@ MSG_B1 = (
     "\n"
     "SI TON PROJET A UN GUICHET DES QUESTIONS (un pair qui les reçoit, comme QA), c'est à lui que tu l'adresses (`@QA`) et que tu l'envoies par message, pas à `@user`.\n"
     "\n"
-    "ET POSE-LA : tout `@user` que tu écris ce tour-ci se pose AUSSI, en clair et sous sa forme fermée, dans ton message de fin de tour. Le todo est le filet pour quand il n'est pas là ; il ne remplace pas la question.\n"
+    "LE MOTIF EST OBLIGATOIRE : `motif → …`, un seul mot de cette liste — irréversible, production, argent, données, hors du poste, cap, périmètre. Sans motif, ce n'est pas à lui de trancher : décide, note l'hypothèse dans les décisions, et dis en fin de tour ce que tu as fait et comment le défaire. Une question dont la réponse est un fait que tu peux mesurer ne se pose pas : mesure-le.\n"
+    "\n"
+    "ET POSE-LA AUX BOUTONS : tout `@user` que tu écris ce tour-ci se pose AUSSI avec les boutons de l'app (l'outil AskUserQuestion : quatre questions au plus par appel, deux à quatre voies chacune), et tu attends sa réponse. En clair dans ton message de fin de tour seulement si les boutons te manquent. Le todo est le filet pour quand il n'est pas là ; il ne remplace pas la question.\n"
     "\n"
     "Tu ne t'arrêtes pas pour autant : si tu peux avancer par un chemin réversible, prends-le, note l'hypothèse, et continue."
 )
@@ -2358,6 +2404,7 @@ MSG_B8 = (
     "- [ ] !haut @user **J'autorise le paiement en ligne ? oui / non**\n"
     "      oui → la boutique encaisse dès lundi ; il me faut ta signature, 20 min.\n"
     "      non → on ouvre sans encaissement, les clients paient à la livraison.\n"
+    "      motif → argent : un encaissement réel sur le compte de la société.\n"
     "      fini quand → tu ouvres la boutique et un paiement d'essai passe.\n"
     "      Ça attend depuis 4 jours ; j'ai continué sur le reste.\n"
     "\n"
@@ -2367,7 +2414,24 @@ MSG_B8 = (
     "\n"
     "Et si tu ne sais pas quoi faire de l'une des réponses, la question n'est pas prête — elle n'a rien à faire dans sa liste.\n"
     "\n"
-    "Une question que tu as déjà posée dans ce tour l'est : ne la recopie pas. Une question que tu n'as pas encore posée, pose-la.\n"
+    "Le motif est obligatoire : `motif → …`, un seul mot de cette liste — irréversible, production, argent, données, hors du poste, cap, périmètre.\n"
+    "\n"
+    "Une question que tu as déjà posée dans ce tour l'est : ne la recopie pas. Une question que tu n'as pas encore posée, pose-la aux boutons de l'app (AskUserQuestion).\n"
+    "\n"
+    "Je te le redemanderai au plus une fois encore par ligne : c'est un avertissement, pas un blocage permanent."
+)
+
+MSG_B8_MOTIF = (
+    "attente : {} question(s) pour le commanditaire ne disent pas pourquoi elles lui reviennent : {}.\n"
+    "\n"
+    "Il répond « 1 » à presque tout : une question dont la réponse va de soi lui coûte une décision pour rien, et elle t'arrête. Le socle le dit déjà — réversible : avance, note l'hypothèse.\n"
+    "\n"
+    "Pour chacune, une des deux voies :\n"
+    "\n"
+    "1. Elle lui revient vraiment → ajoute sous elle `motif → …`, un seul mot de cette liste : irréversible, production, argent, données, hors du poste, cap, périmètre. Puis pose-la aux boutons de l'app (AskUserQuestion) et attends sa réponse.\n"
+    "2. Aucun de ces motifs ne tient → elle n'est pas pour lui. Décide toi-même, note l'hypothèse dans les décisions, retire la ligne de sa liste, et dis-lui en fin de tour ce que tu as fait et comment le défaire.\n"
+    "\n"
+    "Si la réponse est un fait que tu peux mesurer (une revue est-elle soumise ? un fichier existe-t-il ?), ce n'est pas une question : mesure-le.\n"
     "\n"
     "Je te le redemanderai au plus une fois encore par ligne : c'est un avertissement, pas un blocage permanent."
 )
@@ -2451,7 +2515,7 @@ MSG_B13 = (
     "\n"
     "{}{}\n"
     "\n"
-    "Pose CELLES-LÀ, en clair et sous leur forme fermée, voies numérotées comprises — pas les autres, qu'il a déjà vues. Le todo est le filet pour quand il n'est pas là ; une question rangée sans être posée dort des jours.\n"
+    "Pose CELLES-LÀ aux boutons de l'app (AskUserQuestion), et attends sa réponse ; en clair, voies numérotées comprises, seulement si les boutons te manquent — pas les autres, qu'il a déjà vues. Le todo est le filet pour quand il n'est pas là ; une question rangée sans être posée dort des jours.\n"
     "\n"
     "Tu ne t'arrêtes pas pour autant : ce qui peut avancer par un chemin réversible avance."
 )

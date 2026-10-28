@@ -16,6 +16,7 @@ import subprocess
 import sys
 import tempfile
 import unittest
+from unittest import mock
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "py"))
 import memoire  # noqa: E402
@@ -71,6 +72,14 @@ class Base(unittest.TestCase):
         self._home = os.environ.get("HOME")
         os.environ["HOME"] = self.maison
         self.addCleanup(self._remet)
+        # UNE MAISON NEUVE N'A PAS D'IDENTITÉ GIT, et la mise à niveau enregistre.
+        # Sous Windows git ne la devine pas : « Author identity unknown »
+        # (mesuré sur un poste Windows le 28/10/2026). Un poste réel en a une.
+        identite = mock.patch.dict(os.environ, {
+            "GIT_AUTHOR_NAME": "t", "GIT_AUTHOR_EMAIL": "t@t",
+            "GIT_COMMITTER_NAME": "t", "GIT_COMMITTER_EMAIL": "t@t"})
+        identite.start()
+        self.addCleanup(identite.stop)
 
     def _remet(self):
         if self._home is None:
