@@ -1,0 +1,15 @@
+Atelier : <ATELIER> — 1 projet(s)
+
+── conforme               [????] Les inscriptions au paquet n'ont pas pu être lues : qu'il se charge au prochain démarrage n'est PAS vérifié.
+     cap    : le cap de conforme
+     maj    : <J-3> — à jour (3 j)   santé : verte   jalon : livrer la v2
+     mémoire: brain/ · faits 4/4 · état 2/2 · .logs 2 · git oui
+     paquet : déclaré oui · inscrit ? · servi <V> il y a 0 j
+     contexte: CLAUDE.md→mémoire oui · deny 1
+     tâches : 1 en cours · 3 à faire · 1 attendent une décision
+
+════════════════════════════════════════════════════════════════
+CE QUI ATTEND UNE DÉCISION — 1 point(s), la seule colonne qui ne se délègue pas
+
+  [haut ] conforme           @user      **Je publie ? oui / non**
+rc=0

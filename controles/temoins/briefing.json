@@ -1,0 +1,98 @@
+{
+ "controle": "briefing",
+ "gele_le": "2026-09-23",
+ "commit_depot": "e406beb2c397fd00a834e50a13657667bf950039",
+ "origine": "python",
+ "sources": {
+  "~/.claude/hooks/briefing.py": "bf4ec969e9caf245"
+ },
+ "contre_exemple": [
+  "mono simple",
+  "racine sans agent"
+ ],
+ "cas": [
+  {
+   "nom": "mono simple",
+   "entree": "bac fabriqué",
+   "sortie": "── Briefing d'entrée · mono ─ relu à l'instant, jamais recopié ──\ncap    : aller là-bas\nétat   : à jour (0 j) · santé verte · jalon : J1\nattente: 2 décision(s) humaine(s) — la première : [haut] Une question ? 1 / 2\n         Ça passe avant tout le reste dans un point d'avancement : pose-la UNE fois.\n\nAvant toute affirmation sur ce projet, ouvrir le fichier qui porte la\nréponse — ces titres disent lequel :\n  base.md 6 l. · la nature du projet, et où il va\n      Nature · Où on va\n  stack.md 2 l. · outils, comptes, accès, versions\n      Les outils · Les comptes\n  rules.md 1 l. · ce qu'on ne franchit pas\n      Ce qu'on ne franchit pas\n  architecture.md ABSENT — comment c'est agencé, les frontières : personne ne le sait.\n  decisions.md le pourquoi de chaque choix, daté\n\nDroits appliqués (settings.json) : mode bypassPermissions · 1 allow · 1 deny\n    refusé : Bash(rm*)"
+  },
+  {
+   "nom": "multi-agents",
+   "entree": "bac fabriqué",
+   "sortie": "── Briefing d'entrée · multi · ios ─ relu à l'instant, jamais recopié ──\ncap    : aller là-bas\nétat   : à jour (0 j) · santé verte · jalon : J1\nattente: 2 décision(s) humaine(s) — la première : [haut] Une question ? 1 / 2\n         Ça passe avant tout le reste dans un point d'avancement : pose-la UNE fois.\n\nAvant toute affirmation sur ce projet, ouvrir le fichier qui porte la\nréponse — ces titres disent lequel :\n  base.md 6 l. · la nature du projet, et où il va\n      Nature · Où on va\n  stack.md 2 l. · outils, comptes, accès, versions\n      Les outils · Les comptes\n  rules.md 1 l. · ce qu'on ne franchit pas\n      Ce qu'on ne franchit pas\n  architecture.md ABSENT — comment c'est agencé, les frontières : personne ne le sait.\n  decisions.md le pourquoi de chaque choix, daté\n\nDroits appliqués (settings.json) : mode bypassPermissions · 1 allow · 1 deny\n    refusé : Bash(rm*)"
+  },
+  {
+   "nom": "racine sans agent",
+   "entree": "bac fabriqué",
+   "sortie": "── Briefing · racine ─ TU N'ES DANS AUCUN AGENT ──\n\nCe dossier porte un `.fact/` mais pas de `.mind/` : c'est la racine\nd'un projet MULTI-AGENTS, et aucun agent n'y travaille. Tu n'as donc\nni état, ni todo, ni droits appliqués — et `.claude/settings.json`\nd'ici ne s'exécute pas (les réglages ne s'héritent pas).\n\nAucun agent n'est encore déclaré : `agents/<nom>/` est vide\nou absent. Soit ce projet doit être converti, soit il lui\nmanque son premier agent."
+  },
+  {
+   "nom": "déporté + carnet",
+   "entree": "bac fabriqué",
+   "sortie": "── Briefing d'entrée · dep · ios ─ relu à l'instant, jamais recopié ──\ncap    : cap déporté\nétat   : EN-TÊTE ILLISIBLE · santé — · jalon : —\nattente: aucune tâche `@<qui>` ouverte dans todo.md\néquipe : ce que les autres ont fait — carnet commun `equipe/`\n  09-23 · Un Pair · → POUR TOI — une transmission qui t'est adressée.\n         Ce qui te vise reste en tête tant que tu ne l'as pas\n         acquitté : `↩ <empreinte>` dans ta prochaine entrée.\n\nAvant toute affirmation sur ce projet, ouvrir le fichier qui porte la\nréponse — ces titres disent lequel :\n  base.md 5 l. · la nature du projet, et où il va\n      Nature\n  stack.md ABSENT — outils, comptes, accès, versions : personne ne le sait.\n  rules.md ABSENT — ce qu'on ne franchit pas : personne ne le sait.\n  architecture.md ABSENT — comment c'est agencé, les frontières : personne ne le sait.\n  decisions.md le pourquoi de chaque choix, daté\n\nDroits appliqués (settings.json) : mode bypassPermissions · 1 allow · 1 deny\n    refusé : Bash(rm*)"
+  },
+  {
+   "nom": "réglages cassés",
+   "entree": "bac fabriqué",
+   "sortie": "── Briefing d'entrée · cass ─ relu à l'instant, jamais recopié ──\ncap    : aller là-bas\nétat   : à jour (0 j) · santé verte · jalon : J1\nattente: 2 décision(s) humaine(s) — la première : [haut] Une question ? 1 / 2\n         Ça passe avant tout le reste dans un point d'avancement : pose-la UNE fois.\n\nAvant toute affirmation sur ce projet, ouvrir le fichier qui porte la\nréponse — ces titres disent lequel :\n  base.md 6 l. · la nature du projet, et où il va\n      Nature · Où on va\n  stack.md 2 l. · outils, comptes, accès, versions\n      Les outils · Les comptes\n  rules.md 1 l. · ce qu'on ne franchit pas\n      Ce qu'on ne franchit pas\n  architecture.md ABSENT — comment c'est agencé, les frontières : personne ne le sait.\n  decisions.md le pourquoi de chaque choix, daté\n\nDroits : `settings.json` illisible — rien n'est mécaniquement interdit dans ce projet.\n         Tout ce qui a été dit à l'oral n'est retenu par rien."
+  },
+  {
+   "nom": "aucun deny",
+   "entree": "bac fabriqué",
+   "sortie": "── Briefing d'entrée · nodeny ─ relu à l'instant, jamais recopié ──\ncap    : aller là-bas\nétat   : à jour (0 j) · santé verte · jalon : J1\nattente: 2 décision(s) humaine(s) — la première : [haut] Une question ? 1 / 2\n         Ça passe avant tout le reste dans un point d'avancement : pose-la UNE fois.\n\nAvant toute affirmation sur ce projet, ouvrir le fichier qui porte la\nréponse — ces titres disent lequel :\n  base.md 6 l. · la nature du projet, et où il va\n      Nature · Où on va\n  stack.md 2 l. · outils, comptes, accès, versions\n      Les outils · Les comptes\n  rules.md 1 l. · ce qu'on ne franchit pas\n      Ce qu'on ne franchit pas\n  architecture.md ABSENT — comment c'est agencé, les frontières : personne ne le sait.\n  decisions.md le pourquoi de chaque choix, daté\n\nDroits appliqués (settings.json) : mode — · 0 allow · 0 deny\n    ⚠ aucun `deny` : ce qui doit être interdit ici ne l'est que\n      par la prose. Un droit en prose est un espoir."
+  },
+  {
+   "nom": "aucun settings",
+   "entree": "bac fabriqué",
+   "sortie": "── Briefing d'entrée · nosett ─ relu à l'instant, jamais recopié ──\ncap    : aller là-bas\nétat   : à jour (0 j) · santé verte · jalon : J1\nattente: 2 décision(s) humaine(s) — la première : [haut] Une question ? 1 / 2\n         Ça passe avant tout le reste dans un point d'avancement : pose-la UNE fois.\n\nAvant toute affirmation sur ce projet, ouvrir le fichier qui porte la\nréponse — ces titres disent lequel :\n  base.md 6 l. · la nature du projet, et où il va\n      Nature · Où on va\n  stack.md 2 l. · outils, comptes, accès, versions\n      Les outils · Les comptes\n  rules.md 1 l. · ce qu'on ne franchit pas\n      Ce qu'on ne franchit pas\n  architecture.md ABSENT — comment c'est agencé, les frontières : personne ne le sait.\n  decisions.md le pourquoi de chaque choix, daté\n\nDroits : aucun settings.json — rien n'est mécaniquement interdit dans ce projet.\n         Tout ce qui a été dit à l'oral n'est retenu par rien."
+  },
+  {
+   "nom": "sans .fact",
+   "entree": "bac fabriqué",
+   "sortie": "── Briefing d'entrée · nofact ─ relu à l'instant, jamais recopié ──\ncap    : AUCUN `cap:` déclaré dans .mind/state.md\nétat   : à jour (0 j) · santé verte · jalon : J1\nattente: 2 décision(s) humaine(s) — la première : [haut] Une question ? 1 / 2\n         Ça passe avant tout le reste dans un point d'avancement : pose-la UNE fois.\n\nAvant toute affirmation sur ce projet, ouvrir le fichier qui porte la\nréponse — ces titres disent lequel :\n  stack.md ABSENT — outils, comptes, accès, versions : personne ne le sait.\n  rules.md ABSENT — ce qu'on ne franchit pas : personne ne le sait.\n  architecture.md ABSENT — comment c'est agencé, les frontières : personne ne le sait.\n  decisions.md le pourquoi de chaque choix, daté\n\nDroits appliqués (settings.json) : mode bypassPermissions · 1 allow · 1 deny\n    refusé : Bash(rm*)"
+  },
+  {
+   "nom": "cible TIENT",
+   "entree": "bac fabriqué",
+   "sortie": "── Briefing d'entrée · cibTIENT ─ relu à l'instant, jamais recopié ──\ncap    : aller là-bas\nétat   : à jour (0 j) · santé verte · jalon : J1\nattente: 2 décision(s) humaine(s) — la première : [haut] Une question ? 1 / 2\n         Ça passe avant tout le reste dans un point d'avancement : pose-la UNE fois.\ncible  : la phrase de la cible\n         → tenue au 2026-09-08\n\nAvant toute affirmation sur ce projet, ouvrir le fichier qui porte la\nréponse — ces titres disent lequel :\n  base.md 6 l. · la nature du projet, et où il va\n      Nature · Où on va\n  stack.md 2 l. · outils, comptes, accès, versions\n      Les outils · Les comptes\n  rules.md 1 l. · ce qu'on ne franchit pas\n      Ce qu'on ne franchit pas\n  architecture.md ABSENT — comment c'est agencé, les frontières : personne ne le sait.\n  decisions.md le pourquoi de chaque choix, daté\n\nDroits appliqués (settings.json) : mode bypassPermissions · 1 allow · 1 deny\n    refusé : Bash(rm*)"
+  },
+  {
+   "nom": "cible TOMBÉ",
+   "entree": "bac fabriqué",
+   "sortie": "── Briefing d'entrée · cibTOMBE ─ relu à l'instant, jamais recopié ──\ncap    : aller là-bas\nétat   : à jour (0 j) · santé verte · jalon : J1\nattente: 2 décision(s) humaine(s) — la première : [haut] Une question ? 1 / 2\n         Ça passe avant tout le reste dans un point d'avancement : pose-la UNE fois.\ncible  : la phrase de la cible\n         → PAS TENUE, et l'écart n'a pas bougé depuis 4 mesures — ce qu'on essaie ne marche pas\n\nAvant toute affirmation sur ce projet, ouvrir le fichier qui porte la\nréponse — ces titres disent lequel :\n  base.md 6 l. · la nature du projet, et où il va\n      Nature · Où on va\n  stack.md 2 l. · outils, comptes, accès, versions\n      Les outils · Les comptes\n  rules.md 1 l. · ce qu'on ne franchit pas\n      Ce qu'on ne franchit pas\n  architecture.md ABSENT — comment c'est agencé, les frontières : personne ne le sait.\n  decisions.md le pourquoi de chaque choix, daté\n\nDroits appliqués (settings.json) : mode bypassPermissions · 1 allow · 1 deny\n    refusé : Bash(rm*)"
+  },
+  {
+   "nom": "cible SANS",
+   "entree": "bac fabriqué",
+   "sortie": "── Briefing d'entrée · cibSANS ─ relu à l'instant, jamais recopié ──\ncap    : aller là-bas\nétat   : à jour (0 j) · santé verte · jalon : J1\nattente: 2 décision(s) humaine(s) — la première : [haut] Une question ? 1 / 2\n         Ça passe avant tout le reste dans un point d'avancement : pose-la UNE fois.\ncible  : la phrase de la cible\n         → AUCUNE MESURE n'est encore écrite — c'est le premier travail : sans elle, cette phrase est un vœu\n\nAvant toute affirmation sur ce projet, ouvrir le fichier qui porte la\nréponse — ces titres disent lequel :\n  base.md 6 l. · la nature du projet, et où il va\n      Nature · Où on va\n  stack.md 2 l. · outils, comptes, accès, versions\n      Les outils · Les comptes\n  rules.md 1 l. · ce qu'on ne franchit pas\n      Ce qu'on ne franchit pas\n  architecture.md ABSENT — comment c'est agencé, les frontières : personne ne le sait.\n  decisions.md le pourquoi de chaque choix, daté\n\nDroits appliqués (settings.json) : mode bypassPermissions · 1 allow · 1 deny\n    refusé : Bash(rm*)"
+  },
+  {
+   "nom": "cible MUET",
+   "entree": "bac fabriqué",
+   "sortie": "── Briefing d'entrée · cibMUET ─ relu à l'instant, jamais recopié ──\ncap    : aller là-bas\nétat   : à jour (0 j) · santé verte · jalon : J1\nattente: 2 décision(s) humaine(s) — la première : [haut] Une question ? 1 / 2\n         Ça passe avant tout le reste dans un point d'avancement : pose-la UNE fois.\ncible  : la phrase de la cible\n         → pas mesurée au 2026-09-08 : la vérification n'a pas abouti\n\nAvant toute affirmation sur ce projet, ouvrir le fichier qui porte la\nréponse — ces titres disent lequel :\n  base.md 6 l. · la nature du projet, et où il va\n      Nature · Où on va\n  stack.md 2 l. · outils, comptes, accès, versions\n      Les outils · Les comptes\n  rules.md 1 l. · ce qu'on ne franchit pas\n      Ce qu'on ne franchit pas\n  architecture.md ABSENT — comment c'est agencé, les frontières : personne ne le sait.\n  decisions.md le pourquoi de chaque choix, daté\n\nDroits appliqués (settings.json) : mode bypassPermissions · 1 allow · 1 deny\n    refusé : Bash(rm*)"
+  },
+  {
+   "nom": "UserPromptSubmit-en-regime-etabli",
+   "entree": "bac fabriqué",
+   "sortie": "muet"
+  }
+ ],
+ "retouches": [
+  {
+   "le": "2026-10-14",
+   "cas": [
+    "mono simple",
+    "multi-agents",
+    "réglages cassés",
+    "aucun deny",
+    "aucun settings",
+    "sans .fact",
+    "cible TIENT",
+    "cible TOMBÉ",
+    "cible SANS",
+    "cible MUET"
+   ],
+   "pourquoi": "0.18.1 : la ligne qui suit `attente:` lit le registre des questions posees de la garde de fin de tour (l'humain : « pourquoi tu me poses 4 fois la meme question ?? »). Sans registre, elle ajoute « : pose-la UNE fois. » ; seule cette phrase change, cas retouches a la main ; le cas « deja posee » est couvert par tests/test_questions_posees.py."
+  }
+ ]
+}

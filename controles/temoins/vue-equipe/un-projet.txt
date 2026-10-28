@@ -1,0 +1,17 @@
+Atelier : <ATELIER> — 1 projet(s)
+
+── equipe                 [OK  ] Servi en <V>, mémoire complète.
+     cap    : le cap de equipe
+     maj    : <J-10> — tiède (10 j)   santé : rouge   jalon : réparer
+     mémoire: brain/ · faits 5/5 · état 4/4 · 2 agent(s) · .logs 0 · git oui
+     paquet : A — déclaré oui · inscrit oui · servi <V> il y a 0 j
+     paquet : B — déclaré oui · inscrit oui · servi <V> il y a 0 j
+     contexte: CLAUDE.md→mémoire oui · deny 1
+     tâches : 1 en cours · 2 à faire · 2 attendent une décision
+
+════════════════════════════════════════════════════════════════
+CE QUI ATTEND UNE DÉCISION — 2 point(s), la seule colonne qui ne se délègue pas
+
+  [moyen] equipe             @Zoe       **Zoe tranche ?**
+  [bas  ] equipe             @user      **Tu valides ?**
+rc=0

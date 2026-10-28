@@ -1,0 +1,103 @@
+
+  [1mMémoire — -projet-essai[0m   [32mAPPLIQUÉ[0m
+  ──────────────────────────────────────────────────────────────
+  10 notes · mesure d'usage en place depuis 200 j
+  seuils de base : dormante à 30 j, archivée à 90 j — puis GRADUÉS
+  [2mpar note : × niveau (supposé 0,5 · observé 0,7 · mesuré 1 · dit 1,5)[0m
+  [2m× (1 + log(lectures)) × 2 si un résultat l'a déjà éprouvée[0m
+
+  [1mservies au moins une fois[0m : 9 sur 10
+  [2mce compte est complet, et c'est mesuré : le harnais n'injecte[0m
+  [2mque l'index, jamais une note (40 transcriptions, 09/09/2026).[0m
+  [2mIl ne verrait pas une note lue autrement que par l'outil de[0m
+  [2mlecture — copiée à la main, par exemple. À revérifier si Claude[0m
+  [2mCode change sa façon de servir la mémoire.[0m
+    [32m12 ×[0m  servie-hier
+    [32m 7 ×[0m  dementie
+    [32m 5 ×[0m  supposee-chaude
+    [32m 3 ×[0m  sans-niveau
+    [32m 2 ×[0m  doublon-alpha
+
+  [31mà archiver[0m : 2
+    a-archiver [2mdernier usage il y a 60 j [supposé][0m
+    jamais-vue [2mjamais servie en 200 j [observé][0m
+
+  [33mà endormir[0m : 1
+    a-endormir [2mdernier usage il y a 60 j [mesuré][0m
+
+  [1mce qui établit chaque note[0m : 9 sur 10 le disent
+    dit 1 · mesuré 5 · observé 1 · supposé 2
+    [33m1 sans niveau — poids INCONNU, pas faible.[0m
+      [2msans-niveau[0m
+    [2mne pas leur en inventer un : on le pose en ROUVRANT la note.[0m
+    [31msupposé ET servi ≥3 fois — à rejouer, pas à relire :[0m
+      supposee-chaude (5 ×)
+
+  [33mdémenties par un résultat[0m — à REJOUER, pas à relire :
+    dementie                                 80 → 55  [2m(2 résultat(s), 7 lecture(s))[0m
+
+  [33mdoublons probables[0m — SIGNALÉS, jamais fusionnés :
+    doublon-alpha ⟷ doublon-beta  [2m(directe, ecriture, garde, production)[0m
+    [2mfusionner demande de lire : c'est la partie qui coûte,[0m
+    [2met c'est au commanditaire de dire si elle vaut son prix.[0m
+
+  [32m2 archivée(s), 1 endormie(s). Index mis à jour.[0m
+
+./.usage.json
+./MEMORY.md
+./a-endormir.md
+./archive/a-archiver.md
+./archive/jamais-vue.md
+./dementie.md
+./doublon-alpha.md
+./doublon-beta.md
+./epinglee.md
+./sans-niveau.md
+./servie-hier.md
+./supposee-chaude.md
+── MEMORY.md
+- [Servie hier](servie-hier.md) — une ligne qui doit rester
+── .usage.json
+{
+ "_depuis": "2026-02-22",
+ "a-archiver": {
+  "n": 0,
+  "vu": "2026-07-12"
+ },
+ "a-endormir": {
+  "n": 1,
+  "vu": "2026-07-12",
+  "etat": "dormante"
+ },
+ "dementie": {
+  "conf": 55,
+  "n": 7,
+  "res": 2,
+  "vu": "2026-09-06"
+ },
+ "doublon-alpha": {
+  "n": 2,
+  "vu": "2026-09-05"
+ },
+ "doublon-beta": {
+  "n": 2,
+  "vu": "2026-09-04"
+ },
+ "epinglee": {
+  "epingle": true,
+  "n": 0,
+  "vu": "2025-11-14"
+ },
+ "sans-niveau": {
+  "n": 3,
+  "vu": "2026-09-08"
+ },
+ "servie-hier": {
+  "n": 12,
+  "vu": "2026-09-09"
+ },
+ "supposee-chaude": {
+  "n": 5,
+  "vu": "2026-09-07"
+ }
+}

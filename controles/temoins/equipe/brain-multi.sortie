@@ -1,0 +1,11 @@
+── agents — brain-mono (multi)
+  + agents/OPS/ — CLAUDE.md de rôle, settings.json ; esprit neuf dans brain/mind/OPS
+  + agents/OPS/.claude/settings.json — paquet harnais@atelier déclaré, 2 deny de périmètre
+  + agents/OPS/.mcp.json — copié depuis la racine (ne s'hérite pas)
+  + carnet d'équipe amorcé : brain/workspace
+
+── À reprendre à la main
+  · DÉCOUPER LE CLAUDE.md — la seule étape qui ne s'automatise pas. Le commun reste à la racine, le rôle descend dans agents/<nom>/CLAUDE.md. Contrôle de sortie : aucune phrase du bas ne resterait vraie pour un autre agent.
+  · ÉCRIRE LES PÉRIMÈTRES en dossiers dans chaque settings.json : les deny posés ne couvrent que les dossiers d'agents. Le code, lui, n'est pas partagé au hasard — dire qui tient quoi.
+  · RELANCER LES SESSIONS tmux DANS les dossiers d'agents, sous des noms slugifiés (po, qa, ops). L'ancienne session à la racine n'a plus d'agent : le briefing l'avertira au lieu de se taire.
+rc=0

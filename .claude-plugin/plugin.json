@@ -1,0 +1,8 @@
+{
+  "name": "harnais",
+  "description": "Le harnais de l'atelier : mémoire qui vieillit, questions qui remontent au commanditaire, gardes de fin de tour, et une liste de contrôle rejouée avant d'affirmer.",
+  "version": "0.19.4",
+  "author": {
+    "name": "Harnais"
+  }
+}

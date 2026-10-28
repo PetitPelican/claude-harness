@@ -1,0 +1,118 @@
+{
+ "controle": "usage",
+ "gele_le": "2026-09-23",
+ "commit_depot": "e406beb2c397fd00a834e50a13657667bf950039",
+ "origine": "python",
+ "sources": {
+  "~/.claude/hooks/memoire-usage.py": "8157bf792ddbf1b4"
+ },
+ "contre_exemple": [
+  "douze-charges",
+  "voie-du-shell"
+ ],
+ "cas": [
+  {
+   "nom": "douze-charges",
+   "entree": [
+    {
+     "tool_name": "Read",
+     "session_id": "s1",
+     "tool_response": {
+      "file_path": "<mem>/une-note.md"
+     }
+    },
+    {
+     "tool_name": "Read",
+     "session_id": "s1",
+     "tool_response": {
+      "file_path": "<mem>/une-note.md"
+     }
+    },
+    {
+     "tool_name": "Read",
+     "session_id": "s1",
+     "tool_input": {
+      "file_path": "<mem>/une-note.md"
+     }
+    },
+    {
+     "tool_name": "Read",
+     "session_id": "s1",
+     "tool_response": {
+      "file_path": "<mem>/AUTRE-note.md"
+     }
+    },
+    {
+     "tool_name": "Read",
+     "session_id": "s1",
+     "tool_response": {
+      "file_path": "<mem>/MEMORY.md"
+     }
+    },
+    {
+     "tool_name": "Read",
+     "session_id": "s1",
+     "tool_response": {
+      "file_path": "<mem>/memory.MD"
+     }
+    },
+    {
+     "tool_name": "Read",
+     "session_id": "s1",
+     "tool_response": {
+      "file_path": "<mem>/une-note.txt"
+     }
+    },
+    {
+     "tool_name": "Read",
+     "session_id": "s1",
+     "tool_response": {
+      "file_path": "/ailleurs/une-note.md"
+     }
+    },
+    {
+     "tool_name": "Read",
+     "session_id": "s1",
+     "tool_response": {
+      "file_path": "<mem>/accentuée-é.md"
+     }
+    },
+    {
+     "tool_name": "Read",
+     "session_id": "s2",
+     "tool_response": {
+      "file_path": "<mem>/dans-une-autre-session.md"
+     }
+    },
+    {
+     "tool_name": "Read"
+    },
+    {
+     "pas": "du json attendu"
+    }
+   ],
+   "sortie": "{\n \"AUTRE-note\": {\n  \"n\": 1,\n  \"vu\": \"2026-09-23\"\n },\n \"_encours\": {\n  \"s1\": [\n   \"une-note\",\n   \"AUTRE-note\",\n   \"accentuée-é\"\n  ],\n  \"s2\": [\n   \"dans-une-autre-session\"\n  ]\n },\n \"accentuée-é\": {\n  \"n\": 1,\n  \"vu\": \"2026-09-23\"\n },\n \"dans-une-autre-session\": {\n  \"n\": 1,\n  \"vu\": \"2026-09-23\"\n },\n \"une-note\": {\n  \"n\": 3,\n  \"vu\": \"2026-09-23\"\n }\n}"
+  },
+  {
+   "nom": "plafond-45",
+   "entree": "45 lectures de n00.md a n44.md",
+   "sortie": "{\n \"_encours\": {\n  \"s1\": [\n   \"n05\",\n   \"n06\",\n   \"n07\",\n   \"n08\",\n   \"n09\",\n   \"n10\",\n   \"n11\",\n   \"n12\",\n   \"n13\",\n   \"n14\",\n   \"n15\",\n   \"n16\",\n   \"n17\",\n   \"n18\",\n   \"n19\",\n   \"n20\",\n   \"n21\",\n   \"n22\",\n   \"n23\",\n   \"n24\",\n   \"n25\",\n   \"n26\",\n   \"n27\",\n   \"n28\",\n   \"n29\",\n   \"n30\",\n   \"n31\",\n   \"n32\",\n   \"n33\",\n   \"n34\",\n   \"n35\",\n   \"n36\",\n   \"n37\",\n   \"n38\",\n   \"n39\",\n   \"n40\",\n   \"n41\",\n   \"n42\",\n   \"n43\",\n   \"n44\"\n  ]\n },\n \"n00\": {\n  \"n\": 1,\n  \"vu\": \"2026-09-23\"\n },\n \"n01\": {\n  \"n\": 1,\n  \"vu\": \"2026-09-23\"\n },\n \"n02\": {\n  \"n\": 1,\n  \"vu\": \"2026-09-23\"\n },\n \"n03\": {\n  \"n\": 1,\n  \"vu\": \"2026-09-23\"\n },\n \"n04\": {\n  \"n\": 1,\n  \"vu\": \"2026-09-23\"\n },\n \"n05\": {\n  \"n\": 1,\n  \"vu\": \"2026-09-23\"\n },\n \"n06\": {\n  \"n\": 1,\n  \"vu\": \"2026-09-23\"\n },\n \"n07\": {\n  \"n\": 1,\n  \"vu\": \"2026-09-23\"\n },\n \"n08\": {\n  \"n\": 1,\n  \"vu\": \"2026-09-23\"\n },\n \"n09\": {\n  \"n\": 1,\n  \"vu\": \"2026-09-23\"\n },\n \"n10\": {\n  \"n\": 1,\n  \"vu\": \"2026-09-23\"\n },\n \"n11\": {\n  \"n\": 1,\n  \"vu\": \"2026-09-23\"\n },\n \"n12\": {\n  \"n\": 1,\n  \"vu\": \"2026-09-23\"\n },\n \"n13\": {\n  \"n\": 1,\n  \"vu\": \"2026-09-23\"\n },\n \"n14\": {\n  \"n\": 1,\n  \"vu\": \"2026-09-23\"\n },\n \"n15\": {\n  \"n\": 1,\n  \"vu\": \"2026-09-23\"\n },\n \"n16\": {\n  \"n\": 1,\n  \"vu\": \"2026-09-23\"\n },\n \"n17\": {\n  \"n\": 1,\n  \"vu\": \"2026-09-23\"\n },\n \"n18\": {\n  \"n\": 1,\n  \"vu\": \"2026-09-23\"\n },\n \"n19\": {\n  \"n\": 1,\n  \"vu\": \"2026-09-23\"\n },\n \"n20\": {\n  \"n\": 1,\n  \"vu\": \"2026-09-23\"\n },\n \"n21\": {\n  \"n\": 1,\n  \"vu\": \"2026-09-23\"\n },\n \"n22\": {\n  \"n\": 1,\n  \"vu\": \"2026-09-23\"\n },\n \"n23\": {\n  \"n\": 1,\n  \"vu\": \"2026-09-23\"\n },\n \"n24\": {\n  \"n\": 1,\n  \"vu\": \"2026-09-23\"\n },\n \"n25\": {\n  \"n\": 1,\n  \"vu\": \"2026-09-23\"\n },\n \"n26\": {\n  \"n\": 1,\n  \"vu\": \"2026-09-23\"\n },\n \"n27\": {\n  \"n\": 1,\n  \"vu\": \"2026-09-23\"\n },\n \"n28\": {\n  \"n\": 1,\n  \"vu\": \"2026-09-23\"\n },\n \"n29\": {\n  \"n\": 1,\n  \"vu\": \"2026-09-23\"\n },\n \"n30\": {\n  \"n\": 1,\n  \"vu\": \"2026-09-23\"\n },\n \"n31\": {\n  \"n\": 1,\n  \"vu\": \"2026-09-23\"\n },\n \"n32\": {\n  \"n\": 1,\n  \"vu\": \"2026-09-23\"\n },\n \"n33\": {\n  \"n\": 1,\n  \"vu\": \"2026-09-23\"\n },\n \"n34\": {\n  \"n\": 1,\n  \"vu\": \"2026-09-23\"\n },\n \"n35\": {\n  \"n\": 1,\n  \"vu\": \"2026-09-23\"\n },\n \"n36\": {\n  \"n\": 1,\n  \"vu\": \"2026-09-23\"\n },\n \"n37\": {\n  \"n\": 1,\n  \"vu\": \"2026-09-23\"\n },\n \"n38\": {\n  \"n\": 1,\n  \"vu\": \"2026-09-23\"\n },\n \"n39\": {\n  \"n\": 1,\n  \"vu\": \"2026-09-23\"\n },\n \"n40\": {\n  \"n\": 1,\n  \"vu\": \"2026-09-23\"\n },\n \"n41\": {\n  \"n\": 1,\n  \"vu\": \"2026-09-23\"\n },\n \"n42\": {\n  \"n\": 1,\n  \"vu\": \"2026-09-23\"\n },\n \"n43\": {\n  \"n\": 1,\n  \"vu\": \"2026-09-23\"\n },\n \"n44\": {\n  \"n\": 1,\n  \"vu\": \"2026-09-23\"\n }\n}"
+  },
+  {
+   "nom": "voie-du-shell",
+   "entree": [
+    "lecture-commande",
+    "lecture-commande",
+    "ecriture-ecartee",
+    "ecriture-ecartee",
+    "chemin-en-sortie",
+    "inventaire-refuse",
+    "index-jamais",
+    "hors-memoire",
+    "note-inexistante",
+    "sans-commande"
+   ],
+   "sortie": "{\n \"AUTRE-note\": {\n  \"n\": 1,\n  \"vu\": \"2026-09-23\"\n },\n \"_encours\": {\n  \"s1\": [\n   \"une-note\",\n   \"AUTRE-note\",\n   \"accentuée-é\"\n  ]\n },\n \"accentuée-é\": {\n  \"n\": 1,\n  \"vu\": \"2026-09-23\"\n },\n \"une-note\": {\n  \"n\": 2,\n  \"vu\": \"2026-09-23\"\n }\n}"
+  }
+ ]
+}

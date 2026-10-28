@@ -1,0 +1,76 @@
+#!/bin/sh
+# LE LANCEUR — la seule porte du harnais, pour les hooks comme pour les agents.
+#
+#     harnais <sous-commande> [arguments]
+#
+# Les hooks l'appellent (hooks.json) et les agents le tapent : un seul endroit
+# sait trouver Python, donc un seul endroit à réparer.
+#
+# POURQUOI IL SE PLAINT. Un hook qui ne démarre pas ne bloque rien et ne le dit
+# pas : tout est installé, tout a l'air en place, et rien ne part. C'était la
+# panne la plus vicieuse du dispositif sous Windows (mesuré le 10/09/2026), et
+# l'ancien lanceur Python sortait en 0 quand il ne trouvait pas d'interpréteur.
+# Ici l'absence de Python s'ÉCRIT sur la sortie d'erreur, avec le code que le
+# hook concerné aurait de toute façon : 2 pour `mind-guard` (il refuse la
+# commande — un garde absent ne laisse pas passer), 1 pour les autres.
+#
+# CE QU'IL CHERCHE, DANS CET ORDRE :
+#   1. `python3`, puis `python`, puis `py -3` (le lanceur de Windows) ;
+#   2. jamais le faux `python.exe` du Microsoft Store (WindowsApps) : il ouvre
+#      le Store au lieu d'exécuter, et rend un code que rien ne comprend ;
+#   3. `/usr/bin/python3` seulement en dernier recours sur macOS : c'est le
+#      relais des outils Xcode, 62 ms à démarrer contre 14 ms pour un vrai
+#      Python (mesuré le 12/10/2026).
+# La version (3.9 au moins) est vérifiée par le programme lui-même, au premier
+# octet : un second processus pour la tester doublerait le prix de chaque hook.
+#
+# -S : ni site-packages ni fichiers .pth (la bibliothèque standard suffit, et
+#      démarrer sans eux est plus rapide et ne dépend pas de la machine).
+# -E : ignore PYTHONPATH & co — un environnement ne doit pas remplacer un module.
+# pycache_prefix : le code compilé va dans le dossier d'état du paquet, jamais
+#      dans le paquet lui-même (qui reste tel que livré).
+racine=$(cd "$(dirname "$0")/.." 2>/dev/null && pwd)
+sous="$1"
+code=1
+# Les gardes qui REFUSENT quand le paquet ne peut pas juger (main.py, _REFUSE).
+case "$sous" in mind-guard|consignes|production|coffre) code=2 ;; esac
+
+python_ok() {   # python_ok <chemin> : existe, et n'est pas le relais du Store
+  case "$1" in *WindowsApps*|"") return 1 ;; esac
+  [ -x "$1" ] || return 1
+  return 0
+}
+
+choisi=""
+# HARNAIS_PYTHON : un interpréteur imposé, et lui seul. Sert aux essais (un Python
+# absent, un Python 3.9) ; absent ou inutilisable, on le DIT au lieu de chercher ailleurs.
+if [ -n "$HARNAIS_PYTHON" ]; then
+  if python_ok "$HARNAIS_PYTHON"; then choisi="$HARNAIS_PYTHON"; else
+    echo "harnais : HARNAIS_PYTHON=$HARNAIS_PYTHON n'est pas un programme utilisable — aucun Python 3.9 ou plus : les gardes du paquet ne partent pas." >&2
+    exit $code
+  fi
+fi
+[ -z "$choisi" ] && for c in python3 python; do
+  p=$(command -v "$c" 2>/dev/null) || continue
+  python_ok "$p" || continue
+  if [ "$p" = "/usr/bin/python3" ]; then relais="$p"; continue; fi
+  choisi="$p"; break
+done
+if [ -z "$choisi" ] && [ -z "$HARNAIS_PYTHON" ]; then
+  for p in /opt/homebrew/bin/python3 /usr/local/bin/python3 \
+           /Library/Frameworks/Python.framework/Versions/Current/bin/python3; do
+    if python_ok "$p"; then choisi="$p"; break; fi
+  done
+fi
+[ -z "$choisi" ] && [ -n "$relais" ] && choisi="$relais"
+
+donnees="${CLAUDE_PLUGIN_DATA:-$HOME/.claude}/pycache"
+if [ -n "$choisi" ]; then
+  exec "$choisi" -S -E -X "pycache_prefix=$donnees" "$racine/py/main.py" "$@"
+fi
+if command -v py >/dev/null 2>&1; then
+  exec py -3 -S -E -X "pycache_prefix=$donnees" "$racine/py/main.py" "$@"
+fi
+
+echo "harnais : aucun Python 3.9 ou plus n'est installe sur cette machine — les gardes du paquet ne partent pas, rien ne les remplace. Installer Python (macOS : brew install python · Windows : winget install Python.Python.3.13, ou python.org, en cochant « Add to PATH »), puis relancer l'agent. Le faux python du Microsoft Store ne compte pas." >&2
+exit $code

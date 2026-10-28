@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+controles/verdicts-bruts/
+controles/dernier-verdict.json
+backups/
+projects/
+.last-cleanup
+mcp-needs-auth-cache.json
+/atelier/target/
+
+# Construit sur le Mac par rappels/construire.sh ; livré par la chaîne, pas par git.
+rappels/rappels-darwin-arm64

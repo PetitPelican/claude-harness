@@ -1,0 +1,31 @@
+controles: verdict du 2026-10-28 14:20
+source: py=c23a40617334208de95ef55d28a8fa24853f17cf hooks=d26a074095c4055b9021e0283c4ad9d3aca4ad5e skills=6929fe94afd069214f1a2463b11e3cf1da0e9c7f
+ecarts: 0 sur 28
+binaire livre: OK
+temoins du lanceur: OK
+- OK    compteur d'usage · témoin usage · 3 cas figés au commit e406beb2 (origine python) · contre-exemple douze-charges ≠ voie-du-shell · registre plafonné à 40 · 8/8 propriété
+- OK    journal · témoin journal · 5 cas figés au commit e406beb2 (origine python) · contre-exemple commit-simple ≠ hors-commit · ÉCARTS : AUCUN — le Rust rend le témoi
+- OK    résolveur mémoire · témoin memoire · 10 cas figés au commit e406beb2 (origine python) · contre-exemple en-place ≠ chemin inexistant · 10 formes, 1 résolutions non nulles 
+- OK    garde de commit · témoin mind-guard · 19 cas figés au commit e406beb2 (origine python) · contre-exemple en-tête absent ≠ pas un commit · 11 refus, 7 passages · ÉCARTS :
+- OK    carnet d'équipe · témoin carnet · 5 cas figés au commit e406beb2 (origine python) · contre-exemple lecture-Alpha-QA ≠ lecture-CTO · 5 entrées, 4 agents · ÉCARTS : AUCUN
+- OK    briefing · témoins : 12 briefings servis, 0 silences — UserPromptSubmit muet en régime établi : True · le repli s'annonce : sans objet (le repli Python n'est plu
+- OK    briefing · mémoire · témoin briefing-mem · 2 cas figés au commit e406beb2 (origine python) · contre-exemple briefing-servi ≠ usage-reecrit · mémoire: 3 note(s) sur 5 n'ont
+- OK    fin de tour · gardes traversées : 9/9 — B1-code-sans-todo, B10-rechutes, B11-acharnement, B13-poser, B5-carnet, B6-faits, B7-constat-sans-rejeu, B8-forme, B9-tombe 
+- OK    fin de tour · mémoire · témoin attente-mem · 2 cas figés au commit e3cc1945 (origine rust) · contre-exemple garde qui mord ≠ constat qui tient · 2/2 cas ont fait bouger la co
+- OK    relecteur (Rust seul) · LA BOUCLE TIENT — dépôt, verdict, blocage, et aucun agent coincé
+- OK    conversion en équipe · témoins : blanc muet, 4 agents montés, carnet amorcé, briefing servi depuis un dossier d'agent : True · ÉCARTS : AUCUN — conversion, périmètres, carne
+- OK    canal de déploiement · ✓ canal du paquet conforme, et chaque garde propre au projet confronté à l'arbre principal de son dépôt
+- OK    formes réelles · ✓ aucun projet à cheval — 1 encore sur l'ancien arbre, ce n'est pas un défaut
+- OK    ménage (témoin figé) · 0 écart(s)
+- OK    équipe (témoin figé) · 0 écart(s)
+- OK    vue d'équipe (témoin figé) · 0 écart(s)
+- OK    curateur (témoin figé) · témoin : 0 écart(s) sur 5 régimes
+- OK    demandes !cible, pairs · témoin : 0 écart(s) sur 12 garanties
+- OK    plus rien vers les Rappels · ÉCARTS : AUCUN sur 9 garanties
+- OK    mémoire partagée à deux · ÉCARTS : AUCUN sur 19 garanties
+- OK    un dossier par agent · témoin : banc équipe brain/ → un dossier par agent, 19 garanties · ÉCARTS : AUCUN sur 19 garanties
+- OK    faits des experts · ÉCARTS : AUCUN sur 13 garanties
+- OK    renvois de fin de tour · renvois : 0 écart(s)
+- OK    canal Notion · notion : 0 écart(s)
+- OK    doc et code · témoin : 111 citation(s), 24 compétence(s), 34 chemin(s) relevés, 15 gardes, 7 questions, 0 écart(s)
+- OK    garde du coffre · 14 paire(s) jouée(s) sur un faux coffre + le témoin, 0 en échec

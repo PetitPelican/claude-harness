@@ -1,0 +1,21 @@
+Agentic clean — DRY-RUN
+Cible : memoire
+
+══════════════════════════════════════════════════════════════════════════════
+  memoire
+══════════════════════════════════════════════════════════════════════════════
+
+2. RÉSIDUS — listés seulement, à trancher par l'agent du projet
+   docs/ porte 1 fichier(s) qui ressemblent à des sorties de build (rapport.pdf) : `docs/` ne contient que de l'écrit à la main — les sortir vers `site/` ou un dossier de build.
+   docs/charter.md                        taxonomie d'avant le 02/09/2026 : à trier, son contenu se répartit entre .fact/, .mind/ et docs/
+   docs/state.md                          dit des FAITS ACTUELS : MONTE dans .fact/ ou .mind/, il y a déjà sa place
+   docs/archive/                          2 fichier(s), 0.0 Mo — dont 1 repris par .mind/ (overview.md)
+   docs/notes.md.bak                               0.0 Mo  sauvegarde manuelle
+
+3. MÉMOIRE AU-DELÀ DE 500 LIGNES — à découper, jamais automatiquement
+   docs/journal.md                              600 lignes  la plus ancienne entrée datée : 12/05/2026
+
+──────────────────────────────────────────────────────────────────────────────
+Total récupérable : 0.0 Mo
+
+Dry-run. `--apply` supprime la FAMILLE 1 seulement — les familles 2 et 3 ne sont jamais supprimées par ce script.

@@ -1,0 +1,134 @@
+Atelier : <ATELIER> — 18 projet(s)
+
+── ambigu                 [AMBI] À cheval entre `brain/` et l'organisation d'avant : le harnais refuse de choisir et ne sert AUCUNE mémoire. `harnais mise-a-niveau` dit quoi trancher.
+     maj    : — — ILLISIBLE   santé : —   jalon : —
+     mémoire: À CHEVAL · faits 0/4 · état 0/2 · .logs 0 · git oui
+     paquet : déclaré oui · inscrit oui · servi <V> il y a 0 j
+     contexte: CLAUDE.md→mémoire NON · deny 1
+
+── ancien                 [TRI ] Taxonomie d'avant le 02/09/2026 dans `.memory/` (charter.md) : aucun outil ne la migre — le tri se fait à la main, puis `harnais adopte`.
+     maj    : <J-40> — PÉRIMÉ (40 j)   santé : orange   jalon : vieux
+     mémoire: taxonomie d'avant · faits 0/4 · état 5/2 · .logs 0 · git oui
+     paquet : déclaré NON · inscrit NON · servi NON
+     contexte: CLAUDE.md→mémoire NON · deny —
+
+── conforme               [OK  ] Servi en <V>, mémoire complète.
+     cap    : le cap de conforme
+     maj    : <J-3> — à jour (3 j)   santé : verte   jalon : livrer la v2
+     mémoire: brain/ · faits 4/4 · état 2/2 · .logs 2 · git oui
+     paquet : déclaré oui · inscrit oui · servi <V> il y a 0 j
+     contexte: CLAUDE.md→mémoire oui · deny 1
+     tâches : 1 en cours · 3 à faire · 1 attendent une décision
+
+── en-retard              [RETD] La session tourne encore sur 0.0.1 (entrée il y a 0 j), <V> inscrite : la nouvelle arrivera à son prochain démarrage.
+     cap    : le cap de x
+     maj    : <J-2> — à jour (2 j)   santé : verte   jalon : avancer
+     mémoire: brain/ · faits 4/4 · état 2/2 · .logs 0 · git oui
+     paquet : déclaré oui · inscrit oui · servi 0.0.1 il y a 0 j
+     contexte: CLAUDE.md→mémoire NON · deny 1
+
+── equipe                 [OK  ] Servi en <V>, mémoire complète.
+     cap    : le cap de equipe
+     maj    : <J-10> — tiède (10 j)   santé : rouge   jalon : réparer
+     mémoire: brain/ · faits 5/5 · état 4/4 · 2 agent(s) · .logs 0 · git oui
+     paquet : A — déclaré oui · inscrit oui · servi <V> il y a 0 j
+     paquet : B — déclaré oui · inscrit oui · servi <V> il y a 0 j
+     contexte: CLAUDE.md→mémoire oui · deny 1
+     tâches : 1 en cours · 2 à faire · 2 attendent une décision
+
+── hooks-locaux           [HOOK] Câblé par des hooks locaux, d'avant le paquet : ils ne reçoivent aucune correction. `harnais adopte --go` déclare le paquet ; retirer ensuite les hooks locaux, sinon tout tourne deux fois.
+     cap    : le cap de x
+     maj    : <J-2> — à jour (2 j)   santé : verte   jalon : avancer
+     mémoire: brain/ · faits 4/4 · état 2/2 · .logs 0 · git oui
+     paquet : déclaré hooks locaux · inscrit oui · servi <V> il y a 0 j
+     contexte: CLAUDE.md→mémoire NON · deny 1
+
+── incomplet              [MANQ] Il manque brain/mind/todo.md : `harnais mise-a-niveau --apply` le pose sans rien écraser.
+     cap    : le cap de x
+     maj    : <J-2> — à jour (2 j)   santé : verte   jalon : avancer
+     mémoire: brain/ · faits 4/4 · état 1/2 · .logs 0 · git oui
+     paquet : déclaré oui · inscrit oui · servi <V> il y a 0 j
+     contexte: CLAUDE.md→mémoire NON · deny 1
+
+── inscription-vieille    [MAJ ] Inscrit en 0.0.1 alors que le paquet en est à <V> : dans le dossier, `claude plugin update harnais@atelier --scope project`, puis au prochain démarrage.
+     cap    : le cap de x
+     maj    : <J-2> — à jour (2 j)   santé : verte   jalon : avancer
+     mémoire: brain/ · faits 4/4 · état 2/2 · .logs 0 · git oui
+     paquet : déclaré oui · inscrit oui · servi 0.0.1 il y a 0 j
+     contexte: CLAUDE.md→mémoire NON · deny 1
+
+── jamais-servi           [SERV] Aucune trace d'entrée : l'agent n'a pas démarré depuis qu'il est branché — ou le paquet ne se charge pas. Le démarrer, puis relire.
+     cap    : le cap de x
+     maj    : <J-2> — à jour (2 j)   santé : verte   jalon : avancer
+     mémoire: brain/ · faits 4/4 · état 2/2 · .logs 0 · git oui
+     paquet : déclaré oui · inscrit oui · servi NON
+     contexte: CLAUDE.md→mémoire NON · deny 1
+
+── neuf                   [NEUF] Aucune mémoire : `harnais adopte` la pose et branche le paquet — à blanc d'abord, `--go` pour écrire.
+     maj    : — — ILLISIBLE   santé : —   jalon : —
+     mémoire: aucune · faits 0/4 · état 0/2 · .logs 0 · git oui
+     paquet : déclaré NON · inscrit NON · servi NON
+     contexte: CLAUDE.md→mémoire NON · deny —
+
+── non-branche            [BRCH] Rien ne déclare le paquet : `harnais adopte --go` le branche.
+     cap    : le cap de x
+     maj    : <J-2> — à jour (2 j)   santé : verte   jalon : avancer
+     mémoire: brain/ · faits 4/4 · état 2/2 · .logs 0 · git oui
+     paquet : déclaré NON · inscrit oui · servi <V> il y a 0 j
+     contexte: CLAUDE.md→mémoire NON · deny 1
+
+── non-inscrit            [INSC] Paquet déclaré mais pas inscrit : depuis Claude Code 2.1.268 il ne se charge PAS, sans un mot. Dans le dossier : `claude plugin install harnais@atelier --scope project`.
+     cap    : le cap de x
+     maj    : <J-2> — à jour (2 j)   santé : verte   jalon : avancer
+     mémoire: brain/ · faits 4/4 · état 2/2 · .logs 0 · git oui
+     paquet : déclaré oui · inscrit NON · servi <V> il y a 0 j
+     contexte: CLAUDE.md→mémoire NON · deny 1
+
+── retard-ancien          [RETD] La session tourne encore sur une version d'avant la 0.10.0 (entrée il y a 0 j), <V> inscrite : la nouvelle arrivera à son prochain démarrage.
+     cap    : le cap de x
+     maj    : <J-2> — à jour (2 j)   santé : verte   jalon : avancer
+     mémoire: brain/ · faits 4/4 · état 2/2 · .logs 0 · git oui
+     paquet : déclaré oui · inscrit oui · servi avant 0.10.0 il y a 0 j
+     contexte: CLAUDE.md→mémoire NON · deny 1
+
+── sans-agent             [AGT?] Des faits, aucun état d'agent — il manque brain/mind/state.md, brain/mind/todo.md : `harnais mise-a-niveau --apply` le pose sans rien écraser.
+     cap    : le cap de seul
+     maj    : — — ILLISIBLE   santé : —   jalon : —
+     mémoire: brain/ · faits 4/4 · état 0/2 · .logs 0 · git oui
+     paquet : déclaré oui · inscrit oui · servi <V> il y a 0 j
+     contexte: CLAUDE.md→mémoire NON · deny 1
+
+── sans-deny              [DENY] Aucune règle `deny` : ce qui doit être interdit ici ne l'est que par la prose, donc se redemande à chaque session.
+     cap    : le cap de x
+     maj    : <J-2> — à jour (2 j)   santé : verte   jalon : avancer
+     mémoire: brain/ · faits 4/4 · état 2/2 · .logs 0 · git oui
+     paquet : déclaré oui · inscrit oui · servi <V> il y a 0 j
+     contexte: CLAUDE.md→mémoire NON · deny 0
+
+── sans-git               [GIT ] Pas de dépôt git : le harnais ne cherche la mémoire que dans un dépôt, et ses gardes se déclenchent au commit. `git init`, puis relire.
+     maj    : — — ILLISIBLE   santé : —   jalon : —
+     mémoire: aucune · faits 0/4 · état 0/2 · .logs 0 · git NON
+     paquet : déclaré NON · inscrit NON · servi NON
+     contexte: CLAUDE.md→mémoire NON · deny —
+
+── surplus                [TROP] La mémoire porte 1 fichier(s) que le harnais ne prévoit pas (brain/fact/journal.md) : les faits en tiennent quatre, cinq à plusieurs ; l'état d'un agent, deux.
+     cap    : le cap de x
+     maj    : <J-2> — à jour (2 j)   santé : verte   jalon : avancer
+     mémoire: brain/ · faits 5/4 · état 2/2 · .logs 0 · git oui
+     paquet : déclaré oui · inscrit oui · servi <V> il y a 0 j
+     contexte: CLAUDE.md→mémoire NON · deny 1
+
+── v1                     [V1  ] Servi, en organisation d'avant (`.fact/`, `.mind/`) : `harnais mise-a-niveau` la passe en `brain/` quand tu le décides, sans rien perdre.
+     cap    : le cap de v1
+     maj    : <J-5> — à jour (5 j)   santé : orange   jalon : migrer un jour
+     mémoire: en place (.fact/ .mind/) · faits 4/4 · état 2/2 · .logs 0 · git oui
+     paquet : déclaré oui · inscrit oui · servi <V> il y a 0 j
+     contexte: CLAUDE.md→mémoire NON · deny 1
+
+════════════════════════════════════════════════════════════════
+CE QUI ATTEND UNE DÉCISION — 3 point(s), la seule colonne qui ne se délègue pas
+
+  [haut ] conforme           @user      **Je publie ? oui / non**
+  [moyen] equipe             @Zoe       **Zoe tranche ?**
+  [bas  ] equipe             @user      **Tu valides ?**
+rc=0

@@ -1,0 +1,57 @@
+#!/usr/bin/env python3
+"""FAUX `osascript` — l'adaptateur de poste, remplacé pour le contrôle.
+
+Deux raisons, et la première est impérative : le vrai `osascript` écrirait dans
+les VRAIES listes Rappels de l'utilisateur — `RAPPELS_ECRIRE` crée la liste si elle
+n'existe pas. Un contrôle qui pollue la boîte de réception de quelqu'un n'est
+pas un contrôle.
+
+La seconde est qu'il rend le canal MESURABLE : les appels sont journalisés, donc
+comparables entre les deux versions. Sans ça on ne comparerait que ce qui se
+passe AVANT le téléphone, c'est-à-dire pas la partie qui a le plus de code.
+"""
+import json, os, sys, pathlib
+script = sys.stdin.read()
+args = sys.argv[1:]
+if args and args[0] == "-":
+    args = args[1:]
+fix = json.loads(pathlib.Path(os.environ["FAUX_RAPPELS"]).read_text())
+log = pathlib.Path(os.environ["FAUX_JOURNAL"])
+# LE CANAL QUI NE RÉPOND PAS. Une fixture peut le rendre muet : c'est le seul
+# moyen d'éprouver ce que fait une fin de tour quand les Rappels sont
+# inaccessibles — panne réelle du 11/09/2026, où l'app a cessé de répondre aux
+# sessions sans écran. Le vrai `osascript` rend alors un code non nul et rien
+# sur la sortie ; on fait exactement ça, sans rien journaliser.
+if fix.get("muet"):
+    sys.exit(1)
+import hashlib
+def note(quoi, charge):
+    with log.open("a") as f:
+        # L'EMPREINTE DU SCRIPT ENVOYÉ, et pas seulement ce qu'il fait : c'est
+        # ce qui prouve que les deux versions parlent le MÊME AppleScript,
+        # commentaires compris — et ces commentaires gardent deux formes
+        # essayées qui échouent en silence.
+        f.write(json.dumps({"quoi": quoi, "liste": args[0] if args else "",
+                            "script": hashlib.sha1(script.encode()).hexdigest()[:8],
+                            "charge": charge}, ensure_ascii=False) + "\n")
+if "delete cibles" in script:                           # RAPPELS_SUPPRIMER
+    noms = [l for l in (args[1] if len(args) > 1 else "").split("\x1e") if l]
+    note("supprimer", noms)
+    sys.stdout.write(str(len(noms)))
+elif "make new reminder" in script:                     # RAPPELS_ECRIRE
+    lots = [l for l in (args[1] if len(args) > 1 else "").split("\x1e") if l]
+    note("ecrire", [l.split("\x1f") for l in lots])
+    sys.stdout.write(str(len(lots)))
+elif "completed is true" in script:                     # RAPPELS_ETAT
+    note("etat", None)
+    sys.stdout.write("\n".join(fix.get("faits", [])) + "\x1e"
+                     + "\n".join(fix.get("ouverts", [])))
+elif "repeat with r in (reminders of list" in script:   # RAPPELS_LIRE
+    note("lire", None)
+    for t in fix.get("faits", []):
+        sys.stdout.write("1\t%s\n" % t)
+    for t in fix.get("ouverts", []):
+        sys.stdout.write("0\t%s\n" % t)
+else:
+    note("inconnu", script[:80])
+sys.exit(0)

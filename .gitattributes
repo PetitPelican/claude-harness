@@ -1,0 +1,6 @@
+# Fins de ligne figées (0.19) : sous Windows, Git convertit par défaut en CRLF, et
+# le lanceur `sh` casse alors sur « \r » — aucun hook ne part, sans un mot.
+# L'empreinte du paquet doit aussi être la même sur Mac et sous Windows.
+* text=auto eol=lf
+*.png binary
+*.icns binary

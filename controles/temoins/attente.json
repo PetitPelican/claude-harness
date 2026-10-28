@@ -1,0 +1,385 @@
+{
+ "controle": "attente",
+ "gele_le": "2026-10-08",
+ "commit_depot": "3754fa11a235199d0d71a87bf1c91556266e9dbb",
+ "origine": "rust",
+ "sources": {
+  "harnais/target/release/harnais": "1dbd04419e0fed69"
+ },
+ "contre_exemple": [
+  "code sans todo · tour 1",
+  "todo à jour · tour 1"
+ ],
+ "cas": [
+  {
+   "nom": "code sans todo · tour 1",
+   "entree": "bac fabriqué",
+   "sortie": "{\"appels\": [], \"code\": 2, \"message\": \"attente : tu as modifié du code (a.ts) sans mettre `<TODO>` à jour. Ce fichier est ce que le commanditaire retrouve quand il n'est pas là. Ce n'est PAS un moyen de ne pas lui demander : il est souvent disponible, et une question rangée sans être posée dort des jours.\\n\\nAvant de rendre la main : coche ce que tu as fini, et écris ce qui l'attend, une entrée par blocage, dans cette forme exacte :\\n\\n- [ ] !haut @user **J'autorise le paiement en ligne ? oui / non**\\n      oui → la boutique encaisse dès lundi ; il me faut ta signature, 20 min.\\n      non → on ouvre sans encaissement, les clients paient à la livraison.\\n      fini quand → tu ouvres la boutique et un paiement d'essai passe.\\n      Ça attend depuis 4 jours ; j'ai continué sur le reste.\\n\\nUNE QUESTION FERMÉE, JAMAIS UN CONSTAT. Un constat lui laisse tout le travail : comprendre ce qu'on lui demande, deviner comment répondre, et mesurer seul ce qu'il risque à ne pas répondre. Il doit trancher d'un mot, sans rien ouvrir.\\n\\nSous la ligne, une ligne par réponse possible — ce qu'elle DÉCLENCHE, pas ce qu'elle signifie. Trois voies : numérote-les, il répond « 2 ». Et si tu ne sais pas quoi faire de l'une des réponses, la question n'est pas prête : elle n'a rien à faire dans sa liste.\\n\\nLe commanditaire est CEO — PAS de nom de fichier, de fonction ni de variable d'environnement.\\n\\nSI TON PROJET A UN GUICHET DES QUESTIONS (un pair qui les reçoit, comme QA), c'est à lui que tu l'adresses (`@QA`) et que tu l'envoies par message, pas à `@user`.\\n\\nET POSE-LA : tout `@user` que tu écris ce tour-ci se pose AUSSI, en clair et sous sa forme fermée, dans ton message de fin de tour. Le todo est le filet pour quand il n'est pas là ; il ne remplace pas la question.\\n\\nTu ne t'arrêtes pas pour autant : si tu peux avancer par un chemin réversible, prends-le, note l'hypothèse, et continue.\\n\\n— — —\\nLe commanditaire a DÉJÀ lu ton message : ne le recopie pas, ni tes conclusions, ni les questions que tu as déjà posées dans ce tour. Fais ce qui est demandé, puis termine par une ou deux lignes qui disent ce que tu as changé.\"}"
+  },
+  {
+   "nom": "code sans todo · tour 2",
+   "entree": "bac fabriqué",
+   "sortie": "{\"appels\": [], \"code\": 0, \"message\": \"\"}"
+  },
+  {
+   "nom": "code sans todo · état",
+   "entree": "bac fabriqué",
+   "sortie": "{\"attente/blocages.log\": [[\"projet\", \"B1-code-sans-todo\", \"1\"]], \"attente/projet.forme\": \"dfe5ecb425f8\", \"attente/projet.posees\": \"dfe5ecb425f8cff5\", \"attente/projet.pousse\": \"porte la date de son todo\", \"attente/projet.rechutes\": \"dfe5ecb425f8\", \"attente/projet.tombes\": \"\", \"attente/sess-1.bloc\": \"397d46011f510fe3\"}"
+  },
+  {
+   "nom": "todo à jour · tour 1",
+   "entree": "bac fabriqué",
+   "sortie": "{\"appels\": [], \"code\": 0, \"message\": \"\"}"
+  },
+  {
+   "nom": "todo à jour · tour 2",
+   "entree": "bac fabriqué",
+   "sortie": "{\"appels\": [], \"code\": 0, \"message\": \"\"}"
+  },
+  {
+   "nom": "todo à jour · état",
+   "entree": "bac fabriqué",
+   "sortie": "{\"attente/projet.forme\": \"dfe5ecb425f8\", \"attente/projet.posees\": \"dfe5ecb425f8cff5\", \"attente/projet.pousse\": \"porte la date de son todo\", \"attente/projet.rechutes\": \"dfe5ecb425f8\", \"attente/projet.tombes\": \"\"}"
+  },
+  {
+   "nom": "réponse de l'humain · tour 1",
+   "entree": "bac fabriqué",
+   "sortie": "{\"appels\": [], \"code\": 0, \"message\": \"\"}"
+  },
+  {
+   "nom": "réponse de l'humain · tour 2",
+   "entree": "bac fabriqué",
+   "sortie": "{\"appels\": [], \"code\": 0, \"message\": \"\"}"
+  },
+  {
+   "nom": "réponse de l'humain · état",
+   "entree": "bac fabriqué",
+   "sortie": "{\"attente/projet.forme\": \"dfe5ecb425f8\", \"attente/projet.posees\": \"dfe5ecb425f8cff5\", \"attente/projet.pousse\": \"porte la date de son todo\", \"attente/projet.rechutes\": \"dfe5ecb425f8\", \"attente/projet.tombes\": \"\"}"
+  },
+  {
+   "nom": "point tranché · tour 1",
+   "entree": "bac fabriqué",
+   "sortie": "{\"appels\": [], \"code\": 0, \"message\": \"\"}"
+  },
+  {
+   "nom": "point tranché · tour 2",
+   "entree": "bac fabriqué",
+   "sortie": "{\"appels\": [], \"code\": 0, \"message\": \"\"}"
+  },
+  {
+   "nom": "point tranché · état",
+   "entree": "bac fabriqué",
+   "sortie": "{\"attente/projet.forme\": \"dfe5ecb425f8\", \"attente/projet.posees\": \"dfe5ecb425f8cff5\", \"attente/projet.pousse\": \"porte la date de son todo\", \"attente/projet.rechutes\": \"dfe5ecb425f8\", \"attente/projet.tombes\": \"\"}"
+  },
+  {
+   "nom": "demande de l'humain · tour 1",
+   "entree": "bac fabriqué",
+   "sortie": "{\"appels\": [], \"code\": 0, \"message\": \"\"}"
+  },
+  {
+   "nom": "demande de l'humain · tour 2",
+   "entree": "bac fabriqué",
+   "sortie": "{\"appels\": [], \"code\": 0, \"message\": \"\"}"
+  },
+  {
+   "nom": "demande de l'humain · état",
+   "entree": "bac fabriqué",
+   "sortie": "{\"attente/projet.forme\": \"dfe5ecb425f8\", \"attente/projet.posees\": \"dfe5ecb425f8cff5\", \"attente/projet.pousse\": \"porte la date de son todo\", \"attente/projet.rechutes\": \"dfe5ecb425f8\", \"attente/projet.tombes\": \"\"}"
+  },
+  {
+   "nom": "constat sans rejeu · tour 1",
+   "entree": "bac fabriqué",
+   "sortie": "{\"appels\": [], \"code\": 2, \"message\": \"attente : 1 constat(s) sans moyen d'être rouvert(s) : La page manque ? oui / non.\\n\\nUn constat n'est pas une tâche. « Construire X » reste vrai jusqu'à ce que tu le fasses ; « X manque » peut cesser d'être vrai TOUT SEUL, sans que personne y touche — et un constat bien mesuré n'est pas plus durable qu'un constat bâclé, seulement plus crédible, donc plus dangereux quand il périme.\\n\\nAjoute sous chaque ligne `?constat` de quoi la rejouer :\\n\\n      ↻ service :: curl -s -o /dev/null -w '%{http_code}' https://exemple.fr/contact :: ^200$\\n\\nTrois champs. D'ABORD LA SOURCE — `machine` si la réponse est sur ce poste, `service` si elle est chez le fournisseur. Une mesure locale ne répond jamais à une question distante : c'est ainsi qu'un contrôle a décodé un cache vieux de quatre jours et rendu un chiffre net, cohérent, et hors sujet. Puis la commande, puis ce qu'elle doit répondre si le constat tient encore.\\n\\nSi une ligne est une tâche et non un constat, retire `?constat`.\\n\\n— — —\\nLe commanditaire a DÉJÀ lu ton message : ne le recopie pas, ni tes conclusions, ni les questions que tu as déjà posées dans ce tour. Fais ce qui est demandé, puis termine par une ou deux lignes qui disent ce que tu as changé.\"}"
+  },
+  {
+   "nom": "constat sans rejeu · tour 2",
+   "entree": "bac fabriqué",
+   "sortie": "{\"appels\": [], \"code\": 0, \"message\": \"\"}"
+  },
+  {
+   "nom": "constat sans rejeu · état",
+   "entree": "bac fabriqué",
+   "sortie": "{\"attente/blocages.log\": [[\"projet\", \"B7-constat-sans-rejeu\", \"1\"]], \"attente/projet.forme\": \"fc76edfff6ea\", \"attente/projet.posees\": \"fc76edfff6ea11d0\", \"attente/projet.pousse\": \"porte la date de son todo\", \"attente/projet.rechutes\": \"fc76edfff6ea\", \"attente/projet.tombes\": \"\", \"attente/sess-1.constat\": \"8da42eeb36725bad\"}"
+  },
+  {
+   "nom": "constat qui tient · tour 1",
+   "entree": "bac fabriqué",
+   "sortie": "{\"appels\": [], \"code\": 0, \"message\": \"\"}"
+  },
+  {
+   "nom": "constat qui tient · tour 2",
+   "entree": "bac fabriqué",
+   "sortie": "{\"appels\": [], \"code\": 0, \"message\": \"\"}"
+  },
+  {
+   "nom": "constat qui tient · état",
+   "entree": "bac fabriqué",
+   "sortie": "{\"attente/projet.forme\": \"fc76edfff6ea\", \"attente/projet.posees\": \"fc76edfff6ea11d0\", \"attente/projet.pousse\": \"porte la date de son todo\", \"attente/projet.rechutes\": \"fc76edfff6ea\", \"attente/projet.tombes\": \"\"}"
+  },
+  {
+   "nom": "constat qui tombe · tour 1",
+   "entree": "bac fabriqué",
+   "sortie": "{\"appels\": [], \"code\": 0, \"message\": \"\"}"
+  },
+  {
+   "nom": "constat qui tombe · tour 2",
+   "entree": "bac fabriqué",
+   "sortie": "{\"appels\": [], \"code\": 0, \"message\": \"\"}"
+  },
+  {
+   "nom": "constat qui tombe · état",
+   "entree": "bac fabriqué",
+   "sortie": "{\"attente/projet.forme\": \"fc76edfff6ea\", \"attente/projet.posees\": \"fc76edfff6ea11d0\", \"attente/projet.pousse\": \"porte la date de son todo\", \"attente/projet.rechutes\": \"fc76edfff6ea\", \"attente/projet.tombes\": \"fc76edfff6ea\"}"
+  },
+  {
+   "nom": "ligne mal formée · tour 1",
+   "entree": "bac fabriqué",
+   "sortie": "{\"appels\": [], \"code\": 0, \"message\": \"\"}"
+  },
+  {
+   "nom": "ligne mal formée · tour 2",
+   "entree": "bac fabriqué",
+   "sortie": "{\"appels\": [], \"code\": 0, \"message\": \"\"}"
+  },
+  {
+   "nom": "ligne mal formée · état",
+   "entree": "bac fabriqué",
+   "sortie": "{\"attente/projet.forme\": \"47d1fc24b30c\", \"attente/projet.posees\": \"47d1fc24b30cb68a\", \"attente/projet.pousse\": \"porte la date de son todo\", \"attente/projet.rechutes\": \"47d1fc24b30c\", \"attente/projet.tombes\": \"\"}"
+  },
+  {
+   "nom": "carnet, zone touchée · tour 1",
+   "entree": "bac fabriqué",
+   "sortie": "{\"appels\": [], \"code\": 0, \"message\": \"\"}"
+  },
+  {
+   "nom": "carnet, zone touchée · tour 2",
+   "entree": "bac fabriqué",
+   "sortie": "{\"appels\": [], \"code\": 0, \"message\": \"\"}"
+  },
+  {
+   "nom": "carnet, zone touchée · état",
+   "entree": "bac fabriqué",
+   "sortie": "{\"attente/projet.carnet\": \"\", \"attente/projet.forme\": \"dfe5ecb425f8\", \"attente/projet.posees\": \"dfe5ecb425f8cff5\", \"attente/projet.pousse\": \"porte la date de son todo\", \"attente/projet.rechutes\": \"dfe5ecb425f8\", \"attente/projet.tete\": \"porte le HEAD de son dépôt\", \"attente/projet.tombes\": \"\"}"
+  },
+  {
+   "nom": "faits déportés · tour 1",
+   "entree": "bac fabriqué",
+   "sortie": "{\"appels\": [], \"code\": 2, \"message\": \"attente : tu as modifié les FAITS du projet (.fact/base.md). Ce sont les seuls fichiers partagés par tous les agents, et ils ne s'écrivent qu'à la demande du commanditaire — un agent qui les réécrit depuis son lot efface le travail d'un autre en silence.\\n\\nTa mémoire est déportée : elle s'enregistre toute seule en fin de tour, MAIS jamais ces fichiers-là. Ils resteront donc en attente indéfiniment.\\n\\nSi le commanditaire ne l'a pas demandé, annule-les. S'il l'a demandé, enregistre-les toi-même avec ` # fact-ok` dans le message — l'autorisation restera dans l'historique.\\n\\n— — —\\nLe commanditaire a DÉJÀ lu ton message : ne le recopie pas, ni tes conclusions, ni les questions que tu as déjà posées dans ce tour. Fais ce qui est demandé, puis termine par une ou deux lignes qui disent ce que tu as changé.\"}"
+  },
+  {
+   "nom": "faits déportés · tour 2",
+   "entree": "bac fabriqué",
+   "sortie": "{\"appels\": [], \"code\": 0, \"message\": \"\"}"
+  },
+  {
+   "nom": "faits déportés · état",
+   "entree": "bac fabriqué",
+   "sortie": "{\"attente/blocages.log\": [[\"projet\", \"B6-faits\", \"1\"]], \"attente/projet.forme\": \"dfe5ecb425f8\", \"attente/projet.posees\": \"dfe5ecb425f8cff5\", \"attente/projet.pousse\": \"porte la date de son todo\", \"attente/projet.rechutes\": \"dfe5ecb425f8\", \"attente/projet.tombes\": \"\", \"attente/sess-1.faits\": \"79b217638ce50000\"}"
+  },
+  {
+   "nom": "cible tombée · tour 1",
+   "entree": "bac fabriqué",
+   "sortie": "{\"appels\": [], \"code\": 0, \"message\": \"\"}"
+  },
+  {
+   "nom": "cible tombée · tour 2",
+   "entree": "bac fabriqué",
+   "sortie": "{\"appels\": [], \"code\": 0, \"message\": \"\"}"
+  },
+  {
+   "nom": "cible tombée · état",
+   "entree": "bac fabriqué",
+   "sortie": "{\"attente/projet.cible\": \"TOMBÉ\\t08/10\\t1\\tZéro page cassée\", \"attente/projet.forme\": \"dfe5ecb425f8\", \"attente/projet.posees\": \"dfe5ecb425f8cff5\", \"attente/projet.pousse\": \"porte la date de son todo\", \"attente/projet.rechutes\": \"dfe5ecb425f8\", \"attente/projet.tombes\": \"\"}"
+  },
+  {
+   "nom": "cible sans mesure · tour 1",
+   "entree": "bac fabriqué",
+   "sortie": "{\"appels\": [], \"code\": 0, \"message\": \"\"}"
+  },
+  {
+   "nom": "cible sans mesure · tour 2",
+   "entree": "bac fabriqué",
+   "sortie": "{\"appels\": [], \"code\": 0, \"message\": \"\"}"
+  },
+  {
+   "nom": "cible sans mesure · état",
+   "entree": "bac fabriqué",
+   "sortie": "{\"attente/projet.cible\": \"SANS\\t08/10\\t1\\tZéro page cassée\", \"attente/projet.forme\": \"dfe5ecb425f8\", \"attente/projet.posees\": \"dfe5ecb425f8cff5\", \"attente/projet.pousse\": \"porte la date de son todo\", \"attente/projet.rechutes\": \"dfe5ecb425f8\", \"attente/projet.tombes\": \"\"}"
+  },
+  {
+   "nom": "rappels existants · tour 1",
+   "entree": "bac fabriqué",
+   "sortie": "{\"appels\": [], \"code\": 0, \"message\": \"\"}"
+  },
+  {
+   "nom": "rappels existants · tour 2",
+   "entree": "bac fabriqué",
+   "sortie": "{\"appels\": [], \"code\": 0, \"message\": \"\"}"
+  },
+  {
+   "nom": "rappels existants · état",
+   "entree": "bac fabriqué",
+   "sortie": "{\"attente/projet.forme\": \"dfe5ecb425f8\", \"attente/projet.posees\": \"dfe5ecb425f8cff5\", \"attente/projet.pousse\": \"porte la date de son todo\", \"attente/projet.rechutes\": \"dfe5ecb425f8\", \"attente/projet.tombes\": \"\"}"
+  },
+  {
+   "nom": "forme rappelée · tour 0",
+   "entree": "bac fabriqué",
+   "sortie": "{\"appels\": [], \"code\": 0, \"message\": \"\"}"
+  },
+  {
+   "nom": "forme rappelée · tour 1",
+   "entree": "bac fabriqué",
+   "sortie": "{\"appels\": [], \"code\": 2, \"message\": \"attente : 1 ligne(s) qui attend(ent) le commanditaire sont écrites comme des CONSTATS, pas comme des questions : « Le service est cassé ».\\n\\nUn constat lui laisse tout le travail — comprendre ce qu'on lui demande, deviner comment répondre, mesurer seul ce qu'il risque à ne pas répondre. Il doit trancher d'un mot, sans rien ouvrir.\\n\\nRéécris chacune dans cette forme :\\n\\n- [ ] !haut @user **J'autorise le paiement en ligne ? oui / non**\\n      oui → la boutique encaisse dès lundi ; il me faut ta signature, 20 min.\\n      non → on ouvre sans encaissement, les clients paient à la livraison.\\n      fini quand → tu ouvres la boutique et un paiement d'essai passe.\\n      Ça attend depuis 4 jours ; j'ai continué sur le reste.\\n\\nLe libellé porte la question ET les réponses possibles. Dessous, une ligne par réponse : ce qu'elle DÉCLENCHE, pas ce qu'elle signifie. Trois voies : numérote-les, il répond « 2 ».\\n\\nLa dernière ligne est obligatoire : `fini quand → …`, ce que l'HUMAIN doit voir pour considérer la chose réglée. Pas une commande, pas un `↻` : ce qu'il constate, lui, de son côté. Sans elle, il n'a que ta parole.\\n\\nEt si tu ne sais pas quoi faire de l'une des réponses, la question n'est pas prête — elle n'a rien à faire dans sa liste.\\n\\nUne question que tu as déjà posée dans ce tour l'est : ne la recopie pas. Une question que tu n'as pas encore posée, pose-la.\\n\\nJe te le redemanderai au plus une fois encore par ligne : c'est un avertissement, pas un blocage permanent.\\n\\n— — —\\nLe commanditaire a DÉJÀ lu ton message : ne le recopie pas, ni tes conclusions, ni les questions que tu as déjà posées dans ce tour. Fais ce qui est demandé, puis termine par une ou deux lignes qui disent ce que tu as changé.\"}"
+  },
+  {
+   "nom": "forme rappelée · tour 2",
+   "entree": "bac fabriqué",
+   "sortie": "{\"appels\": [], \"code\": 2, \"message\": \"attente : 1 ligne(s) qui attend(ent) le commanditaire sont écrites comme des CONSTATS, pas comme des questions : « Le service est cassé ».\\n\\nUn constat lui laisse tout le travail — comprendre ce qu'on lui demande, deviner comment répondre, mesurer seul ce qu'il risque à ne pas répondre. Il doit trancher d'un mot, sans rien ouvrir.\\n\\nRéécris chacune dans cette forme :\\n\\n- [ ] !haut @user **J'autorise le paiement en ligne ? oui / non**\\n      oui → la boutique encaisse dès lundi ; il me faut ta signature, 20 min.\\n      non → on ouvre sans encaissement, les clients paient à la livraison.\\n      fini quand → tu ouvres la boutique et un paiement d'essai passe.\\n      Ça attend depuis 4 jours ; j'ai continué sur le reste.\\n\\nLe libellé porte la question ET les réponses possibles. Dessous, une ligne par réponse : ce qu'elle DÉCLENCHE, pas ce qu'elle signifie. Trois voies : numérote-les, il répond « 2 ».\\n\\nLa dernière ligne est obligatoire : `fini quand → …`, ce que l'HUMAIN doit voir pour considérer la chose réglée. Pas une commande, pas un `↻` : ce qu'il constate, lui, de son côté. Sans elle, il n'a que ta parole.\\n\\nEt si tu ne sais pas quoi faire de l'une des réponses, la question n'est pas prête — elle n'a rien à faire dans sa liste.\\n\\nUne question que tu as déjà posée dans ce tour l'est : ne la recopie pas. Une question que tu n'as pas encore posée, pose-la.\\n\\nJe te le redemanderai au plus une fois encore par ligne : c'est un avertissement, pas un blocage permanent.\\n\\n— — —\\nLe commanditaire a DÉJÀ lu ton message : ne le recopie pas, ni tes conclusions, ni les questions que tu as déjà posées dans ce tour. Fais ce qui est demandé, puis termine par une ou deux lignes qui disent ce que tu as changé.\"}"
+  },
+  {
+   "nom": "forme rappelée · état",
+   "entree": "bac fabriqué",
+   "sortie": "{\"attente/blocages.log\": [[\"projet\", \"B8-forme\", \"1\"], [\"projet\", \"B8-forme\", \"1\"]], \"attente/projet.forme\": \"47d1fc24b30c 2\\ndfe5ecb425f8 2\", \"attente/projet.posees\": \"dfe5ecb425f8cff5\", \"attente/projet.pousse\": \"DATE ÉTRANGÈRE : '1700000000'\", \"attente/projet.rechutes\": \"dfe5ecb425f8\", \"attente/projet.tombes\": \"\"}"
+  },
+  {
+   "nom": "constat tombé 2× · tour 0",
+   "entree": "bac fabriqué",
+   "sortie": "{\"appels\": [], \"code\": 0, \"message\": \"\"}"
+  },
+  {
+   "nom": "constat tombé 2× · tour 1",
+   "entree": "bac fabriqué",
+   "sortie": "{\"appels\": [], \"code\": 2, \"message\": \"attente : 1 constat(s) ne tiennent plus — leur propre vérification dit le contraire, DEUX FOIS DE SUITE :\\n\\n  ✗ La page manque ? oui / non\\n\\nUn premier échec les avait seulement annotés : une vérification rate aussi pour de mauvaises raisons — réseau, jeton, débit limité. Deux d'affilée, c'est autre chose.\\n\\nIls ne lui sont plus présentés comme des questions, pour qu'il n'ait pas à contrôler des lignes fausses. Ils sont TOUJOURS dans `<TODO>` : rien n'a été détruit, parce qu'une vérification peut se tromper et qu'un contrôle dont l'échec ressemble au succès est exactement ce qu'on cherche à éviter.\\n\\nÀ toi de trancher : si le constat est bien caduc, coche-le ou retire la ligne. S'il tient encore, c'est ta VÉRIFICATION qui est fausse — corrige-la plutôt que le constat, et demande-toi d'abord de quelle source elle a lu sa réponse.\\n\\nET DANS LES DEUX CAS, TU AS AFFIRMÉ QUELQUE CHOSE DE FAUX : ou bien le constat, ou bien le contrôle. C'est le seul endroit de la chaîne où on le sait avec certitude. Dans `~/.claude/rechutes.md`, au-dessus de la ligne « ÉCRITURE » (le reste n'est jamais relu) : qu'aurait-il fallu vérifier avant ? Affûte le titre en gras d'une question existante si elle dit déjà à peu près ça, sinon ajoute une question — la même leçon apprise deux fois est une seule règle.\\n\\n— — —\\nLe commanditaire a DÉJÀ lu ton message : ne le recopie pas, ni tes conclusions, ni les questions que tu as déjà posées dans ce tour. Fais ce qui est demandé, puis termine par une ou deux lignes qui disent ce que tu as changé.\"}"
+  },
+  {
+   "nom": "constat tombé 2× · tour 2",
+   "entree": "bac fabriqué",
+   "sortie": "{\"appels\": [], \"code\": 0, \"message\": \"\"}"
+  },
+  {
+   "nom": "constat tombé 2× · état",
+   "entree": "bac fabriqué",
+   "sortie": "{\"attente/blocages.log\": [[\"projet\", \"B9-tombe\", \"1\"]], \"attente/projet.forme\": \"fc76edfff6ea 2\", \"attente/projet.posees\": \"fc76edfff6ea11d0\", \"attente/projet.pousse\": \"porte la date de son todo\", \"attente/projet.rechutes\": \"fc76edfff6ea\", \"attente/projet.tombes\": \"fc76edfff6ea\", \"attente/sess-1.tombe\": \"9d260220fb12b396\"}"
+  },
+  {
+   "nom": "liste de contrôle · tour 0",
+   "entree": "bac fabriqué",
+   "sortie": "{\"appels\": [], \"code\": 0, \"message\": \"\"}"
+  },
+  {
+   "nom": "liste de contrôle · tour 1",
+   "entree": "bac fabriqué",
+   "sortie": "{\"appels\": [], \"code\": 2, \"message\": \"attente : 1 point(s) vont partir chez le commanditaire. Avant qu'ils partent, rejoue ceci — c'est la liste de nos erreurs qui reviennent, et elle t'a déjà repris :\\n\\n# Avant d'affirmer\\n- Une question de contrôle ?\\n\\nLe détail de chaque question, et ses récidives : <bac>/rs_liste_de_contrôle/data/rechutes.md\\n\\nReprends chacune de tes affirmations en face de ces questions. Si l'une d'elles mord, corrige la mesure AVANT de corriger la conclusion — c'est presque toujours l'instrument qui a tort, pas le monde.\\n\\nSi rien ne mord, dis-le en une ligne et continue : je ne te le redemanderai pas pour ces points-là.\\n\\n— — —\\nLe commanditaire a DÉJÀ lu ton message : ne le recopie pas, ni tes conclusions, ni les questions que tu as déjà posées dans ce tour. Fais ce qui est demandé, puis termine par une ou deux lignes qui disent ce que tu as changé.\"}"
+  },
+  {
+   "nom": "liste de contrôle · tour 2",
+   "entree": "bac fabriqué",
+   "sortie": "{\"appels\": [], \"code\": 2, \"message\": \"attente : 1 question(s) NOUVELLE(S) attendent le commanditaire, et ton message ne les pose pas :\\n\\n  · Une AUTRE question ? oui / non\\n\\nPose CELLES-LÀ, en clair et sous leur forme fermée, voies numérotées comprises — pas les autres, qu'il a déjà vues. Le todo est le filet pour quand il n'est pas là ; une question rangée sans être posée dort des jours.\\n\\nTu ne t'arrêtes pas pour autant : ce qui peut avancer par un chemin réversible avance.\\n\\n— — —\\nLe commanditaire a DÉJÀ lu ton message : ne le recopie pas, ni tes conclusions, ni les questions que tu as déjà posées dans ce tour. Fais ce qui est demandé, puis termine par une ou deux lignes qui disent ce que tu as changé.\"}"
+  },
+  {
+   "nom": "liste de contrôle · état",
+   "entree": "bac fabriqué",
+   "sortie": "{\"attente/blocages.log\": [[\"projet\", \"B10-rechutes\", \"1\"], [\"projet\", \"B13-poser\", \"1\"]], \"attente/projet.forme\": \"5606311d2264 2\\ndfe5ecb425f8 2\", \"attente/projet.posees\": \"5606311d2264be44\\ndfe5ecb425f8cff5\", \"attente/projet.pousse\": \"porte la date de son todo\", \"attente/projet.rechutes\": \"5606311d2264\\ndfe5ecb425f8\", \"attente/projet.tombes\": \"\", \"attente/sess-1.compteur\": \"1\"}"
+  },
+  {
+   "nom": "acharnement · tour 0",
+   "entree": "bac fabriqué",
+   "sortie": "{\"appels\": [], \"code\": 0, \"message\": \"\"}"
+  },
+  {
+   "nom": "acharnement · tour 1",
+   "entree": "bac fabriqué",
+   "sortie": "{\"appels\": [], \"code\": 0, \"message\": \"\"}"
+  },
+  {
+   "nom": "acharnement · tour 2",
+   "entree": "bac fabriqué",
+   "sortie": "{\"appels\": [], \"code\": 2, \"message\": \"attente : la cible du projet n'est pas tenue, et l'écart n'a PAS BOUGÉ depuis 3 mesures.\\n\\n  🎯 Zéro page cassée\\n\\nCe que tu essaies ne marche pas. Continuer à prescrire la même chose ne la fera pas marcher — et personne ne s'en apercevra, parce qu'une boucle qui tourne ressemble à une boucle qui avance.\\n\\nARRÊTE de represcrire. Deux gestes, dans cet ordre :\\n\\n1. Demande-toi si c'est la MESURE qui est fausse avant de conclure que le produit l'est. Une vérification qui rend toujours le même verdict est suspecte : de quelle source lit-elle sa réponse ?\\n2. Si la mesure tient, pose la question au commanditaire dans `<TODO>` — une question fermée, ce que chaque réponse déclenche, et la ligne `fini quand →`. C'est lui qui tranche entre changer d'approche, changer la cible, ou accepter l'écart.\\n\\nSi tu ne conduis pas la campagne, tu n'as rien à prescrire : note-le et continue ton travail.\\n\\nJe te le redirai dans 3 cycles si rien ne bouge.\\n\\n— — —\\nLe commanditaire a DÉJÀ lu ton message : ne le recopie pas, ni tes conclusions, ni les questions que tu as déjà posées dans ce tour. Fais ce qui est demandé, puis termine par une ou deux lignes qui disent ce que tu as changé.\"}"
+  },
+  {
+   "nom": "acharnement · tour 3",
+   "entree": "bac fabriqué",
+   "sortie": "{\"appels\": [], \"code\": 0, \"message\": \"\"}"
+  },
+  {
+   "nom": "acharnement · état",
+   "entree": "bac fabriqué",
+   "sortie": "{\"attente/blocages.log\": [[\"projet\", \"B11-acharnement\", \"3\"]], \"attente/projet.cible\": \"TOMBÉ\\t08/10\\t4\\tZéro page cassée\", \"attente/projet.forme\": \"dfe5ecb425f8 2\", \"attente/projet.posees\": \"dfe5ecb425f8cff5\", \"attente/projet.pousse\": \"porte la date de son todo\", \"attente/projet.rechutes\": \"dfe5ecb425f8\", \"attente/projet.tombes\": \"\"}"
+  },
+  {
+   "nom": "carnet non versé · tour 0",
+   "entree": "bac fabriqué",
+   "sortie": "{\"appels\": [], \"code\": 0, \"message\": \"\"}"
+  },
+  {
+   "nom": "carnet non versé · tour 1",
+   "entree": "bac fabriqué",
+   "sortie": "{\"appels\": [], \"code\": 2, \"message\": \"attente : tu viens de commiter dans une zone que d'autres agents lisent ou importent (src/b.ts), sans rien verser au carnet d'équipe.\\n\\nTes coéquipiers travaillent sur d'autres copies du dépôt : ils ne verront ton travail qu'à leur prochaine fusion, parfois deux jours plus tard, et RIEN ne le leur dira. Le carnet est le seul endroit qui n'existe qu'une fois.\\n\\nAjoute `↗` sous la tâche que tu viens de finir dans `<TODO>`, et coche-la :\\n\\n- [x] Réparer l'écran d'inscription\\n      ↗ PO : l'écran d'inscription n'a plus besoin de son contournement.\\n      ↻ service :: curl -s -o /dev/null -w '%{http_code}' https://…/signup :: ^200$\\n\\nUNE LIGNE `↗` PAR AGENT CONCERNÉ, et ce qu'elle dit est ce que ça change POUR LUI — pas le résumé de ton travail. Sans `↗`, rien n'est versé : c'est à toi de juger qui est concerné.\\n\\nLa ligne `↻` est facultative et vaut « mesuré » : l'entrée porte alors de quoi être revérifiée, et sa confiance se restaure quand elle tient. Sans elle, l'entrée vaut « observé ».\\n\\nSi ton travail a ÉCHOUÉ, écris-le : `échoué` dans le bloc. Un échec sert d'examen, jamais d'exemple — le taire est la façon la plus sûre de le refaire.\\n\\n— — —\\nLe commanditaire a DÉJÀ lu ton message : ne le recopie pas, ni tes conclusions, ni les questions que tu as déjà posées dans ce tour. Fais ce qui est demandé, puis termine par une ou deux lignes qui disent ce que tu as changé.\"}"
+  },
+  {
+   "nom": "carnet non versé · tour 2",
+   "entree": "bac fabriqué",
+   "sortie": "{\"appels\": [], \"code\": 0, \"message\": \"\"}"
+  },
+  {
+   "nom": "carnet non versé · état",
+   "entree": "bac fabriqué",
+   "sortie": "{\"attente/blocages.log\": [[\"projet\", \"B5-carnet\", \"1\"]], \"attente/projet.carnet\": \"\", \"attente/projet.forme\": \"dfe5ecb425f8 2\", \"attente/projet.posees\": \"dfe5ecb425f8cff5\", \"attente/projet.pousse\": \"porte la date de son todo\", \"attente/projet.rechutes\": \"dfe5ecb425f8\", \"attente/projet.tete\": \"porte le HEAD de son dépôt\", \"attente/projet.tombes\": \"\", \"attente/sess-1.equipe\": \"a5514bb4a23f9a91\"}"
+  },
+  {
+   "nom": "rechutes, le plafond · tour 0",
+   "entree": "bac fabriqué",
+   "sortie": "{\"appels\": [], \"code\": 0, \"message\": \"\"}"
+  },
+  {
+   "nom": "rechutes, le plafond · tour 1",
+   "entree": "bac fabriqué",
+   "sortie": "{\"appels\": [], \"code\": 2, \"message\": \"attente : 1 point(s) vont partir chez le commanditaire. Avant qu'ils partent, rejoue ceci — c'est la liste de nos erreurs qui reviennent, et elle t'a déjà repris :\\n\\n# Avant d'affirmer\\n- Une question de contrôle ?\\n\\nLe détail de chaque question, et ses récidives : <bac>/rs_rechutes_le_plafond/data/rechutes.md\\n\\nReprends chacune de tes affirmations en face de ces questions. Si l'une d'elles mord, corrige la mesure AVANT de corriger la conclusion — c'est presque toujours l'instrument qui a tort, pas le monde.\\n\\nSi rien ne mord, dis-le en une ligne et continue : je ne te le redemanderai pas pour ces points-là.\\n\\n— — —\\nLe commanditaire a DÉJÀ lu ton message : ne le recopie pas, ni tes conclusions, ni les questions que tu as déjà posées dans ce tour. Fais ce qui est demandé, puis termine par une ou deux lignes qui disent ce que tu as changé.\"}"
+  },
+  {
+   "nom": "rechutes, le plafond · tour 2",
+   "entree": "bac fabriqué",
+   "sortie": "{\"appels\": [], \"code\": 2, \"message\": \"attente : 1 point(s) vont partir chez le commanditaire. Avant qu'ils partent, rejoue ceci — c'est la liste de nos erreurs qui reviennent, et elle t'a déjà repris :\\n\\n# Avant d'affirmer\\n- Une question de contrôle ?\\n\\nLe détail de chaque question, et ses récidives : <bac>/rs_rechutes_le_plafond/data/rechutes.md\\n\\nReprends chacune de tes affirmations en face de ces questions. Si l'une d'elles mord, corrige la mesure AVANT de corriger la conclusion — c'est presque toujours l'instrument qui a tort, pas le monde.\\n\\nSi rien ne mord, dis-le en une ligne et continue : je ne te le redemanderai pas pour ces points-là.\\n\\n— — —\\nLe commanditaire a DÉJÀ lu ton message : ne le recopie pas, ni tes conclusions, ni les questions que tu as déjà posées dans ce tour. Fais ce qui est demandé, puis termine par une ou deux lignes qui disent ce que tu as changé.\"}"
+  },
+  {
+   "nom": "rechutes, le plafond · tour 3",
+   "entree": "bac fabriqué",
+   "sortie": "{\"appels\": [], \"code\": 2, \"message\": \"attente : 1 point(s) vont partir chez le commanditaire. Avant qu'ils partent, rejoue ceci — c'est la liste de nos erreurs qui reviennent, et elle t'a déjà repris :\\n\\n# Avant d'affirmer\\n- Une question de contrôle ?\\n\\nLe détail de chaque question, et ses récidives : <bac>/rs_rechutes_le_plafond/data/rechutes.md\\n\\nReprends chacune de tes affirmations en face de ces questions. Si l'une d'elles mord, corrige la mesure AVANT de corriger la conclusion — c'est presque toujours l'instrument qui a tort, pas le monde.\\n\\nSi rien ne mord, dis-le en une ligne et continue : je ne te le redemanderai pas pour ces points-là.\\n\\n— — —\\nCette garde t'a repris 3 fois cette semaine. Un rappel qui revient n'est plus un rappel, c'est une règle manquante.\\n\\nAvant de repartir, ouvre `~/.claude/rechutes.md` : qu'aurait-il fallu vérifier avant ? Seuls les TITRES en gras (`- **question ?**`) au-dessus de la ligne « ÉCRITURE » sont relus aux agents — une ligne ajoutée en fin de fichier ne revient jamais à personne. Si une question dit déjà à peu près ça, AFFÛTE son titre ; sinon ajoute une question dans la bonne section. La même leçon apprise deux fois est une seule règle. N'y mets jamais une panne d'environnement, ni une affirmation négative sur un outil.\\n\\n\\n— — —\\nLe commanditaire a DÉJÀ lu ton message : ne le recopie pas, ni tes conclusions, ni les questions que tu as déjà posées dans ce tour. Fais ce qui est demandé, puis termine par une ou deux lignes qui disent ce que tu as changé.\"}"
+  },
+  {
+   "nom": "rechutes, le plafond · tour 4",
+   "entree": "bac fabriqué",
+   "sortie": "{\"appels\": [], \"code\": 2, \"message\": \"attente : 1 question(s) NOUVELLE(S) attendent le commanditaire, et ton message ne les pose pas :\\n\\n  · Question numéro 5 ? oui / non\\n\\nPose CELLES-LÀ, en clair et sous leur forme fermée, voies numérotées comprises — pas les autres, qu'il a déjà vues. Le todo est le filet pour quand il n'est pas là ; une question rangée sans être posée dort des jours.\\n\\nTu ne t'arrêtes pas pour autant : ce qui peut avancer par un chemin réversible avance.\\n\\n— — —\\nLe commanditaire a DÉJÀ lu ton message : ne le recopie pas, ni tes conclusions, ni les questions que tu as déjà posées dans ce tour. Fais ce qui est demandé, puis termine par une ou deux lignes qui disent ce que tu as changé.\"}"
+  },
+  {
+   "nom": "rechutes, le plafond · tour 5",
+   "entree": "bac fabriqué",
+   "sortie": "{\"appels\": [], \"code\": 0, \"message\": \"\"}"
+  },
+  {
+   "nom": "rechutes, le plafond · état",
+   "entree": "bac fabriqué",
+   "sortie": "{\"attente/blocages.log\": [[\"projet\", \"B10-rechutes\", \"1\"], [\"projet\", \"B10-rechutes\", \"1\"], [\"projet\", \"B10-rechutes\", \"1\"], [\"projet\", \"B13-poser\", \"1\"]], \"attente/projet.forme\": \"1ecd88cb4bf9 2\\nad504a7a7067 2\\nc65fc7fd2f30 2\\ne0670cb688b1 2\\nf3c5aab0c21b 2\", \"attente/projet.posees\": \"ad504a7a7067f4d7\\nf3c5aab0c21baeae\", \"attente/projet.pousse\": \"porte la date de son todo\", \"attente/projet.rechutes\": \"1ecd88cb4bf9\\nad504a7a7067\\nc65fc7fd2f30\\ne0670cb688b1\\nf3c5aab0c21b\", \"attente/projet.tombes\": \"\", \"attente/sess-1.compteur\": \"3\"}"
+  }
+ ],
+ "retouches": [
+  {
+   "le": "2026-10-14",
+   "cas": [
+    "constat tombé 2× · tour 1",
+    "liste de contrôle · tour 1",
+    "rechutes, le plafond · tour 1",
+    "rechutes, le plafond · tour 2",
+    "rechutes, le plafond · tour 3"
+   ],
+   "pourquoi": "0.18.1 : la garde sert le carnet que les agents ECRIVENT (~/.claude/rechutes.md, avant : la copie livree), en titres seuls, et nomme le fichier du detail ; la consigne dit ou ecrire pour etre relu. Seules ces phrases changent ; cas retouches a la main ; couvert par tests/test_rechutes.py."
+  },
+  {
+   "le": "2026-10-15",
+   "cas": [
+    "code sans todo · tour 1"
+   ],
+   "pourquoi": "0.19 : le message B1 (code sans todo a jour) nomme le guichet des questions d'une equipe (une équipe : OPS, PO, NXT questionnent QA) ; seule cette phrase change ; cas retouches a la main."
+  }
+ ]
+}

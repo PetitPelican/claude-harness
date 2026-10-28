@@ -1,0 +1,4 @@
+figé le 11/09/2026 11:25 par : ~/.local/bin/atelier claude-memoire
+binaire : 46177c0ca4d15ece
+dépôt : e238f66
+corpus : atelier/controles/corpus-memoire, dates décalées de 1 j puis remises

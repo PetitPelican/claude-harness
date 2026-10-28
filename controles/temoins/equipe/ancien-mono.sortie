@@ -1,0 +1,16 @@
+── agents — ancien-mono (mono)
+  → .mind -> agents/A/.mind (l'agent qui était là garde sa mémoire)
+  + agents/A/.claude/settings.json — paquet harnais@atelier déclaré, 1 deny de périmètre
+  · aucune mémoire auto à migrer (<MAISON-SLUG>-Agentic-ancien-mono absent)
+  + agents/A/CLAUDE.md — rôle à remplir
+  + agents/B/ — CLAUDE.md de rôle, settings.json ; esprit neuf dans agents/B/.mind
+  + agents/B/.claude/settings.json — paquet harnais@atelier déclaré, 1 deny de périmètre
+  + carnet d'équipe amorcé : equipe
+  + .fact/roles.md — qui tient quoi, à remplir
+
+── À reprendre à la main
+  · REMPLIR .fact/roles.md — qui tient quoi, et surtout LES ZONES PARTAGÉES. Un périmètre propre se lit dans les deny ; une zone partagée ne se lit nulle part, et c'est là que les collisions arrivent. Ce sont des FAITS : ça s'écrit à la demande du commanditaire (` # fact-ok` au commit).
+  · DÉCOUPER LE CLAUDE.md — la seule étape qui ne s'automatise pas. Le commun reste à la racine, le rôle descend dans agents/<nom>/CLAUDE.md. Contrôle de sortie : aucune phrase du bas ne resterait vraie pour un autre agent.
+  · ÉCRIRE LES PÉRIMÈTRES en dossiers dans chaque settings.json : les deny posés ne couvrent que les dossiers d'agents. Le code, lui, n'est pas partagé au hasard — dire qui tient quoi.
+  · RELANCER LES SESSIONS tmux DANS les dossiers d'agents, sous des noms slugifiés (a, b). L'ancienne session à la racine n'a plus d'agent : le briefing l'avertira au lieu de se taire.
+rc=0

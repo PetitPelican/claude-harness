@@ -1,0 +1,65 @@
+{
+ "controle": "memoire",
+ "gele_le": "2026-09-23",
+ "commit_depot": "e406beb2c397fd00a834e50a13657667bf950039",
+ "origine": "python",
+ "sources": {
+  "~/.claude/hooks/memoire.py": "2f6c4e5bc7e2bab9"
+ },
+ "contre_exemple": [
+  "en-place",
+  "chemin inexistant"
+ ],
+ "cas": [
+  {
+   "nom": "en-place",
+   "entree": "forme fabriquée",
+   "sortie": "{\"arbre\": \"<bac>/en-place\", \"base\": null, \"base_projet\": null, \"fact\": null, \"lot\": \"\", \"mind\": null, \"projet_etats\": null, \"projet_fact\": null, \"racine_depot\": \"<bac>/en-place\"}"
+  },
+  {
+   "nom": "brain",
+   "entree": "forme fabriquée",
+   "sortie": "{\"arbre\": \"<bac>/brain\", \"base\": null, \"base_projet\": null, \"fact\": null, \"lot\": \"\", \"mind\": null, \"projet_etats\": null, \"projet_fact\": null, \"racine_depot\": \"<bac>/brain\"}"
+  },
+  {
+   "nom": "deportee",
+   "entree": "forme fabriquée",
+   "sortie": "{\"arbre\": \"<bac>/deportee\", \"base\": \"<bac>/deportee/memoire\", \"base_projet\": \"<bac>/deportee/memoire\", \"fact\": \"<bac>/deportee/memoire/.fact\", \"lot\": \"\", \"mind\": \"<bac>/deportee/memoire/.mind\", \"projet_etats\": [[null, \"<bac>/deportee/memoire/.mind\"]], \"projet_fact\": \"<bac>/deportee/memoire/.fact\", \"racine_depot\": \"<bac>/deportee\"}"
+  },
+  {
+   "nom": "multi-agents",
+   "entree": "forme fabriquée",
+   "sortie": "{\"arbre\": \"<bac>/multi-agents\", \"base\": null, \"base_projet\": null, \"fact\": null, \"lot\": \"\", \"mind\": null, \"projet_etats\": null, \"projet_fact\": null, \"racine_depot\": \"<bac>/multi-agents\"}"
+  },
+  {
+   "nom": "multi-agents · dans un lot",
+   "entree": "forme fabriquée",
+   "sortie": "{\"arbre\": \"<bac>/multi-agents\", \"base\": null, \"base_projet\": null, \"fact\": null, \"lot\": \"agents/ios\", \"mind\": null, \"projet_etats\": null, \"projet_fact\": null, \"racine_depot\": \"<bac>/multi-agents\"}"
+  },
+  {
+   "nom": "arbre de travail",
+   "entree": "forme fabriquée",
+   "sortie": "{\"arbre\": \"<bac>/worktree-arbre\", \"base\": null, \"base_projet\": null, \"fact\": null, \"lot\": \"\", \"mind\": null, \"projet_etats\": null, \"projet_fact\": null, \"racine_depot\": \"<bac>/worktree-source\"}"
+  },
+  {
+   "nom": "ambiguë — les deux arbres",
+   "entree": "forme fabriquée",
+   "sortie": "{\"arbre\": \"<bac>/ambigue\", \"base\": null, \"base_projet\": null, \"fact\": null, \"lot\": \"\", \"mind\": null, \"projet_etats\": null, \"projet_fact\": null, \"racine_depot\": \"<bac>/ambigue\"}"
+  },
+  {
+   "nom": "dépôt sans mémoire",
+   "entree": "forme fabriquée",
+   "sortie": "{\"arbre\": \"<bac>/sans-faits\", \"base\": null, \"base_projet\": null, \"fact\": null, \"lot\": \"\", \"mind\": null, \"projet_etats\": null, \"projet_fact\": null, \"racine_depot\": \"<bac>/sans-faits\"}"
+  },
+  {
+   "nom": "hors dépôt",
+   "entree": "forme fabriquée",
+   "sortie": "{\"arbre\": null, \"base\": null, \"base_projet\": null, \"fact\": null, \"lot\": \"\", \"mind\": null, \"projet_etats\": null, \"projet_fact\": null, \"racine_depot\": null}"
+  },
+  {
+   "nom": "chemin inexistant",
+   "entree": "forme fabriquée",
+   "sortie": "{\"arbre\": null, \"base\": null, \"base_projet\": null, \"fact\": null, \"lot\": \"\", \"mind\": null, \"projet_etats\": null, \"projet_fact\": null, \"racine_depot\": null}"
+  }
+ ]
+}

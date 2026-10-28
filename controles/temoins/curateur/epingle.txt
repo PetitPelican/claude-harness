@@ -1,0 +1,60 @@
+  [32ma-archiver[0m ne s'endormira plus.
+./.usage.json
+./MEMORY.md
+./a-archiver.md
+./a-endormir.md
+./dementie.md
+./doublon-alpha.md
+./doublon-beta.md
+./epinglee.md
+./jamais-vue.md
+./sans-niveau.md
+./servie-hier.md
+./supposee-chaude.md
+── MEMORY.md
+- [A archiver](a-archiver.md) — une ligne qui doit disparaitre
+- [Servie hier](servie-hier.md) — une ligne qui doit rester
+── .usage.json
+{
+ "_depuis": "2026-02-22",
+ "a-archiver": {
+  "n": 0,
+  "vu": "2026-07-12",
+  "epingle": true
+ },
+ "a-endormir": {
+  "n": 1,
+  "vu": "2026-07-12"
+ },
+ "dementie": {
+  "conf": 55,
+  "n": 7,
+  "res": 2,
+  "vu": "2026-09-06"
+ },
+ "doublon-alpha": {
+  "n": 2,
+  "vu": "2026-09-05"
+ },
+ "doublon-beta": {
+  "n": 2,
+  "vu": "2026-09-04"
+ },
+ "epinglee": {
+  "epingle": true,
+  "n": 0,
+  "vu": "2025-11-14"
+ },
+ "sans-niveau": {
+  "n": 3,
+  "vu": "2026-09-08"
+ },
+ "servie-hier": {
+  "n": 12,
+  "vu": "2026-09-09"
+ },
+ "supposee-chaude": {
+  "n": 5,
+  "vu": "2026-09-07"
+ }
+}

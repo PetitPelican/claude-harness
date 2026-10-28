@@ -1,0 +1,52 @@
+{
+ "controle": "journal",
+ "gele_le": "2026-09-23",
+ "commit_depot": "e406beb2c397fd00a834e50a13657667bf950039",
+ "origine": "python",
+ "sources": {
+  "~/.claude/hooks/journal.py": "b534a499619a028f"
+ },
+ "contre_exemple": [
+  "commit-simple",
+  "hors-commit"
+ ],
+ "cas": [
+  {
+   "nom": "commit-simple",
+   "entree": {
+    "commande": "git commit -m 'x'",
+    "agent": false
+   },
+   "sortie": "{\"code\": 0, \"journal\": {\"<jour>.md\": \"# Journal — <jour>\\n\\nÉcrit par le hook `journal` à chaque commit. **Append-only** : on n'y réécrit rien, on n'y compresse rien.\\n\\n## HH:MM · `HASH` · main\\n\\n**Un sujet de commit**\\n\\n- `src/a.rs`\\n- `src/b.rs`\\n\\n<!-- Alex Martin -->\\n\"}}"
+  },
+  {
+   "nom": "reecriture",
+   "entree": {
+    "commande": "git commit --amend -m 'x'",
+    "agent": false
+   },
+   "sortie": "{\"code\": 0, \"journal\": {\"<jour>.md\": \"# Journal — <jour>\\n\\nÉcrit par le hook `journal` à chaque commit. **Append-only** : on n'y réécrit rien, on n'y compresse rien.\\n\\n## HH:MM · `HASH` · main · réécriture (`--amend`)\\n\\n**Un sujet de commit**\\n\\n- `src/a.rs`\\n- `src/b.rs`\\n\\n<!-- Alex Martin -->\\n\"}}"
+  },
+  {
+   "nom": "hors-commit",
+   "entree": {
+    "commande": "git status",
+    "agent": false
+   },
+   "sortie": "{\"code\": 0, \"journal\": {}}"
+  },
+  {
+   "nom": "multi-agents",
+   "entree": {
+    "commande": "git commit -m 'x'",
+    "agent": true
+   },
+   "sortie": "{\"code\": 0, \"journal\": {\"<jour>-Alpha-PO.md\": \"# Journal — <jour>\\n\\nÉcrit par le hook `journal` à chaque commit. **Append-only** : on n'y réécrit rien, on n'y compresse rien.\\n\\n## HH:MM · `HASH` · main\\n\\n**Un sujet de commit**\\n\\n- `src/a.rs`\\n- `src/b.rs`\\n\\n<!-- Alex Martin -->\\n\"}}"
+  },
+  {
+   "nom": "doublon",
+   "entree": "deux appels identiques",
+   "sortie": "{\"deux-fois-identique\": true, \"une-fois\": {\"<jour>.md\": \"# Journal — <jour>\\n\\nÉcrit par le hook `journal` à chaque commit. **Append-only** : on n'y réécrit rien, on n'y compresse rien.\\n\\n## HH:MM · `HASH` · main\\n\\n**Un sujet de commit**\\n\\n- `src/a.rs`\\n- `src/b.rs`\\n\\n<!-- Alex Martin -->\\n\"}}"
+  }
+ ]
+}

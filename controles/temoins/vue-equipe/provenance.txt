@@ -1,0 +1,4 @@
+origine: rust — la lecture d'avant était fausse, et son script est retiré (voir l'en-tête)
+32234b4410b0fb15b3719c19b8a95771a7ffc370
+programme: 0.17.0
+b41779dfba4f452115a0c2bc708fcb08bf3f5a86  py/vue.py

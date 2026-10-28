@@ -1,0 +1,2 @@
+--watch en dessous de 5 s relit tous les .mind/ en boucle pour rien. 60 s convient.
+rc=1

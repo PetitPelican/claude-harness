@@ -1,0 +1,223 @@
+{
+ "controle": "mind-guard",
+ "gele_le": "2026-09-23",
+ "commit_depot": "e406beb2c397fd00a834e50a13657667bf950039",
+ "origine": "python",
+ "sources": {
+  "~/.claude/hooks/mind-guard.py": "1c0a06d2c1bb2e20"
+ },
+ "contre_exemple": [
+  "en-tête absent",
+  "pas un commit"
+ ],
+ "cas": [
+  {
+   "nom": "en-tête absent",
+   "entree": {
+    "commande": "git commit -m x",
+    "montage": {
+     "state": "pas d'en-tête du tout\n"
+    }
+   },
+   "sortie": "{\"hookSpecificOutput\": {\"hookEventName\": \"PreToolUse\", \"permissionDecision\": \"deny\", \"permissionDecisionReason\": \"mind-guard : `.mind/state.md` ne serait plus lisible par le tableau de bord — il n'a plus d'en-tête `---` en première ligne — le collecteur le range en « aucune déclaration » et le projet disparaît du tableau de bord. Corrige, réindexe (`git add .mind/state.md`), puis recommite.\"}}"
+  },
+  {
+   "nom": "champ manquant",
+   "entree": {
+    "commande": "git commit -m x",
+    "montage": {
+     "state": "---\nmaj: 2026-09-23\n---\n\ntexte\n"
+    }
+   },
+   "sortie": "{\"hookSpecificOutput\": {\"hookEventName\": \"PreToolUse\", \"permissionDecision\": \"deny\", \"permissionDecisionReason\": \"mind-guard : `.mind/state.md` ne serait plus lisible par le tableau de bord — il lui manque `cap:`, `jalon:`. Corrige, réindexe (`git add .mind/state.md`), puis recommite.\"}}"
+  },
+  {
+   "nom": "date périmée",
+   "entree": {
+    "commande": "git commit -m x",
+    "montage": {
+     "state": "---\nmaj: 2020-01-01\ncap: c\nsante: verte\njalon: x\n---\n\ntexte\n"
+    }
+   },
+   "sortie": "{\"hookSpecificOutput\": {\"hookEventName\": \"PreToolUse\", \"permissionDecision\": \"deny\", \"permissionDecisionReason\": \"mind-guard : `.mind/state.md` n'est pas à jour — `maj:` porte 2020-01-01 alors que le commit est d'aujourd'hui (2026-09-23) — le tableau de bord datera ce projet du mauvais jour. Corrige, réindexe (`git add .mind/state.md`), puis recommite.\"}}"
+  },
+  {
+   "nom": "état frais, code",
+   "entree": {
+    "commande": "git commit -m x",
+    "montage": {
+     "state": "---\nmaj: 2026-09-23\ncap: aller là\nsante: verte\njalon: x\n---\n\ntexte\n"
+    }
+   },
+   "sortie": "null"
+  },
+  {
+   "nom": "code sans état",
+   "entree": {
+    "commande": "git commit -m x",
+    "montage": {
+     "state": "---\nmaj: 2026-09-23\ncap: aller là\nsante: verte\njalon: x\n---\n\ntexte\n",
+     "code": "True"
+    }
+   },
+   "sortie": "null"
+  },
+  {
+   "nom": ".fact touché",
+   "entree": {
+    "commande": "git commit -m x",
+    "montage": {
+     "state": "---\nmaj: 2026-09-23\ncap: aller là\nsante: verte\njalon: x\n---\n\ntexte\n",
+     "fact": "---\ncap: la destination du projet\n---\n\ntexte\n"
+    }
+   },
+   "sortie": "{\"hookSpecificOutput\": {\"hookEventName\": \"PreToolUse\", \"permissionDecision\": \"deny\", \"permissionDecisionReason\": \"mind-guard : ce commit modifie `.fact/` (.fact/base.md). Ces fichiers sont partagés par TOUS les agents du projet et ne s'écrivent qu'à la demande du commanditaire — un agent qui les réécrit depuis son lot efface le travail d'un autre en silence. Si le commanditaire l'a demandé, ajoute ` # fact-ok` à la fin de la commande : l'autorisation restera dans l'historique.\"}}"
+  },
+  {
+   "nom": ".fact autorisé",
+   "entree": {
+    "commande": "git commit -m x # fact-ok",
+    "montage": {
+     "state": "---\nmaj: 2026-09-23\ncap: aller là\nsante: verte\njalon: x\n---\n\ntexte\n",
+     "fact": "---\ncap: la destination du projet\n---\n\ntexte\n"
+    }
+   },
+   "sortie": "null"
+  },
+  {
+   "nom": "fact-ok au milieu",
+   "entree": {
+    "commande": "git commit -m 'fact-ok un jour'",
+    "montage": {
+     "state": "---\nmaj: 2026-09-23\ncap: aller là\nsante: verte\njalon: x\n---\n\ntexte\n",
+     "fact": "---\ncap: la destination du projet\n---\n\ntexte\n"
+    }
+   },
+   "sortie": "{\"hookSpecificOutput\": {\"hookEventName\": \"PreToolUse\", \"permissionDecision\": \"deny\", \"permissionDecisionReason\": \"mind-guard : ce commit modifie `.fact/` (.fact/base.md). Ces fichiers sont partagés par TOUS les agents du projet et ne s'écrivent qu'à la demande du commanditaire — un agent qui les réécrit depuis son lot efface le travail d'un autre en silence. Si le commanditaire l'a demandé, ajoute ` # fact-ok` à la fin de la commande : l'autorisation restera dans l'historique.\"}}"
+  },
+  {
+   "nom": "mind-ok n'ouvre pas .fact",
+   "entree": {
+    "commande": "git commit -m x # mind-ok",
+    "montage": {
+     "state": "pas d'en-tête du tout\n",
+     "fact": "---\ncap: la destination du projet\n---\n\ntexte\n"
+    }
+   },
+   "sortie": "{\"hookSpecificOutput\": {\"hookEventName\": \"PreToolUse\", \"permissionDecision\": \"deny\", \"permissionDecisionReason\": \"mind-guard : ce commit modifie `.fact/` (.fact/base.md). Ces fichiers sont partagés par TOUS les agents du projet et ne s'écrivent qu'à la demande du commanditaire — un agent qui les réécrit depuis son lot efface le travail d'un autre en silence. Si le commanditaire l'a demandé, ajoute ` # fact-ok` à la fin de la commande : l'autorisation restera dans l'historique.\"}}"
+  },
+  {
+   "nom": "mind-ok, état cassé",
+   "entree": {
+    "commande": "git commit -m x # mind-ok",
+    "montage": {
+     "state": "pas d'en-tête du tout\n"
+    }
+   },
+   "sortie": "null"
+  },
+  {
+   "nom": "base.md sans cap",
+   "entree": {
+    "commande": "git commit -m x # fact-ok",
+    "montage": {
+     "state": "---\nmaj: 2026-09-23\ncap: aller là\nsante: verte\njalon: x\n---\n\ntexte\n",
+     "fact": "---\nautre: x\n---\n\ntexte\n"
+    }
+   },
+   "sortie": "{\"hookSpecificOutput\": {\"hookEventName\": \"PreToolUse\", \"permissionDecision\": \"deny\", \"permissionDecisionReason\": \"mind-guard : `.fact/base.md` ne porte pas de `cap:` — le tableau de bord n'a alors AUCUNE réponse au niveau du projet, quel que soit le nombre d'agents qui s'y déclarent. Écris-y l'en-tête `---` avec `cap:`, puis recommite (` # fact-ok`, c'est `.fact/`).\"}}"
+  },
+  {
+   "nom": "pas un commit",
+   "entree": {
+    "commande": "git status",
+    "montage": {
+     "state": "pas d'en-tête du tout\n"
+    }
+   },
+   "sortie": "null"
+  },
+  {
+   "nom": "sans code",
+   "entree": {
+    "commande": "git commit -m x",
+    "montage": {
+     "state": "---\nmaj: 2026-09-23\ncap: aller là\nsante: verte\njalon: x\n---\n\ntexte\n",
+     "code": "False"
+    }
+   },
+   "sortie": "null"
+  },
+  {
+   "nom": "multi-agents",
+   "entree": {
+    "commande": "git commit -m x",
+    "montage": {
+     "state": "---\nmaj: 2026-09-23\ncap: aller là\nsante: verte\njalon: x\n---\n\ntexte\n",
+     "lot": "agents/ios"
+    }
+   },
+   "sortie": "null"
+  },
+  {
+   "nom": "multi-agents cassé",
+   "entree": {
+    "commande": "git commit -m x",
+    "montage": {
+     "state": "pas d'en-tête du tout\n",
+     "lot": "agents/ios"
+    }
+   },
+   "sortie": "{\"hookSpecificOutput\": {\"hookEventName\": \"PreToolUse\", \"permissionDecision\": \"deny\", \"permissionDecisionReason\": \"mind-guard : `agents/ios/.mind/state.md` ne serait plus lisible par le tableau de bord — il n'a plus d'en-tête `---` en première ligne — le collecteur le range en « aucune déclaration » et le projet disparaît du tableau de bord. Corrige, réindexe (`git add agents/ios/.mind/state.md`), puis recommite.\"}}"
+  },
+  {
+   "nom": "déporté, état frais",
+   "entree": {
+    "commande": "git commit -m x",
+    "montage": {
+     "state": "---\nmaj: 2026-09-23\ncap: aller là\nsante: verte\njalon: x\n---\n\ntexte\n",
+     "deporte": "True"
+    }
+   },
+   "sortie": "{\"hookSpecificOutput\": {\"hookEventName\": \"PreToolUse\", \"permissionDecision\": \"deny\", \"permissionDecisionReason\": \"mind-guard : du code projet est indexé (src/a.ts) alors que ta déclaration d'état n'a pas bougé depuis. C'est ce que le tableau de bord lit pour savoir où en est ce projet. Mets `memoire/.mind/state.md` à jour (dont le champ `maj:`), puis recommite. Si elle n'a vraiment pas à bouger, ajoute ` # mind-ok` à la fin de la commande.\\n\\nTa mémoire vit dans un dépôt à part (`memoire`) : il n'y a rien à `git add`, elle est versionnée à part et commitée toute seule en fin de tour.\"}}"
+  },
+  {
+   "nom": "déporté, code plus récent",
+   "entree": {
+    "commande": "git commit -m x",
+    "montage": {
+     "state": "---\nmaj: 2026-09-23\ncap: aller là\nsante: verte\njalon: x\n---\n\ntexte\n",
+     "deporte": "True",
+     "tard": "True"
+    }
+   },
+   "sortie": "{\"hookSpecificOutput\": {\"hookEventName\": \"PreToolUse\", \"permissionDecision\": \"deny\", \"permissionDecisionReason\": \"mind-guard : du code projet est indexé (src/a.ts) alors que ta déclaration d'état n'a pas bougé depuis. C'est ce que le tableau de bord lit pour savoir où en est ce projet. Mets `memoire/.mind/state.md` à jour (dont le champ `maj:`), puis recommite. Si elle n'a vraiment pas à bouger, ajoute ` # mind-ok` à la fin de la commande.\\n\\nTa mémoire vit dans un dépôt à part (`memoire`) : il n'y a rien à `git add`, elle est versionnée à part et commitée toute seule en fin de tour.\"}}"
+  },
+  {
+   "nom": "déporté, état cassé",
+   "entree": {
+    "commande": "git commit -m x",
+    "montage": {
+     "state": "pas d'en-tête du tout\n",
+     "deporte": "True"
+    }
+   },
+   "sortie": "{\"hookSpecificOutput\": {\"hookEventName\": \"PreToolUse\", \"permissionDecision\": \"deny\", \"permissionDecisionReason\": \"mind-guard : `.mind/state.md` ne serait plus lisible par le tableau de bord — il n'a plus d'en-tête `---` en première ligne — le collecteur le range en « aucune déclaration » et le projet disparaît du tableau de bord. Corrige, réindexe (`git add .mind/state.md`), puis recommite.\"}}"
+  },
+  {
+   "nom": "deux-depots",
+   "entree": "lancé depuis un dépôt sain, agent déclaré dans un autre",
+   "sortie": "null"
+  }
+ ],
+ "retouches": [
+  {
+   "le": "2026-10-14",
+   "cas": [
+    "déporté, code plus récent",
+    "déporté, état frais"
+   ],
+   "pourquoi": "0.18.0 : le message nommait `.mind/state.md`, un chemin absent du depot de code en memoire deportee ; il nomme desormais le vrai fichier depuis le dossier de l'agent (`memoire/.mind/state.md`). Seule cette phrase change ; cas retouches a la main, le programme de gel d'origine (hooks Python retires) rendrait l'ancien texte."
+  }
+ ]
+}

@@ -1,0 +1,188 @@
+.
+./.fact
+./.fact/base.md
+./.fact/roles.md
+./agents
+./agents/A
+./agents/A/.claude
+./agents/A/.claude/settings.json
+./agents/A/.mind
+./agents/A/.mind/state.md
+./agents/A/.mind/todo.md
+./agents/A/CLAUDE.md
+./agents/B
+./agents/B/.claude
+./agents/B/.claude/settings.json
+./agents/B/.mind
+./agents/B/.mind/state.md
+./agents/B/.mind/todo.md
+./agents/B/CLAUDE.md
+./equipe
+./equipe/.etat
+── mémoire auto
+.
+./<MAISON-SLUG>-Agentic-brain-mono-agents-PO
+./<MAISON-SLUG>-Agentic-brain-mono-agents-PO/f1.jsonl
+./<MAISON-SLUG>-Agentic-brain-mono-agents-PO/memory
+./<MAISON-SLUG>-Agentic-brain-mono-agents-PO/memory/n.md
+./<MAISON-SLUG>-Agentic-brain-mono.migre-<JOURC>
+./<MAISON-SLUG>-Agentic-brain-mono.migre-<JOURC>/f1.jsonl
+./<MAISON-SLUG>-Agentic-brain-mono.migre-<JOURC>/memory
+./<MAISON-SLUG>-Agentic-brain-mono.migre-<JOURC>/memory/n.md
+── ./.fact/base.md
+---
+cap: essai
+---
+── ./.fact/roles.md
+# Les rôles — ancien-mono
+_Dernière mise à jour : YYYY-MM-DD_
+
+> **Ce fichier n'existe qu'en multi-agents, et il existe pour une raison
+> précise :** le périmètre d'un agent est écrit dans **son** `CLAUDE.md`, que
+> lui seul charge. Chacun connaît donc sa frontière et **ignore celle des
+> autres** — d'où des agents qui déduisent le périmètre d'un tiers pour ne pas
+> l'enfreindre, et des dossiers écrits par deux mains sans que personne le
+> sache. Ici, chacun lit **tout** le découpage.
+>
+> Il appartient à `.fact/` parce qu'il répond au test : *cette phrase
+> resterait-elle vraie pour un autre agent du projet ?* Oui, pour tous. Il ne
+> s'écrit donc qu'à la demande du commanditaire (` # fact-ok` au commit), et le
+> texte périmé s'y **remplace**.
+
+## Qui tient quoi
+
+| Agent | Tient | Ne touche pas |
+|---|---|---|
+| `A` | … | … |
+| `B` | … | … |
+| `<agent-3>` | … | … |
+
+Un dossier n'apparaît qu'**une fois** dans la colonne « tient ». S'il en faut
+deux, il relève de la section suivante.
+
+## Les zones partagées
+
+**C'est la partie qui justifie ce fichier.** Un périmètre propre se lit dans les
+`deny` ; une zone partagée ne se lit nulle part, et c'est là que les collisions
+arrivent.
+
+| Zone | Qui y écrit | Comment on évite la collision |
+|---|---|---|
+| `…` | `A`, `B` | … |
+
+Pour chaque zone : **qui prévient qui**, et à quel moment. Une zone partagée
+sans règle de coexistence n'est pas partagée, elle est en conflit.
+
+## Ce qui n'appartient à personne
+
+`.fact/`, `docs/`, `.logs/` et la racine du dépôt. Un agent n'y écrit qu'à la
+demande du commanditaire.
+
+## Les frontières qui ne sont pas des dossiers
+
+Ce que les `deny` ne peuvent pas exprimer, et qui doit donc être écrit :
+
+- les **branches** et répertoires de travail de chacun ;
+- les **environnements** (qui déploie quoi, qui détient quels accès) ;
+- les **surfaces publiées** — un paquet importé par les autres lots : le
+  modifier casse leur travail sans qu'ils puissent le prévoir.
+
+## Ce que ce découpage ne couvre pas
+
+Le nommer évite de croire qu'un agent de plus réglerait le problème. La
+coordination entre lots n'appartient à aucun agent : **seul l'humain peut
+débloquer un lot au profit d'un autre**, et c'est délibéré.
+
+---
+
+_Méthode et rôles types : `.claude/skills/agentic-agents/references/roles.md`._
+── ./agents/A/.claude/settings.json
+{
+  "extraKnownMarketplaces": {
+    "atelier": {
+      "source": {
+        "source": "github",
+        "repo": "PetitPelican/claude-harness"
+      }
+    }
+  },
+  "enabledPlugins": {
+    "harnais@atelier": true
+  },
+  "permissions": {
+    "deny": [
+      "Edit(~/Agentic/ancien-mono/agents/B/**)"
+    ]
+  }
+}
+── ./agents/A/.mind/state.md
+# état
+── ./agents/A/.mind/todo.md
+# à faire
+── ./agents/A/CLAUDE.md
+# A — rôle
+
+> Le `CLAUDE.md` du projet est **hérité** : il est chargé en même temps que
+> celui-ci, à chaque démarrage. N'y recopier AUCUNE de ses phrases. Le test :
+> si une phrase resterait vraie pour un autre agent du projet, elle est à
+> l'étage au-dessus.
+
+## Ce que cet agent tient
+
+[LE_PÉRIMÈTRE — en dossiers, pas en intentions. « orienté produit » n'empêche
+personne de toucher au backend ; la frontière qui tient est celle écrite en
+`deny` dans `.claude/settings.json`, à côté.]
+
+## Ce qu'il ne touche pas
+
+[LES_AUTRES_LOTS — et qui les tient.]
+── ./agents/B/.claude/settings.json
+{
+  "extraKnownMarketplaces": {
+    "atelier": {
+      "source": {
+        "source": "github",
+        "repo": "PetitPelican/claude-harness"
+      }
+    }
+  },
+  "enabledPlugins": {
+    "harnais@atelier": true
+  },
+  "permissions": {
+    "deny": [
+      "Edit(~/Agentic/ancien-mono/agents/A/**)"
+    ]
+  }
+}
+── ./agents/B/.mind/state.md
+---
+maj: <JOUR>
+sante: vert
+jalon: [LE_PROCHAIN_CAILLOU de ce lot]
+---
+
+# État — B
+
+[où en est CET agent]
+── ./agents/B/.mind/todo.md
+# À faire — B
+
+- [ ] [première tâche de ce lot]
+── ./agents/B/CLAUDE.md
+# B — rôle
+
+> Le `CLAUDE.md` du projet est **hérité** : il est chargé en même temps que
+> celui-ci, à chaque démarrage. N'y recopier AUCUNE de ses phrases. Le test :
+> si une phrase resterait vraie pour un autre agent du projet, elle est à
+> l'étage au-dessus.
+
+## Ce que cet agent tient
+
+[LE_PÉRIMÈTRE — en dossiers, pas en intentions. « orienté produit » n'empêche
+personne de toucher au backend ; la frontière qui tient est celle écrite en
+`deny` dans `.claude/settings.json`, à côté.]
+
+## Ce qu'il ne touche pas
+
+[LES_AUTRES_LOTS — et qui les tient.]

@@ -1,0 +1,4 @@
+.
+./.gitignore
+./app
+./package.json

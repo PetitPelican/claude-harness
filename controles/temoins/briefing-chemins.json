@@ -1,0 +1,75 @@
+{
+ "controle": "briefing-chemins",
+ "gele_le": "2026-09-23",
+ "commit_depot": "e406beb2c397fd00a834e50a13657667bf950039",
+ "origine": "rust",
+ "sources": {
+  "harnais/target/release/harnais": "0671d78bfed8c46c"
+ },
+ "contre_exemple": [
+  "mono simple",
+  "déporté + carnet"
+ ],
+ "cas": [
+  {
+   "nom": "mono simple",
+   "entree": "chemins annoncés dans l'index",
+   "sortie": "  .fact/base.md            6 l. · la nature du projet, et où il va\n  .fact/stack.md           2 l. · outils, comptes, accès, versions\n  .fact/rules.md           1 l. · ce qu'on ne franchit pas\n  .fact/architecture.md  ABSENT — comment c'est agencé, les frontières : personne ne le sait.\n  .memory/decisions.md   le pourquoi de chaque choix, daté"
+  },
+  {
+   "nom": "multi-agents",
+   "entree": "chemins annoncés dans l'index",
+   "sortie": "  <D>/.fact/base.md   6 l. · la nature du projet, et où il va\n  <D>/.fact/stack.md   2 l. · outils, comptes, accès, versions\n  <D>/.fact/rules.md   1 l. · ce qu'on ne franchit pas\n  <D>/.fact/architecture.md ABSENT — comment c'est agencé, les frontières : personne ne le sait.\n  .memory/decisions.md   le pourquoi de chaque choix, daté"
+  },
+  {
+   "nom": "racine sans agent",
+   "entree": "chemins annoncés dans l'index",
+   "sortie": ""
+  },
+  {
+   "nom": "déporté + carnet",
+   "entree": "chemins annoncés dans l'index",
+   "sortie": "attente: aucune tâche `@<qui>` ouverte dans <D>/memoire/agents/ios/.mind/todo.md\n  <D>/memoire/.fact/base.md   5 l. · la nature du projet, et où il va\n  <D>/memoire/.fact/stack.md ABSENT — outils, comptes, accès, versions : personne ne le sait.\n  <D>/memoire/.fact/rules.md ABSENT — ce qu'on ne franchit pas : personne ne le sait.\n  <D>/memoire/.fact/architecture.md ABSENT — comment c'est agencé, les frontières : personne ne le sait.\n  .memory/decisions.md   le pourquoi de chaque choix, daté"
+  },
+  {
+   "nom": "réglages cassés",
+   "entree": "chemins annoncés dans l'index",
+   "sortie": "  .fact/base.md            6 l. · la nature du projet, et où il va\n  .fact/stack.md           2 l. · outils, comptes, accès, versions\n  .fact/rules.md           1 l. · ce qu'on ne franchit pas\n  .fact/architecture.md  ABSENT — comment c'est agencé, les frontières : personne ne le sait.\n  .memory/decisions.md   le pourquoi de chaque choix, daté"
+  },
+  {
+   "nom": "aucun deny",
+   "entree": "chemins annoncés dans l'index",
+   "sortie": "  .fact/base.md            6 l. · la nature du projet, et où il va\n  .fact/stack.md           2 l. · outils, comptes, accès, versions\n  .fact/rules.md           1 l. · ce qu'on ne franchit pas\n  .fact/architecture.md  ABSENT — comment c'est agencé, les frontières : personne ne le sait.\n  .memory/decisions.md   le pourquoi de chaque choix, daté"
+  },
+  {
+   "nom": "aucun settings",
+   "entree": "chemins annoncés dans l'index",
+   "sortie": "  .fact/base.md            6 l. · la nature du projet, et où il va\n  .fact/stack.md           2 l. · outils, comptes, accès, versions\n  .fact/rules.md           1 l. · ce qu'on ne franchit pas\n  .fact/architecture.md  ABSENT — comment c'est agencé, les frontières : personne ne le sait.\n  .memory/decisions.md   le pourquoi de chaque choix, daté"
+  },
+  {
+   "nom": "sans .fact",
+   "entree": "chemins annoncés dans l'index",
+   "sortie": "  .mind/stack.md         ABSENT — outils, comptes, accès, versions : personne ne le sait.\n  .mind/rules.md         ABSENT — ce qu'on ne franchit pas : personne ne le sait.\n  .mind/architecture.md  ABSENT — comment c'est agencé, les frontières : personne ne le sait.\n  .memory/decisions.md   le pourquoi de chaque choix, daté"
+  },
+  {
+   "nom": "cible TIENT",
+   "entree": "chemins annoncés dans l'index",
+   "sortie": "  .fact/base.md            6 l. · la nature du projet, et où il va\n  .fact/stack.md           2 l. · outils, comptes, accès, versions\n  .fact/rules.md           1 l. · ce qu'on ne franchit pas\n  .fact/architecture.md  ABSENT — comment c'est agencé, les frontières : personne ne le sait.\n  .memory/decisions.md   le pourquoi de chaque choix, daté"
+  },
+  {
+   "nom": "cible TOMBÉ",
+   "entree": "chemins annoncés dans l'index",
+   "sortie": "  .fact/base.md            6 l. · la nature du projet, et où il va\n  .fact/stack.md           2 l. · outils, comptes, accès, versions\n  .fact/rules.md           1 l. · ce qu'on ne franchit pas\n  .fact/architecture.md  ABSENT — comment c'est agencé, les frontières : personne ne le sait.\n  .memory/decisions.md   le pourquoi de chaque choix, daté"
+  },
+  {
+   "nom": "cible SANS",
+   "entree": "chemins annoncés dans l'index",
+   "sortie": "  .fact/base.md            6 l. · la nature du projet, et où il va\n  .fact/stack.md           2 l. · outils, comptes, accès, versions\n  .fact/rules.md           1 l. · ce qu'on ne franchit pas\n  .fact/architecture.md  ABSENT — comment c'est agencé, les frontières : personne ne le sait.\n  .memory/decisions.md   le pourquoi de chaque choix, daté"
+  },
+  {
+   "nom": "cible MUET",
+   "entree": "chemins annoncés dans l'index",
+   "sortie": "  .fact/base.md            6 l. · la nature du projet, et où il va\n  .fact/stack.md           2 l. · outils, comptes, accès, versions\n  .fact/rules.md           1 l. · ce qu'on ne franchit pas\n  .fact/architecture.md  ABSENT — comment c'est agencé, les frontières : personne ne le sait.\n  .memory/decisions.md   le pourquoi de chaque choix, daté"
+  }
+ ]
+}

@@ -1,0 +1,21 @@
+── agents — brain-mono (mono)  [DRY-RUN]
+  → brain/mind -> brain/mind/PO (l'agent qui était là garde sa mémoire)
+  + agents/PO/.claude/settings.json — paquet harnais@atelier déclaré, 1 deny de périmètre, 2 hooks à la main retirés
+  − .claude/settings.json de la racine SUPPRIMÉ — il ne s'exécute plus (les réglages ne s'héritent pas) et quelqu'un l'éditerait un jour en croyant agir sur tous
+  + agents/PO/.mcp.json — copié depuis la racine (ne s'hérite pas)
+  → mémoire auto : <MAISON-SLUG>-Agentic-brain-mono -> <MAISON-SLUG>-Agentic-brain-mono-agents-PO (1 fils, 1 mémoires) ; l'ancien sera marqué .migre-<JOURC>
+  + agents/PO/CLAUDE.md — rôle à remplir
+  + agents/QA/ — CLAUDE.md de rôle, settings.json ; esprit neuf dans brain/mind/QA
+  + agents/QA/.claude/settings.json — paquet harnais@atelier déclaré, 1 deny de périmètre, 2 hooks à la main retirés
+  + agents/QA/.mcp.json — copié depuis la racine (ne s'hérite pas)
+  + carnet d'équipe à amorcer (créé à l'application)
+  + brain/fact/roles.md — qui tient quoi, à remplir
+
+── À reprendre à la main
+  · REMPLIR brain/fact/roles.md — qui tient quoi, et surtout LES ZONES PARTAGÉES. Un périmètre propre se lit dans les deny ; une zone partagée ne se lit nulle part, et c'est là que les collisions arrivent. Ce sont des FAITS : ça s'écrit à la demande du commanditaire (` # fact-ok` au commit).
+  · DÉCOUPER LE CLAUDE.md — la seule étape qui ne s'automatise pas. Le commun reste à la racine, le rôle descend dans agents/<nom>/CLAUDE.md. Contrôle de sortie : aucune phrase du bas ne resterait vraie pour un autre agent.
+  · ÉCRIRE LES PÉRIMÈTRES en dossiers dans chaque settings.json : les deny posés ne couvrent que les dossiers d'agents. Le code, lui, n'est pas partagé au hasard — dire qui tient quoi.
+  · RELANCER LES SESSIONS tmux DANS les dossiers d'agents, sous des noms slugifiés (po, qa). L'ancienne session à la racine n'a plus d'agent : le briefing l'avertira au lieu de se taire.
+
+Dry-run. Relancer avec --apply pour écrire.
+rc=0

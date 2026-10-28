@@ -1,0 +1,2 @@
+--watch n'a de sens qu'avec --html : sans page à réécrire, il n'y a rien à rafraîchir.
+rc=1

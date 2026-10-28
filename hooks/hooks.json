@@ -1,0 +1,151 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "b=\"${CLAUDE_PLUGIN_ROOT}/bin/harnais\"; [ -f \"$b\" ] && exec sh \"$b\" briefing; echo \"harnais : le lanceur du paquet manque dans ${CLAUDE_PLUGIN_ROOT}/bin — aucun briefing d'entree n'est servi ce tour. Remettre le paquet en etat : claude plugin update harnais@atelier\" >&2; exit 1",
+            "timeout": 15
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "b=\"${CLAUDE_PLUGIN_ROOT}/bin/harnais\"; [ -f \"$b\" ] && exec sh \"$b\" briefing; echo \"harnais : le lanceur du paquet manque dans ${CLAUDE_PLUGIN_ROOT}/bin — aucun briefing d'entree n'est servi ce tour. Remettre le paquet en etat : claude plugin update harnais@atelier\" >&2; exit 1",
+            "timeout": 15
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "b=\"${CLAUDE_PLUGIN_ROOT}/bin/harnais\"; [ -f \"$b\" ] && exec sh \"$b\" mind-guard; echo \"harnais : le lanceur du paquet manque dans ${CLAUDE_PLUGIN_ROOT}/bin — le garde ne juge pas : on refuse la commande plutot que de la laisser passer. Remettre le paquet en etat : claude plugin update harnais@atelier\" >&2; exit 2",
+            "timeout": 20
+          }
+        ],
+        "matcher": "Bash"
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "b=\"${CLAUDE_PLUGIN_ROOT}/bin/harnais\"; [ -f \"$b\" ] && exec sh \"$b\" production; echo \"harnais : le lanceur du paquet manque dans ${CLAUDE_PLUGIN_ROOT}/bin — le garde de la Production ne juge pas : on refuse la commande plutot que de la laisser passer. Remettre le paquet en etat : claude plugin update harnais@atelier\" >&2; exit 2",
+            "timeout": 20
+          }
+        ],
+        "matcher": "Bash"
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "b=\"${CLAUDE_PLUGIN_ROOT}/bin/harnais\"; [ -f \"$b\" ] && exec sh \"$b\" coffre; echo \"harnais : le lanceur du paquet manque dans ${CLAUDE_PLUGIN_ROOT}/bin — le garde du coffre ne juge pas : on refuse plutot que de laisser passer. Remettre le paquet en etat : claude plugin update harnais@atelier\" >&2; exit 2",
+            "timeout": 10
+          }
+        ],
+        "matcher": "Bash|Read|Grep"
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "b=\"${CLAUDE_PLUGIN_ROOT}/bin/harnais\"; [ -f \"$b\" ] && exec sh \"$b\" consignes; echo \"harnais : le lanceur du paquet manque dans ${CLAUDE_PLUGIN_ROOT}/bin — le verrou des consignes ne juge pas : on refuse plutot que de laisser passer. Remettre le paquet en etat : claude plugin update harnais@atelier\" >&2; exit 2",
+            "timeout": 10
+          }
+        ],
+        "matcher": "Edit|Write|MultiEdit|NotebookEdit|Bash"
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "b=\"${CLAUDE_PLUGIN_ROOT}/bin/harnais\"; [ -f \"$b\" ] && exec sh \"$b\" sous-agent; echo \"harnais : le lanceur du paquet manque dans ${CLAUDE_PLUGIN_ROOT}/bin — la garde des sous-agents ne juge pas : on refuse le lancement plutot que de le laisser passer. Remettre le paquet en etat : claude plugin update harnais@atelier\" >&2; exit 2",
+            "timeout": 10
+          }
+        ],
+        "matcher": "Agent|Task|Workflow"
+      }
+    ],
+    "PostToolUse": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "b=\"${CLAUDE_PLUGIN_ROOT}/bin/harnais\"; [ -f \"$b\" ] && exec sh \"$b\" journal; echo \"harnais : le lanceur du paquet manque dans ${CLAUDE_PLUGIN_ROOT}/bin — ce commit n'entre pas au journal. Remettre le paquet en etat : claude plugin update harnais@atelier\" >&2; exit 1",
+            "timeout": 20
+          }
+        ],
+        "matcher": "Bash"
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "b=\"${CLAUDE_PLUGIN_ROOT}/bin/harnais\"; [ -f \"$b\" ] && exec sh \"$b\" usage; echo \"harnais : le lanceur du paquet manque dans ${CLAUDE_PLUGIN_ROOT}/bin — cette lecture n'est pas comptee dans l'usage de la memoire. Remettre le paquet en etat : claude plugin update harnais@atelier\" >&2; exit 1",
+            "timeout": 5
+          }
+        ],
+        "matcher": "Read"
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "b=\"${CLAUDE_PLUGIN_ROOT}/bin/harnais\"; [ -f \"$b\" ] && exec sh \"$b\" usage; echo \"harnais : le lanceur du paquet manque dans ${CLAUDE_PLUGIN_ROOT}/bin — cette lecture n'est pas comptee dans l'usage de la memoire. Remettre le paquet en etat : claude plugin update harnais@atelier\" >&2; exit 1",
+            "timeout": 5
+          }
+        ],
+        "matcher": "Bash"
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "b=\"${CLAUDE_PLUGIN_ROOT}/bin/harnais\"; [ -f \"$b\" ] && exec sh \"$b\" coffre-temoin; echo \"harnais : le lanceur du paquet manque dans ${CLAUDE_PLUGIN_ROOT}/bin — une cle passee en clair ne sera pas signalee. Remettre le paquet en etat : claude plugin update harnais@atelier\" >&2; exit 1",
+            "timeout": 10
+          }
+        ],
+        "matcher": "Bash|Read|Grep"
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "b=\"${CLAUDE_PLUGIN_ROOT}/bin/harnais\"; [ -f \"$b\" ] && exec sh \"$b\" attente; echo \"harnais : le lanceur du paquet manque dans ${CLAUDE_PLUGIN_ROOT}/bin — la fin de tour n'est pas gardee. Remettre le paquet en etat : claude plugin update harnais@atelier\" >&2; exit 1",
+            "timeout": 40
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "b=\"${CLAUDE_PLUGIN_ROOT}/bin/harnais\"; [ -f \"$b\" ] && exec sh \"$b\" taches; echo \"harnais : le lanceur du paquet manque dans ${CLAUDE_PLUGIN_ROOT}/bin — les taches Notion ne sont pas verifiees. Remettre le paquet en etat : claude plugin update harnais@atelier\" >&2; exit 1",
+            "timeout": 30
+          }
+        ]
+      }
+    ],
+    "PermissionDenied": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "b=\"${CLAUDE_PLUGIN_ROOT}/bin/harnais\"; [ -f \"$b\" ] && exec sh \"$b\" refus-auto; echo \"harnais : le lanceur du paquet manque dans ${CLAUDE_PLUGIN_ROOT}/bin — ce refus du mode auto ne sera pas rappelé en fin de tour. Remettre le paquet en etat : claude plugin update harnais@atelier\" >&2; exit 1",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  }
+}

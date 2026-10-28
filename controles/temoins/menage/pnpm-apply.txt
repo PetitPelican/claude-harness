@@ -1,0 +1,17 @@
+Agentic clean — APPLY
+Cible : pnpm
+
+══════════════════════════════════════════════════════════════════════════════
+  pnpm
+══════════════════════════════════════════════════════════════════════════════
+
+1. CACHES RÉGÉNÉRABLES — SUPPRIMÉS (9.5 Mo)
+   app/node_modules                                5.0 Mo  <- npm ci  (ou pnpm install / yarn install)
+   dist                                            1.5 Mo  <- npm run build
+   node_modules                                    3.0 Mo  <- npm ci  (ou pnpm install / yarn install)
+   (caches de moins de 1 Mo)                     <1 Mo     2 dossier(s) : .turbo
+
+──────────────────────────────────────────────────────────────────────────────
+Total récupérable : 9.5 Mo
+
+Les familles 2 et 3 n'ont pas été touchées : elles demandent un jugement sur du contenu, pas une règle.

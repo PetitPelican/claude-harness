@@ -1,0 +1,2 @@
+REFUS — ces noms donnent la même adresse de mémoire auto : Q A, Q-A. Ils partageraient une seule mémoire sans que rien ne le dise.
+rc=1

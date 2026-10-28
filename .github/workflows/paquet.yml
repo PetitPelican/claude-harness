@@ -1,0 +1,52 @@
+name: paquet
+
+# Rétablie en 0.19 (16/10/2026) : depuis le passage en Python (0.13.0, 12/10) plus
+# rien du harnais ne tournait sous Windows. Windows est la cible d'un poste neuf du
+# commanditaire ; macOS prouve que rien ne dépend d'elle. 3.9 est le plancher promis.
+on:
+  workflow_dispatch:
+  push:
+    branches: ['main', 'deploiement']
+    tags: ['v*']
+
+permissions:
+  contents: read
+
+# Les essais changent HOME : l'identité git doit tenir sans ~/.gitconfig (sous
+# Windows, git ne la devine pas et refuse le commit).
+env:
+  GIT_AUTHOR_NAME: banc
+  GIT_AUTHOR_EMAIL: banc@x
+  GIT_COMMITTER_NAME: banc
+  GIT_COMMITTER_EMAIL: banc@x
+
+jobs:
+  tester:
+    strategy:
+      fail-fast: false
+      matrix:
+        machine: [windows-latest, macos-14]
+        python: ['3.9', '3.13']
+    runs-on: ${{ matrix.machine }}
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: ${{ matrix.python }}
+      - name: le lanceur est en LF (sinon sh casse sur \r et aucun hook ne part)
+        run: |
+          if grep -q $'\r' bin/harnais; then echo "bin/harnais en CRLF"; exit 1; fi
+      - name: identité git des essais
+        run: |
+          git config --global user.name banc
+          git config --global user.email banc@x
+          git config --global init.defaultBranch main
+      - name: suite de tests
+        run: python -m unittest discover -s tests -p 'test_*.py'
+      - name: banc de déploiement (atelier, projet seul, équipe, par le lanceur)
+        run: python controles/banc-deploiement.py
+      - name: le lanceur trouve Python et répond
+        run: sh bin/harnais version

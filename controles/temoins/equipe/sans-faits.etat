@@ -1,0 +1,13 @@
+.
+./src
+./src/a
+── mémoire auto
+.
+./<MAISON-SLUG>-Agentic-brain-mono-agents-PO
+./<MAISON-SLUG>-Agentic-brain-mono-agents-PO/f1.jsonl
+./<MAISON-SLUG>-Agentic-brain-mono-agents-PO/memory
+./<MAISON-SLUG>-Agentic-brain-mono-agents-PO/memory/n.md
+./<MAISON-SLUG>-Agentic-brain-mono.migre-<JOURC>
+./<MAISON-SLUG>-Agentic-brain-mono.migre-<JOURC>/f1.jsonl
+./<MAISON-SLUG>-Agentic-brain-mono.migre-<JOURC>/memory
+./<MAISON-SLUG>-Agentic-brain-mono.migre-<JOURC>/memory/n.md

@@ -1,0 +1,62 @@
+Agentic clean — DRY-RUN
+Cibles : ancien, cerveau, horsgit, memoire, pnpm, propre, pyinst, suivi
+
+══════════════════════════════════════════════════════════════════════════════
+  ancien
+══════════════════════════════════════════════════════════════════════════════
+
+2. RÉSIDUS — listés seulement, à trancher par l'agent du projet
+   .memory/rules.md                          dit des FAITS ACTUELS : MONTE dans .fact/ ou .mind/, il y a déjà sa place
+
+══════════════════════════════════════════════════════════════════════════════
+  horsgit
+══════════════════════════════════════════════════════════════════════════════
+
+1. CACHES RÉGÉNÉRABLES — à supprimer (2.0 Mo)
+   .venv                                           2.0 Mo  <- uv sync  (ou python3 -m venv .venv && pip install -r requirements.txt)
+
+2. RÉSIDUS — listés seulement, à trancher par l'agent du projet
+   build                                           1.0 Mo  hors dépôt git et nom ambigu — pas supprimé, vérifier que ce n'est pas de la source.
+
+══════════════════════════════════════════════════════════════════════════════
+  memoire
+══════════════════════════════════════════════════════════════════════════════
+
+2. RÉSIDUS — listés seulement, à trancher par l'agent du projet
+   docs/ porte 1 fichier(s) qui ressemblent à des sorties de build (rapport.pdf) : `docs/` ne contient que de l'écrit à la main — les sortir vers `site/` ou un dossier de build.
+   docs/charter.md                        taxonomie d'avant le 02/09/2026 : à trier, son contenu se répartit entre .fact/, .mind/ et docs/
+   docs/state.md                          dit des FAITS ACTUELS : MONTE dans .fact/ ou .mind/, il y a déjà sa place
+   docs/archive/                          2 fichier(s), 0.0 Mo — dont 1 repris par .mind/ (overview.md)
+   docs/notes.md.bak                               0.0 Mo  sauvegarde manuelle
+
+3. MÉMOIRE AU-DELÀ DE 500 LIGNES — à découper, jamais automatiquement
+   docs/journal.md                              600 lignes  la plus ancienne entrée datée : 12/05/2026
+
+══════════════════════════════════════════════════════════════════════════════
+  pnpm
+══════════════════════════════════════════════════════════════════════════════
+
+1. CACHES RÉGÉNÉRABLES — à supprimer (6.5 Mo)
+   app/node_modules                                5.0 Mo  <- npm ci  (ou pnpm install / yarn install)
+   dist                                            1.5 Mo  <- npm run build
+   (caches de moins de 1 Mo)                     <1 Mo     3 dossier(s) : .turbo, node_modules
+
+══════════════════════════════════════════════════════════════════════════════
+  pyinst
+══════════════════════════════════════════════════════════════════════════════
+
+1. CACHES RÉGÉNÉRABLES — à supprimer (3.5 Mo)
+   packaging/dist                                  2.5 Mo  <- pyinstaller <le .spec d'à côté>
+   src/__pycache__                                 1.0 Mo  <- refait seul à l'import suivant
+
+══════════════════════════════════════════════════════════════════════════════
+  suivi
+══════════════════════════════════════════════════════════════════════════════
+
+2. RÉSIDUS — listés seulement, à trancher par l'agent du projet
+   node_modules                                    1.2 Mo  SUIVI PAR GIT — pas supprimé. C'est un problème de .gitignore, pas de ménage.
+
+──────────────────────────────────────────────────────────────────────────────
+Total récupérable : 12.0 Mo
+
+Dry-run. `--apply` supprime la FAMILLE 1 seulement — les familles 2 et 3 ne sont jamais supprimées par ce script.

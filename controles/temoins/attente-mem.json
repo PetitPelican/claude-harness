@@ -1,0 +1,31 @@
+{
+ "controle": "attente-mem",
+ "gele_le": "2026-09-26",
+ "commit_depot": "e3cc1945f606eec0b43feb2edc6bf86601bd9eb0",
+ "origine": "rust",
+ "sources": {
+  "harnais/target/release/harnais": "0124056191a1faac"
+ },
+ "contre_exemple": [
+  "garde qui mord",
+  "constat qui tient"
+ ],
+ "cas": [
+  {
+   "nom": "garde qui mord",
+   "entree": {
+    "todo": "- [ ] !haut @user **Une question ? oui / non**\n      oui → ceci.\n      non → cela.\n      fini quand → tu vois.\n",
+    "code_touche": true
+   },
+   "sortie": "{\"code\": 2, \"usage\": \"{\\n \\\"_depuis\\\": \\\"<auj>\\\",\\n \\\"_encours\\\": {},\\n \\\"note-dite\\\": {\\n  \\\"conf\\\": 78.2,\\n  \\\"n\\\": 2,\\n  \\\"res\\\": 1,\\n  \\\"vu\\\": \\\"<auj>\\\"\\n },\\n \\\"note-mesuree\\\": {\\n  \\\"conf\\\": 73.6,\\n  \\\"n\\\": 2,\\n  \\\"res\\\": 1,\\n  \\\"vu\\\": \\\"<auj>\\\"\\n },\\n \\\"note-supposee\\\": {\\n  \\\"conf\\\": 36.8,\\n  \\\"n\\\": 2,\\n  \\\"res\\\": 1,\\n  \\\"vu\\\": \\\"<auj>\\\"\\n }\\n}\"}"
+  },
+  {
+   "nom": "constat qui tient",
+   "entree": {
+    "todo": "- [ ] !haut @user ?constat **La page manque ? oui / non**\n      oui → ceci.\n      non → cela.\n      fini quand → tu vois.\n      ↻ machine :: echo ATTENDU :: ^ATTENDU$\n",
+    "code_touche": false
+   },
+   "sortie": "{\"code\": 0, \"usage\": \"{\\n \\\"_depuis\\\": \\\"<auj>\\\",\\n \\\"_encours\\\": {},\\n \\\"note-dite\\\": {\\n  \\\"conf\\\": 87.5,\\n  \\\"n\\\": 2,\\n  \\\"res\\\": 1,\\n  \\\"vu\\\": \\\"<auj>\\\"\\n },\\n \\\"note-mesuree\\\": {\\n  \\\"conf\\\": 82.4,\\n  \\\"n\\\": 2,\\n  \\\"res\\\": 1,\\n  \\\"vu\\\": \\\"<auj>\\\"\\n },\\n \\\"note-supposee\\\": {\\n  \\\"conf\\\": 41.2,\\n  \\\"n\\\": 2,\\n  \\\"res\\\": 1,\\n  \\\"vu\\\": \\\"<auj>\\\"\\n }\\n}\"}"
+  }
+ ]
+}

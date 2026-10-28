@@ -1,0 +1,7 @@
+Agentic clean — DRY-RUN
+Cible : propre
+
+──────────────────────────────────────────────────────────────────────────────
+Total récupérable : 0.0 Mo
+
+Dry-run. `--apply` supprime la FAMILLE 1 seulement — les familles 2 et 3 ne sont jamais supprimées par ce script.

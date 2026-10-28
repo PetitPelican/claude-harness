@@ -1,0 +1,14 @@
+{
+  "name": "atelier",
+  "owner": {
+    "name": "Harnais"
+  },
+  "description": "Le socle de l'atelier agentique : un seul paquet pour les agents d'un poste macOS et ceux d'un poste Windows.",
+  "plugins": [
+    {
+      "name": "harnais",
+      "source": "./",
+      "description": "Le harnais de l'atelier : mémoire qui vieillit et se souvient de ce qui a servi, questions qui remontent au commanditaire, quinze gardes de fin de tour, et un relecteur qui n'a pas écrit ce qu'il relit."
+    }
+  ]
+}

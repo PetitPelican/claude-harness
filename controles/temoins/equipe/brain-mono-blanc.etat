@@ -1,0 +1,31 @@
+.
+./.claude
+./.claude/settings.json
+./.mcp.json
+./brain
+./brain/fact
+./brain/fact/base.md
+./brain/mind
+./brain/mind/state.md
+./brain/mind/todo.md
+── mémoire auto
+.
+./<MAISON-SLUG>-Agentic-brain-mono
+./<MAISON-SLUG>-Agentic-brain-mono/f1.jsonl
+./<MAISON-SLUG>-Agentic-brain-mono/memory
+./<MAISON-SLUG>-Agentic-brain-mono/memory/n.md
+── ./.claude/settings.json
+{"permissions":{"allow":["Bash(ls:*)"],"deny":["Edit(~/x/agents/vieux/**)"]},"hooks":{"Stop":[{"hooks":[{"type":"command","command":"a"},{"type":"command","command":"b"}]}]}}
+── ./.mcp.json
+{"mcpServers":{}}
+── ./brain/fact/base.md
+---
+cap: essai
+---
+── ./brain/mind/state.md
+---
+maj: 2026-01-01
+---
+# état
+── ./brain/mind/todo.md
+# à faire

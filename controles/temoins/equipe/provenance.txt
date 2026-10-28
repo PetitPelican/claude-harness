@@ -1,0 +1,2 @@
+bda047c181e1ee421efaca599f2feb2ece69a64a
+a1be5f8668d86b2e27a07725033394be75cc1485  skills/agentic-agents/scripts/agentic-agents.py
