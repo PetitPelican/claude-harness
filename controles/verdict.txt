@@ -1,5 +1,5 @@
-controles: verdict du 2026-10-28 14:20
-source: py=c23a40617334208de95ef55d28a8fa24853f17cf hooks=d26a074095c4055b9021e0283c4ad9d3aca4ad5e skills=6929fe94afd069214f1a2463b11e3cf1da0e9c7f
+controles: verdict du 2026-10-29 14:41
+source: py=eea051478aa033b3353422e1b1dab7a2cffedfbf hooks=d26a074095c4055b9021e0283c4ad9d3aca4ad5e skills=bee09a8b8f350edc71a8cf9b07862f44ff5ffeab
 ecarts: 0 sur 28
 binaire livre: OK
 temoins du lanceur: OK
@@ -10,7 +10,7 @@ temoins du lanceur: OK
 - OK    carnet d'équipe · témoin carnet · 5 cas figés au commit e406beb2 (origine python) · contre-exemple lecture-Alpha-QA ≠ lecture-CTO · 5 entrées, 4 agents · ÉCARTS : AUCUN
 - OK    briefing · témoins : 12 briefings servis, 0 silences — UserPromptSubmit muet en régime établi : True · le repli s'annonce : sans objet (le repli Python n'est plu
 - OK    briefing · mémoire · témoin briefing-mem · 2 cas figés au commit e406beb2 (origine python) · contre-exemple briefing-servi ≠ usage-reecrit · mémoire: 3 note(s) sur 5 n'ont
-- OK    fin de tour · gardes traversées : 9/9 — B1-code-sans-todo, B10-rechutes, B11-acharnement, B13-poser, B5-carnet, B6-faits, B7-constat-sans-rejeu, B8-forme, B9-tombe 
+- OK    fin de tour · gardes traversées : 10/10 — B1-code-sans-todo, B10-rechutes, B11-acharnement, B13-poser, B5-carnet, B6-faits, B7-constat-sans-rejeu, B8-forme, B8-moti
 - OK    fin de tour · mémoire · témoin attente-mem · 2 cas figés au commit e3cc1945 (origine rust) · contre-exemple garde qui mord ≠ constat qui tient · 2/2 cas ont fait bouger la co
 - OK    relecteur (Rust seul) · LA BOUCLE TIENT — dépôt, verdict, blocage, et aucun agent coincé
 - OK    conversion en équipe · témoins : blanc muet, 4 agents montés, carnet amorcé, briefing servi depuis un dossier d'agent : True · ÉCARTS : AUCUN — conversion, périmètres, carne
@@ -27,5 +27,5 @@ temoins du lanceur: OK
 - OK    faits des experts · ÉCARTS : AUCUN sur 13 garanties
 - OK    renvois de fin de tour · renvois : 0 écart(s)
 - OK    canal Notion · notion : 0 écart(s)
-- OK    doc et code · témoin : 111 citation(s), 24 compétence(s), 34 chemin(s) relevés, 15 gardes, 7 questions, 0 écart(s)
+- OK    doc et code · témoin : 111 citation(s), 24 compétence(s), 34 chemin(s) relevés, 16 gardes, 7 questions, 0 écart(s)
 - OK    garde du coffre · 14 paire(s) jouée(s) sur un faux coffre + le témoin, 0 en échec

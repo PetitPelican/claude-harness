@@ -46,7 +46,8 @@ rappels() { awk 'END{print NR}' "$DATA/appels.log" 2>/dev/null || echo 0; }
 ecarts=0
 ok() { echo "  ✓ $1"; }
 ko() { echo "  ✗ $1 — code $(code), appels Rappels $(rappels)"; ecarts=$((ecarts+1)); }
-question() { sleep 1.1; printf '\n- [ ] !haut @user **%s ? 1 / 2**\n      1 → a.\n      2 → b.\n      fini quand → tu vois c.\n%s' "$1" "${2:+      ↳ $2
+# Le motif (0.19.5) : sans lui, la garde des questions refuse avant B14.
+question() { sleep 1.1; printf '\n- [ ] !haut @user **%s ? 1 / 2**\n      1 → a.\n      2 → b.\n      motif → périmètre\n      fini quand → tu vois c.\n%s' "$1" "${2:+      ↳ $2
 }" >> "$P/brain/mind/todo.md"; }
 
 fin notion 0 s0; fin notion 0 s0                     # premières rencontres

@@ -8,6 +8,10 @@ Un paquet règle les trois : une version, une commande pour installer, un chemin
 de mise à jour. Pour comprendre ce qu'il fait et pourquoi, lire
 [`COMMENT-CA-MARCHE.md`](COMMENT-CA-MARCHE.md).
 
+> **Vous découvrez le harnais ?** Commencez par [`DEMARRER.md`](DEMARRER.md) : de
+> l'installation de l'app Claude à une équipe de trois agents, pas à pas, avec les
+> messages à copier-coller.
+
 ## Ce qu'il embarque
 
 | | |
@@ -59,7 +63,8 @@ de commit (qui refuse), 1 pour les autres.
 
 1. **Prérequis** — Claude Code connecté ; un vrai Python 3.9 ou plus (sous Windows :
    pas le `python.exe` de `WindowsApps`, qui ouvre le Store) ; Git (sous Windows, Git
-   pour Windows : il fournit le `sh` qui lance les hooks) ; l'accès à ce dépôt privé.
+   pour Windows : il fournit le `sh` qui lance les hooks) ; l'accès au dépôt du paquet
+   (aucun s'il est public).
 2. **Le paquet, pour l'utilisateur** :
    ```bash
    claude plugin marketplace add PetitPelican/claude-harness

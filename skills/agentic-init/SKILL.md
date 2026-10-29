@@ -21,8 +21,8 @@ description: >
   ou python.org, « Add to PATH ») : le `python.exe` du Microsoft Store ne compte pas.
 - **Git** — sous Windows, Git pour Windows : il fournit aussi le `sh` qui lance
   les hooks du paquet.
-- **Le paquet**, depuis le dépôt privé `PetitPelican/claude-harness` (accès GitHub
-  nécessaire) :
+- **Le paquet**, depuis le dépôt public `PetitPelican/claude-harness` (aucun accès
+  GitHub nécessaire) :
   ```
   claude plugin marketplace add PetitPelican/claude-harness
   claude plugin install harnais@atelier
