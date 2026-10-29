@@ -14,7 +14,12 @@ Agentic/                  la racine de votre atelier
 ```
 
 Chaque agent est une session Claude ouverte dans **son** dossier. Il y trouve
-son rôle, ses droits, sa mémoire et sa propre copie du code. Le harnais (ce
+son rôle, ses droits, sa mémoire, et son espace de travail sur le code
+(`code/`). Ce n'est pas une copie indépendante : c'est le même dépôt git, avec un
+seul historique. Le premier agent porte le clone du dépôt ; chacun des autres en
+a un *worktree*, c'est-à-dire un dossier de travail sur sa propre branche. Ainsi,
+quand l'un change de branche, les fichiers ne bougent pas sous les pieds des
+autres, et tout ce que l'un enregistre est visible des autres. Le harnais (ce
 dépôt) est le paquet que chacun charge au démarrage : il lui donne sa mémoire,
 ses gardes et sa façon de rendre compte.
 
