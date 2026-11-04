@@ -44,6 +44,7 @@ TABLE = {
     "taches":        ("taches", "main", "stdin"),
     "sous-agent":    ("sous_agent", "main", "stdin"),
     "laissez-passer-lot": ("sous_agent", "laissez_passer", "code"),
+    "ouverture":     ("ouverture", "main", "stdin"),
     "carnet":        ("carnet", "main", "args"),
     "carnet-essai":  ("carnet", "essai", "args"),
     "equipe-amorce": ("carnet", "amorce_cli", "code"),
@@ -111,6 +112,8 @@ APPELÉES PAR LE HARNAIS (chacune lit sa charge JSON sur l'entrée standard) :
   taches       Stop — les tâches Notion citées par les commits du tour sont à jour (0.19.2)
   sous-agent   PreToolUse/Agent, Task, Workflow — pas de sous-agent qui lit des images ou un
                lot de plus de 30 éléments sans l'accord de l'humain (0.19.3)
+  ouverture    PreToolUse/start_session, hand_off_to_session — un agent qui a déjà une
+               session, on lui écrit ; on ne lui en ouvre pas une seconde (0.19.10)
   versions   la version du harnais chargée par chaque agent à son démarrage
   relecture    lance le juge sur les demandes en attente
   diagnostic   ce que je trouve, ce que je ne trouve pas, et par quel shell

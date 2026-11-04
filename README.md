@@ -16,7 +16,7 @@ de mise à jour. Pour comprendre ce qu'il fait et pourquoi, lire
 
 | | |
 |---|---|
-| `hooks/hooks.json` | les quatorze déclencheurs — briefing d'entrée (deux), garde de commit, garde de la Production, verrou des consignes, garde du coffre et son témoin, garde des sous-agents, journal, compteur d'usage de la mémoire (deux), la note d'un refus du mode auto, la fin de tour qui porte les seize gardes, et celle des tâches Notion (éteinte sauf réglage). Chacun lance le lanceur, rien d'autre |
+| `hooks/hooks.json` | les quinze déclencheurs — briefing d'entrée (deux), garde de commit, garde de la Production, verrou des consignes, garde du coffre et son témoin, garde des sous-agents, garde de l'ouverture de session, journal, compteur d'usage de la mémoire (deux), la note d'un refus du mode auto, la fin de tour qui porte les seize gardes, et celle des tâches Notion (éteinte sauf réglage). Chacun lance le lanceur, rien d'autre |
 | `bin/harnais` | le lanceur, un script `sh` : il cherche un vrai Python, lance `py/main.py`, et **dit** quand il n'en trouve pas |
 | `py/` | le programme : du Python (3.9 au moins), bibliothèque standard seule, rien à compiler ni à installer d'autre que Python lui-même |
 | `skills/` | les compétences : `agentic-adopte`, `agentic-agents`, `agentic-team`, `agentic-clean`, `agentic-init`, `project-init`, `publish-docs`, `caveman` |
@@ -154,6 +154,19 @@ texte aussi, quelle que soit sa taille : le coupe-circuit du poste le couvre. Le
 majeure, avec le volume et le découpage ; sur son oui, `harnais laissez-passer-lot
 "<son oui, cité>"` laisse partir le visuel pendant 120 minutes, chaque lancement
 journalisé. Au-delà de 30 médias, le refus tient même muni : un sous-agent neuf par lot.
+
+## Un agent qui a déjà une session, on lui écrit
+
+Décision du 04/11/2026 : pour confier quelque chose à un autre agent, on lui
+écrit (`SendMessage`) ; on ne lui ouvre pas une seconde session. Le garde de
+l'ouverture refuse `start_session` et `hand_off_to_session`, quelle que soit
+l'initiation (proposition comprise), quand le dossier visé (`cwd`) a déjà une
+session ouverte dans l'app, ou, sans `cwd`, quand le titre commence par le nom
+d'un agent qui en a une (« Designer — … », « Éditeur : … »). Le refus donne
+l'id de la session à qui écrire. Un dossier sans session passe : la carte de
+l'humain décide. Les sessions ouvertes se lisent dans les fiches que l'app tient
+par session (mesuré sous Windows ; `HARNAIS_SESSIONS_APP` impose leur dossier) ;
+sans fiches, rien n'est refusé.
 
 ## Les tâches Notion restent à jour (sur réglage)
 

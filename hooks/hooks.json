@@ -67,6 +67,16 @@
         "hooks": [
           {
             "type": "command",
+            "command": "b=\"${CLAUDE_PLUGIN_ROOT}/bin/harnais\"; [ -f \"$b\" ] && exec sh \"$b\" ouverture; echo \"harnais : le lanceur du paquet manque dans ${CLAUDE_PLUGIN_ROOT}/bin — le garde de l'ouverture de session ne juge pas : la carte de l'humain reste seule. Remettre le paquet en etat : claude plugin update harnais@atelier\" >&2; exit 1",
+            "timeout": 10
+          }
+        ],
+        "matcher": "mcp__ccd_session__start_session|mcp__ccd_session__hand_off_to_session"
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
             "command": "b=\"${CLAUDE_PLUGIN_ROOT}/bin/harnais\"; [ -f \"$b\" ] && exec sh \"$b\" sous-agent; echo \"harnais : le lanceur du paquet manque dans ${CLAUDE_PLUGIN_ROOT}/bin — la garde des sous-agents ne juge pas : on refuse le lancement plutot que de le laisser passer. Remettre le paquet en etat : claude plugin update harnais@atelier\" >&2; exit 2",
             "timeout": 10
           }
