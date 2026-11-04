@@ -35,7 +35,7 @@ peut pas desserrer ce réglage en silence.
 LE LAISSEZ-PASSER. `harnais laissez-passer "motif"`, que seul l'agent nommé
 obtient, après le oui de l'humain au moment du geste. Il vaut `production-duree`
 minutes et chaque usage laisse une ligne au journal (agent, heure, commande,
-motif). Il vit dans le dossier de données du paquet, hors du projet et hors de
+motif). Il vit dans `~/.claude/production`, hors du projet et hors de
 git. Que l'agent nommé puisse se l'accorder est une CONVENTION — le journal la
 rend visible, il ne l'empêche pas.
 
@@ -123,8 +123,11 @@ def agent_appelant(depart):
 # ── le laissez-passer ────────────────────────────────────────────────────
 
 def _dossier():
+    # PAS `socle.socle()` (0.19.9) : le crochet tourne avec CLAUDE_PLUGIN_DATA, le
+    # shell où l'agent tape `harnais laissez-passer` sans — mesuré le 04/11, le
+    # laissez-passer et le garde ne lisaient pas le même dossier.
     import socle
-    d = os.path.join(socle.socle(), "production")
+    d = os.path.join(socle.maison(), ".claude", "production")
     try:
         os.makedirs(d, exist_ok=True)
     except OSError:

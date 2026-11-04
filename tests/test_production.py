@@ -170,6 +170,16 @@ class Vercel(Base):
         self.assertIsNone(self.juge(os.path.join(x, "agents", "OPS"), "vercel --prod"))
         self.assertIsNotNone(self.juge(os.path.join(x, "agents", "OPS"), "git push origin main"))
 
+    def test_le_garde_voit_le_laissez_passer_pose_depuis_le_shell(self):
+        """0.19.9 (relevé par un agent seul le 04/11) : le crochet tourne avec
+        CLAUDE_PLUGIN_DATA, le shell de l'agent sans. Le laissez-passer posé à la
+        main finissait dans `~/.claude`, le garde le cherchait ailleurs."""
+        sans = {k: v for k, v in os.environ.items() if k != "CLAUDE_PLUGIN_DATA"}
+        with mock.patch.dict(os.environ, sans, clear=True):
+            self.assertEqual(self.passe(self.ops, "l'humain : « oui »"), 0)
+        self.assertIn("CLAUDE_PLUGIN_DATA", os.environ)
+        self.assertIsNone(self.juge(self.ops, "vercel --prod"))
+
     def test_l_outil_powershell_ne_contourne_pas(self):
         def ps(agent, cmd):
             with mock.patch.dict(os.environ, {"CLAUDE_PROJECT_DIR": agent}):

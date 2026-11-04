@@ -93,7 +93,7 @@ harnais laissez-passer "l'humain : « oui, mets en ligne »"     # seul l'agent 
 ```
 
 Il vaut `production-duree` minutes ; chaque dépôt et chaque usage sont
-journalisés dans le dossier de données du paquet. Rien n'est fermé sans réglage :
+journalisés dans `~/.claude/production`. Rien n'est fermé sans réglage :
 l'en-tête des règles du projet (`fact/rules.md`, ou `brain/fact/rules.md` seul) —
 
 ```
