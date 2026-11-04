@@ -68,7 +68,8 @@ corrige pas. La maison entière n'est pas ouverte en `additionalDirectories` :
 mesuré le 27/10/2026, un fichier hors de l'arbre se lit sans elle.
 Avec un agent de type `ops`, la Production naît fermée : l'en-tête de
 `fact/rules.md` porte `production:` et `production-agent:` (voir le garde de la
-Production dans `/agentic-agents`). Il refuse un dossier qui n'est pas vide :
+Production dans `/agentic-agents` ; un projet publié par Vercel y ajoute
+`production-commandes: vercel`). Il refuse un dossier qui n'est pas vide :
 une équipe ne naît pas par-dessus un code.
 
 **Il pose un `workflow.md` de départ**, le fichier des faits commun à tous les

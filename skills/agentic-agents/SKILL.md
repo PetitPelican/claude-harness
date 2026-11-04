@@ -81,7 +81,12 @@ L'agent démarre dans `agents/<nom>/` et enregistre son code par `git -C code co
 Rien ne part en Production sans le oui de l'humain AU MOMENT du geste. Le paquet
 refuse `git push` vers une branche de production (toutes formes : `HEAD:main`,
 `+main`, motifs, `--all`, push nu depuis la branche), `gh pr merge` et l'API
-GitHub en écriture, sauf à l'agent nommé, muni d'un laissez-passer daté :
+GitHub en écriture, sauf à l'agent nommé, muni d'un laissez-passer daté. Depuis
+la 0.19.7, il ferme aussi les commandes de publication que le projet déclare
+(`production-commandes:`, famille connue : `vercel` — `--prod`,
+`--environment production`, `promote`, `rollback`, `redeploy`, même derrière
+`env`, `npx` ou un chemin ; `vercel -p` est `--project`, pas la Production), et
+il juge l'outil PowerShell comme l'outil Bash :
 
 ```
 harnais laissez-passer "l'humain : « oui, mets en ligne »"     # seul l'agent nommé l'obtient
@@ -94,12 +99,15 @@ l'en-tête des règles du projet (`fact/rules.md`, ou `brain/fact/rules.md` seul
 ```
 ---
 production: main, master, production
+production-commandes: vercel        # si le projet publie par Vercel (sinon, pas de ligne)
 production-agent: OPS
 production-duree: 15
 ---
 ```
 
-Une équipe avec un agent de type `ops` naît fermée ainsi. C'est un fait : il
+`production:` ou `production-commandes:` : l'une des deux suffit à fermer le
+projet. Une équipe avec un agent de type `ops` naît fermée ainsi (sans
+`production-commandes:`, que l'humain ajoute). C'est un fait : il
 ne s'assouplit qu'à la demande de l'humain (` # fact-ok`). Les gardes propres à
 un produit (base de données, paiements, magasins) restent dans le projet.
 

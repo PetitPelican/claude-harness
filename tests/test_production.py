@@ -5,6 +5,7 @@ import contextlib
 import io
 import json
 import os
+import re
 import shutil
 import subprocess
 import sys
@@ -99,11 +100,93 @@ class Equipe(Base):
         os.utime(f, (vieux, vieux))
         self.assertIsNotNone(self.juge(self.ops, "git push origin main"))
 
+    def test_l_outil_powershell_pousse_aussi(self):
+        with mock.patch.dict(os.environ, {"CLAUDE_PROJECT_DIR": self.po}):
+            m = production.juge({"tool_name": "PowerShell", "cwd": self.po,
+                                 "tool_input": {"command": "git push origin main"}})
+        self.assertIsNotNone(m)
+
     def test_le_hook_rend_un_refus_lisible_par_claude_code(self):
         out = io.StringIO()
         with mock.patch.dict(os.environ, {"CLAUDE_PROJECT_DIR": self.po}), contextlib.redirect_stdout(out):
             production.main(json.dumps({"tool_name": "Bash", "cwd": self.po,
                                         "tool_input": {"command": "git push origin main"}}))
+        self.assertEqual(json.loads(out.getvalue())["hookSpecificOutput"]["permissionDecision"], "deny")
+
+
+class Vercel(Base):
+    """0.19.7 : la publication Vercel se ferme comme une branche de production."""
+    PROD = ("vercel --prod", "vercel deploy --prod", "vercel deploy --prebuilt --prod",
+            "npx vercel --prod", "npx --yes vercel@latest deploy --prod", "pnpm dlx vercel --prod",
+            "env VERCEL_ORG_ID=x /usr/local/bin/vercel --prod", r'"C:\outils\vercel.cmd" --prod',
+            "vercel --scope equipe --prod", "vercel -p site --prod", "vc --prod",
+            "vercel --environment production", "vercel deploy --environment=production",
+            "vercel --target production", "vercel promote dpl_123", "vercel rollback",
+            "vercel redeploy site.vercel.app", "vercel redeploy site.vercel.app -e production",
+            "echo ok && vercel --prod", "cd web && npx vercel deploy --prod")
+    TEMOINS = ("vercel", "vercel deploy", "vercel -p site", "vercel --project site",
+               "npx vercel deploy --yes", "vercel --environment preview", "vercel build --prod",
+               "vercel pull --environment=production", "vercel promote status",
+               "vercel redeploy site.vercel.app --environment preview", "vercel ls",
+               "git push origin main", "grep -r 'vercel --prod' .")
+
+    def setUp(self):
+        super().setUp()
+        x = self.equipe("--modeles", "ops,po")
+        self.ops = os.path.join(x, "agents", "OPS")
+        self.po = os.path.join(x, "agents", "PO")
+        f = os.path.join(x, "fact", "rules.md")
+        with open(f, encoding="utf-8") as h:
+            t = h.read()
+        # Un projet Vercel seul : pas de branche fermée, seule la publication l'est.
+        t = re.sub(r"(?m)^production:.*\n", "production-commandes: vercel\n", t, count=1)
+        with open(f, "w", encoding="utf-8") as h:
+            h.write(t)
+
+    def test_le_garde_mord_sans_laissez_passer_et_s_ouvre_avec(self):
+        for cmd in self.PROD:
+            m = self.juge(self.ops, cmd)
+            self.assertIsNotNone(m, cmd)
+            self.assertIn("laissez-passer", m, cmd)
+        for cmd in self.TEMOINS:
+            self.assertIsNone(self.juge(self.ops, cmd), cmd)
+        self.assertEqual(self.passe(self.ops, "l'humain : « oui, publie »"), 0)
+        for cmd in self.PROD:
+            self.assertIsNone(self.juge(self.ops, cmd), cmd)
+
+    def test_seul_l_agent_nomme_publie(self):
+        self.assertEqual(self.passe(self.po), 1)
+        for cmd in self.PROD:
+            m = self.juge(self.po, cmd)
+            self.assertIsNotNone(m, cmd)
+            self.assertIn("OPS", m, cmd)
+        self.assertIsNone(self.juge(self.po, "vercel deploy"))
+
+    def test_rien_sans_la_cle(self):
+        """TÉMOIN : une équipe qui ferme ses branches sans déclarer vercel le laisse ouvert."""
+        x = os.path.join(self.h, "Autre")
+        os.makedirs(x)
+        muet(adopte.main, [x, "--equipe", "OPS,PO", "--modeles", "ops,po", "--go"])
+        self.assertIsNone(self.juge(os.path.join(x, "agents", "OPS"), "vercel --prod"))
+        self.assertIsNotNone(self.juge(os.path.join(x, "agents", "OPS"), "git push origin main"))
+
+    def test_l_outil_powershell_ne_contourne_pas(self):
+        def ps(agent, cmd):
+            with mock.patch.dict(os.environ, {"CLAUDE_PROJECT_DIR": agent}):
+                return production.juge({"tool_name": "PowerShell", "cwd": agent,
+                                        "tool_input": {"command": cmd}})
+        for cmd in (r'& "C:\Program Files\nodejs\vercel.cmd" --prod', r"C:\outils\vercel.exe deploy --prod",
+                    "npx vercel --prod; Write-Output fini", "vercel promote dpl_1"):
+            self.assertIsNotNone(ps(self.ops, cmd), cmd)
+        self.assertIsNone(ps(self.ops, r"C:\outils\vercel.exe -p site"))
+        self.assertEqual(self.passe(self.ops), 0)
+        self.assertIsNone(ps(self.ops, "npx vercel --prod"))
+
+    def test_le_hook_refuse_vercel(self):
+        out = io.StringIO()
+        with mock.patch.dict(os.environ, {"CLAUDE_PROJECT_DIR": self.ops}), contextlib.redirect_stdout(out):
+            production.main(json.dumps({"tool_name": "Bash", "cwd": self.ops,
+                                        "tool_input": {"command": "npx vercel deploy --prod"}}))
         self.assertEqual(json.loads(out.getvalue())["hookSpecificOutput"]["permissionDecision"], "deny")
 
 

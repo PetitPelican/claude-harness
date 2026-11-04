@@ -111,8 +111,9 @@ l'humain, et c'est lui qui vient de répondre) :
   jamais leur valeur.
 - `architecture.md` : les grandes pièces et leurs frontières.
 - `rules.md` : ce qu'on ne franchit pas, et ce que chaque règle protège. Si Q6
-  ferme la Production, son en-tête porte `production:` / `production-agent:`
-  (le garde du paquet le lit).
+  ferme la Production, son en-tête porte `production:` / `production-agent:`,
+  et `production-commandes: vercel` si le projet publie par Vercel (le garde
+  du paquet le lit).
 - `workflow.md` : les gestes qu'on ne redécouvre pas (commandes, ordre, pièges).
 - en équipe, `roles.md` : qui tient quoi, et surtout les zones partagées.
 
