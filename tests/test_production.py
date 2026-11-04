@@ -213,6 +213,29 @@ class Seul(Base):
         self.assertEqual(self.passe(p), 0)
         self.assertIsNone(self.juge(p, "git push origin main"))
 
+    def test_un_projet_seul_qui_se_nomme_obtient_son_laissez_passer(self):
+        """0.19.8 (relevé par un agent seul le 04/11) : `production-agent:` au nom du
+        projet refusait tout le monde, l'agent seul compris (« tu es « ? » »)."""
+        p = os.path.join(self.h, "Solo")
+        os.makedirs(p)
+        subprocess.run(["git", "init", "-q", "-b", "main"], cwd=p, check=True)
+        muet(adopte.main, [p, "--go"])
+        f = os.path.join(p, "brain", "fact", "rules.md")
+        with open(f, encoding="utf-8") as h:
+            t = h.read()
+        with open(f, "w", encoding="utf-8") as h:
+            h.write("---\nproduction-commandes: vercel\nproduction-agent: Solo\n---\n" + t)
+        self.assertEqual(production.agent_appelant(p), "Solo")
+        self.assertEqual(production.agent_appelant(os.path.join(p, "brain")), "Solo")
+        self.assertIsNotNone(self.juge(p, "vercel --prod"))
+        self.assertEqual(self.passe(p), 0)
+        self.assertIsNone(self.juge(p, "vercel --prod"))
+        # TÉMOIN : un autre nom reste refusé, même dans un projet seul.
+        with open(f, "w", encoding="utf-8") as h:
+            h.write("---\nproduction-commandes: vercel\nproduction-agent: OPS\n---\n" + t)
+        self.assertEqual(self.passe(p), 1)
+        self.assertIn("OPS", self.juge(p, "vercel --prod"))
+
 
 if __name__ == "__main__":
     unittest.main()

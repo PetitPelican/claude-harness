@@ -116,7 +116,8 @@ def agent_appelant(depart):
     for i, m in enumerate(morceaux):
         if m == "agents" and i + 1 < len(morceaux):
             return morceaux[i + 1]
-    return ""
+    # Projet seul : son nom est celui de sa racine (`r.projet` y désigne `brain/`).
+    return os.path.basename(os.path.normpath(r.racine)) if r.racine else ""
 
 
 # ── le laissez-passer ────────────────────────────────────────────────────
