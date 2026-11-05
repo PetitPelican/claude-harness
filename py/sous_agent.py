@@ -119,7 +119,7 @@ def _agent():
 
 def _fichiers(agent):
     import socle
-    d = os.path.join(socle.socle(), "sous-agents")
+    d = socle.partage("sous-agents")
     try:
         os.makedirs(d, exist_ok=True)
     except OSError:
@@ -183,7 +183,7 @@ def juge(d):
     texte = consigne(d)
     if not texte:
         return None
-    agent = os.environ.get("CLAUDE_PROJECT_DIR") or d.get("cwd") or os.getcwd()
+    agent = os.path.abspath(os.environ.get("CLAUDE_PROJECT_DIR") or d.get("cwd") or os.getcwd())
     l = lot(texte)
     if l is not None:
         n, extrait = l

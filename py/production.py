@@ -123,11 +123,8 @@ def agent_appelant(depart):
 # ── le laissez-passer ────────────────────────────────────────────────────
 
 def _dossier():
-    # PAS `socle.socle()` (0.19.9) : le crochet tourne avec CLAUDE_PLUGIN_DATA, le
-    # shell où l'agent tape `harnais laissez-passer` sans — mesuré le 04/11, le
-    # laissez-passer et le garde ne lisaient pas le même dossier.
     import socle
-    d = os.path.join(socle.maison(), ".claude", "production")
+    d = socle.partage("production")    # pas `socle()` : voir `socle.partage` (0.19.9)
     try:
         os.makedirs(d, exist_ok=True)
     except OSError:

@@ -62,6 +62,15 @@ def socle():
     return d if d else os.path.join(maison(), ".claude")
 
 
+def partage(nom):
+    """Un dossier d'état que l'agent ÉCRIT depuis son shell (`harnais
+    laissez-passer…`) et qu'un crochet RELIT : `~/.claude/<nom>`, jamais
+    `socle()`. Le crochet tourne avec CLAUDE_PLUGIN_DATA, le shell de l'agent
+    sans ; mesuré deux fois (04/11 Production, 05/11 sous-agents), les deux côtés
+    ne lisaient pas le même dossier et le laissez-passer restait invisible."""
+    return os.path.join(maison(), ".claude", nom)
+
+
 def livre():
     """Le dossier du paquet, ou None hors plugin. Sert à retrouver ce qui est
     LIVRÉ (critères de relecture, liste des rechutes d'origine) par opposition à

@@ -62,6 +62,18 @@ class Base(unittest.TestCase):
         return muet(sous_agent.laissez_passer, [motif])
 
 
+class Dossier(Base):
+    def test_le_garde_voit_le_laissez_passer_pose_depuis_le_shell(self):
+        """0.19.11 (relevé par un agent le 05/11) : le crochet tourne avec
+        CLAUDE_PLUGIN_DATA, le shell de l'agent sans — même écart que celui de la
+        Production en 0.19.9. Le laissez-passer posé à la main restait invisible."""
+        sans = {k: v for k, v in os.environ.items() if k != "CLAUDE_PLUGIN_DATA"}
+        with mock.patch.dict(os.environ, sans, clear=True):
+            self.assertEqual(self.passe(), 0)
+        self.assertIn("CLAUDE_PLUGIN_DATA", os.environ)
+        self.assertIsNone(self.juge(CONSIGNE_ALT))
+
+
 class Visuel(Base):
     def test_la_consigne_de_textes_alternatifs_est_refusee(self):
         r = self.juge(CONSIGNE_ALT)
