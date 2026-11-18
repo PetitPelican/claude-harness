@@ -331,7 +331,7 @@ def attentes(texte, avec_qui=False):
     tache = re.compile(r"^\s*[-*]\s*\[( |x|X|>|~)\]\s+(.+?)\s*\Z")
     # `@nom` doit OUVRIR un mot, sinon `root@serveur` passerait pour un
     # destinataire — d'où le regard en arrière.
-    qui = re.compile(r"(?:^|(?<=\s))@([A-Za-zÀ-ÿ][\w-]*)\b")
+    qui = re.compile(r"(?:^|(?<=\s))@([A-Za-zÀ-ÿ][\w-]*)(?![\w/-]|\.\w)")
     prio = re.compile(r"!(haut|moyen|bas)\b")
     # QUATRIÈME LECTEUR DU DIALECTE, et il fuyait : `?constat` est de la
     # mécanique, pas du texte, et n'a rien à faire dans la ligne d'entrée.
@@ -912,9 +912,10 @@ def compose(r, projet, session):
                  "fiches (date + source : dit, lu, supposé) ; ce qui identifie quelqu'un, "
                  "dans le registre local. La fin de tour le vérifie.")
         import experts
-        rp = experts.rappel(os.path.join(_s.socle(), "attente"))
-        if rp is not None:
-            l.append(rp)
+        for rp in (experts.rappel(os.path.join(_s.socle(), "attente")),
+                   experts.trop_de_fiches(faits)):
+            if rp is not None:
+                l.append(rp)
 
     lignes = equipe(r, projet, session)
     if lignes:

@@ -1,5 +1,5 @@
-controles: verdict du 2026-10-29 14:41
-source: py=eea051478aa033b3353422e1b1dab7a2cffedfbf hooks=d26a074095c4055b9021e0283c4ad9d3aca4ad5e skills=bee09a8b8f350edc71a8cf9b07862f44ff5ffeab
+controles: verdict du 2026-11-16 22:40
+source: py=42f98a7ecd305ff41566f31b01ecc40c103bffff hooks=456fd5b3e9fcd4c5541fbd527b12cad9263ec152 skills=44b7ae50225bc300e24c7a948a810944758a2a1d
 ecarts: 0 sur 28
 binaire livre: OK
 temoins du lanceur: OK
@@ -27,5 +27,5 @@ temoins du lanceur: OK
 - OK    faits des experts · ÉCARTS : AUCUN sur 13 garanties
 - OK    renvois de fin de tour · renvois : 0 écart(s)
 - OK    canal Notion · notion : 0 écart(s)
-- OK    doc et code · témoin : 111 citation(s), 24 compétence(s), 34 chemin(s) relevés, 16 gardes, 7 questions, 0 écart(s)
+- OK    doc et code · témoin : 111 citation(s), 24 compétence(s), 34 chemin(s) relevés, 17 gardes, 7 questions, 0 écart(s)
 - OK    garde du coffre · 14 paire(s) jouée(s) sur un faux coffre + le témoin, 0 en échec

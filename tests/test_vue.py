@@ -95,6 +95,11 @@ def commandes_mortes(texte):
 
 
 class Essais(unittest.TestCase):
+    def test_un_fichier_cite_n_est_pas_un_destinataire(self):
+        t = vue.taches("- [ ] relire @AGENTS.md\n- [ ] voir @user.\n")
+        self.assertEqual([x.qui for x in t], ["", "user"])
+        self.assertIn("@AGENTS.md", t[0].titre)
+
     def test_servi_seulement_si_declare_inscrit_et_trace_et_chaque_manque_seul_le_fait_tomber(self):
         """Chaque condition, retirée SEULE, fait tomber le « servi » — sinon un
         verdict qui dit toujours « ok » passerait les mêmes essais."""

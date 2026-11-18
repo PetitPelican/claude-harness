@@ -19,7 +19,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "py"))
 
 import attente  # noqa: E402
 from attente import (blocs_bruts, chantiers, consigne, cibles_a_rappeler,  # noqa: E402
-                     dernier_message, enveloppe_note, fini_re, fnmatch, insere_cible,
+                     dernier_message, renvoi_de_garde, enveloppe_note, fini_re, fnmatch, insere_cible,
                      libelle_carnet, ligne_cible, lien_notion, lisible, ou_ecrire,
                      posee, repere_cible, reponse_re, sha16, sort_de_la_machine,
                      specs_constat, texte_cible, titre_et_corps, tour_carnet,
@@ -93,6 +93,35 @@ class EssaisPoser(unittest.TestCase):
         tour = dernier_message({"transcript_path": f})
         self.assertNotIn("version 11", tour, tour)
         shutil.rmtree(d, ignore_errors=True)
+
+    def test_un_message_de_pair_ou_une_tache_programmee_ouvrent_un_tour(self):
+        """LE CAS DE QA, 16/11/2026 : la phrase écrite, renvoyée, retirée ; puis un
+        message de pair et une tâche programmée — `isMeta` tous les deux. La garde
+        relisait la phrase à chaque tour. Le contre-exemple : le renvoi de garde,
+        lui, garde le tour ouvert (test précédent)."""
+        d = tempfile.mkdtemp()
+        self.addCleanup(shutil.rmtree, d, True)
+        f = os.path.join(d, "harnais-pair-%d.jsonl" % os.getpid())
+        def a(t):
+            return json.dumps({"type": "assistant", "message": {"content": [{"type": "text", "text": t}]}})
+        def meta(t):
+            return json.dumps({"type": "user", "isMeta": True, "message": {"content": t}})
+        base = [
+            json.dumps({"type": "user", "message": {"content": "<task-notification>fini</task-notification>"}}),
+            a("OPS attend toujours ta réponse."),
+            meta("Stop hook feedback:\n[command hook 1]: attente : ..."),
+            a("Je retire ma phrase."),
+        ]
+        for ouvre in ("Another Claude session sent a message:\n<cross-session-message from=\"x\">y</cross-session-message>",
+                      "gofast — battement : mettre en ligne la refonte"):
+            with self.subTest(ouvre=ouvre[:12]):
+                with open(f, "w", encoding="utf-8") as h:
+                    h.write("\n".join(base + [meta(ouvre), a("Rien ne t'attend.")]))
+                tour = dernier_message({"transcript_path": f, "last_assistant_message": "Rien ne t'attend."})
+                self.assertEqual(tour, "Rien ne t'attend.")
+        # Le renvoi en blocs de texte se reconnaît aussi.
+        self.assertTrue(renvoi_de_garde([{"type": "text", "text": "Stop hook feedback: x"}]))
+        self.assertFalse(renvoi_de_garde("gofast — battement"))
 
     def test_une_question_posee_aux_boutons_est_posee(self):
         """28/10/2026 : seule la prose comptait, et l'agent qui posait sa question
@@ -310,6 +339,10 @@ class Essais(unittest.TestCase):
         # aucune clé — mesuré invisible à code de sortie 0.
         with self.assertRaises(ValueError):
             json.loads("bonjour")
+
+    def test_un_fichier_cite_n_est_pas_un_destinataire(self):
+        c = chantiers("## Chantiers\n- [ ] relire @AGENTS.md\n- [ ] voir @user.\n")
+        self.assertEqual([t.qui for t in c], [None, "user"])
 
     def test_le_dialecte_rend_les_memes_taches_que_le_parseur_python(self):
         t = ("## Chantiers\n"
@@ -761,6 +794,60 @@ class EssaisMotif(unittest.TestCase):
         rc, err = self.tour_avec(self.QUESTION + "      motif → périmètre\n" + self.FIN,
                                  "Je range les restes de l'ancien outil aux archives ? 1 oui / 2 non")
         self.assertEqual((rc, err), (0, ""))
+
+    def journal_de_session(self, entree, appels=()):
+        """Un journal de session minimal : le point d'entrée, et les appels d'outils du tour."""
+        f = os.path.join(self.maison, "session-%s.jsonl" % entree)
+        es = [{"type": "user", "entrypoint": entree, "message": {"role": "user", "content": "go"}}]
+        for a in appels:
+            es.append({"type": "assistant", "entrypoint": entree,
+                       "message": {"role": "assistant", "content": [dict(a, type="tool_use")]}})
+        with open(f, "w", encoding="utf-8") as h:
+            h.write("\n".join(json.dumps(e) for e in es) + "\n")
+        return f
+
+    def fin_de_tour_dans(self, message, journal, session="b19", actif=False):
+        return self.appelle("attente", {"session_id": session, "last_assistant_message": message,
+                                        "stop_hook_active": actif, "transcript_path": journal})
+
+    def test_une_question_en_clair_est_renvoyee_aux_boutons_une_fois(self):
+        """05/11/2026 : « il n'y a aucun moyen d'obliger les boutons ? », puis oui."""
+        q = ("Rien n'est écrit en PROD.\n\n**Ta réponse est attendue : je mets en ligne en PROD ?**\n"
+             "1. **Oui, la base maintenant.** Je te redemande avant le site.\n"
+             "2. **Oui pour tout l'enchaînement.**\n3. **Pas maintenant :** rien ne bouge.\n")
+        cli = self.journal_de_session("cli")
+        rc, err = self.fin_de_tour_dans(q, cli, session="b19a")
+        self.assertEqual(rc, 2, err)
+        self.assertIn("AskUserQuestion", err)
+        # Sans boucle : le tour déjà renvoyé passe.
+        rc, _ = self.fin_de_tour_dans(q, cli, session="b19a", actif=True)
+        self.assertEqual(rc, 0)
+        # TÉMOINS : la même question posée aux boutons dans le tour passe ; relancée
+        # sans personne (sdk-cli) ou d'origine inconnue, le clair reste permis.
+        bouton = {"name": "AskUserQuestion", "input": {"questions": [
+            {"question": "Je mets en ligne ?", "options": [{"label": "Oui"}, {"label": "Non"}]}]}}
+        rc, err = self.fin_de_tour_dans(q, self.journal_de_session("cli", [bouton]), session="b19b")
+        self.assertEqual((rc, err), (0, ""))
+        rc, err = self.fin_de_tour_dans(q, self.journal_de_session("sdk-cli"), session="b19c")
+        self.assertEqual((rc, err), (0, ""))
+        rc, err = self.fin_de_tour("Je publie ? 1 oui / 2 non", session="b19d")
+        self.assertEqual((rc, err), (0, ""))
+
+    def test_les_formes_d_une_question_en_clair(self):
+        for q in ("Je publie la 0.19.12 ?\n1. oui\n2. non",
+                  "**Je passe le Mac en 0.19.6 ?** 1 oui / 2 pas encore",
+                  "Ta réponse :\n\n1. Oui, la base.\n2. Pas maintenant.",
+                  "On garde lequel ?\n1 → l'ancien\n2 → le nouveau",
+                  "Le plan attend ta validation :\n- 1) phase 1\n- 2) phase 2"):
+            self.assertTrue(attente.questions_en_clair(q), q)
+        # TÉMOINS : des listes qui ne demandent rien, et une question sans voies.
+        for rien in ("Ce que j'ai fait :\n1. la base\n2. le site\n3. la page d'aide",
+                     "Étapes de la mise à jour :\n1. marché\n2. inscriptions",
+                     "Pourquoi ? Parce que le banc était relatif.\nEnsuite :\n1. a\n2. b",
+                     "Tu veux que je continue ?",
+                     "Je publie ?\n1. oui",
+                     attente.BOUTONS + " Je publie ? Oui Non\nJe publie ?\n1. oui\n2. non"):
+            self.assertEqual(attente.questions_en_clair(rien), [], rien)
 
     def test_une_annonce_sans_question_est_renvoyee_une_fois(self):
         rc, err = self.fin_de_tour("Point fait. Le plan de chantier attend toujours ta validation.", session="a1")

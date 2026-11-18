@@ -155,7 +155,7 @@ flowchart TD
     EX --> J[journal]
     EX --> U1[compteur d'usage]
     W -->|va lire un fichier| U2[compteur d'usage]
-    W --> F([Fin de tour]) --> AT[attente : 16 gardes]
+    W --> F([Fin de tour]) --> AT[attente : 17 gardes]
     AT -->|tout va bien| H([La main revient à l'humain])
     AT -->|il manque quelque chose| W
 ```
@@ -169,7 +169,7 @@ flowchart TD
 | après une commande shell | `compteur d'usage` | note qu'une note de mémoire a été lue |
 | après une lecture de fichier | `compteur d'usage` | idem, par l'autre porte |
 | refus du mode auto | `refus-auto` | note le refus ; la fin de tour le rappelle (voir B17) |
-| fin de tour | `attente` | les seize gardes |
+| fin de tour | `attente` | les dix-sept gardes |
 
 **Le code de sortie est tout le pouvoir du dispositif :**
 
@@ -187,7 +187,7 @@ garde **rend la main impossible** tant que le défaut est là.
 
 ---
 
-## 5. Les seize gardes de fin de tour
+## 5. Les dix-sept gardes de fin de tour
 
 C'est le cœur. Au moment où l'agent s'apprête à rendre la main, seize questions
 sont posées à l'état du projet. Chacune peut le renvoyer travailler. (Les numéros
@@ -212,6 +212,7 @@ sautent : B2 et B3 ont été retirées avec les Rappels, B4 n'en garde que la mo
 | **B16** | sur un agent **expert** (`HARNAIS_PROFIL=expert`) : un fait que l'humain vient de donner n'est noté dans aucune fiche, ou un fait qui identifie quelqu'un est rangé dans une fiche partagée. C'est un juge qui le décide, pas des mots-clés (§6 bis) |
 | **B17** | le message final demande à l'humain de **taper une commande** (une ligne ou un bloc qui commence par `!`) — il n'a pas de terminal, il travaille depuis l'app à distance ; ou le mode auto a refusé un geste pendant le tour et le message ne demande pas de passer au **mode edit**. Une seule fois, sans boucle |
 | **B18** | le message final **annonce** une décision attendue de l'humain (« ta réponse est attendue », « attend ta validation », « points à lui poser ») sans la poser — ni aux boutons de l'app, ni en clair avec ses voies numérotées. Une seule fois, sans boucle |
+| **B19** | le message final **pose une question en clair** (une question suivie de ses voies numérotées, ou « 1 oui / 2 non » sur sa ligne) sans l'avoir posée aux boutons de l'app (AskUserQuestion) dans le tour — en session interactive seulement : relancée sans personne (`sdk-cli`) ou d'origine inconnue, le clair reste permis. Une seule fois, sans boucle |
 
 ### La garde B7, pour comprendre l'esprit
 

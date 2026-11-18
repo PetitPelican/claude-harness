@@ -32,16 +32,24 @@ instrument est en panne se fait retirer. Mais la panne s'écrit au journal des
 blocages (`B16-muet`) et le briefing la redit : un silence ne doit pas se lire
 comme « aucun fait oublié ».
 
-UNE FOIS PAR ÉTAT, comme les autres gardes d'état : le même ensemble de faits
-manquants ne renvoie qu'une fois. Au passage suivant, le juge relit — c'est ce qui
-prouve que l'agent a VRAIMENT noté, pas seulement promis.
+UNE FOIS PAR ÉTAT, comme les autres gardes d'état : les mêmes messages ne
+renvoient qu'une fois. Au passage suivant, le juge relit — c'est ce qui prouve que
+l'agent a VRAIMENT noté, pas seulement promis. L'état se signe sur les MESSAGES,
+pas sur les mots du juge : il reformule chaque fait à chaque appel, et une
+signature sur ses phrases a renvoyé trois fois le CTO pour les mêmes faits (21/10).
+
+DES FICHES COUPÉES NE PROUVENT RIEN. Le juge ne reçoit que MAX_FICHES caractères.
+Le 21/10, les fiches du CTO en faisaient 100 200 pour un plafond de 60 000 :
+`stack.md`, où les faits étaient notés, ne partait jamais, et le juge, « dans le
+doute », les déclarait nulle part. Quand les fiches dépassent le plafond, la garde
+ne refuse pas : elle journalise `B16-coupe` et le briefing le redit.
 """
 import os
 
 MODELE = "claude-sonnet-5"
 DELAI_JUGE = 25            # s — la fin de tour est coupée à 40 s par Claude Code
 MAX_MESSAGE = 6000         # caractères par message du commanditaire transmis au juge
-MAX_FICHES = 60000         # caractères de fiches transmis au juge
+MAX_FICHES = 200000        # caractères de fiches transmis au juge (≈ 50 000 jetons)
 MAX_LOCAL = 20000
 REGISTRE = os.path.join("local", "registre.md")
 
@@ -172,6 +180,12 @@ def _lis(p, plafond):
 
 
 # ── le juge ─────────────────────────────────────────────────────────────────
+
+def taille_fiches(d_fact):
+    """Le nombre de caractères des fiches, lu en entier : ce qui dit si le juge
+    les recevra toutes."""
+    return sum(len(_lis(p, 10 ** 9)) for p in fiches(d_fact))
+
 
 def invite(messages, d_fact, registre):
     parts = []
@@ -348,7 +362,17 @@ def garde(data, d_fact, ed, session, affiche):
         _ecris_etat(f, etat)
         return None
 
+    taille = taille_fiches(d_fact)
     verdict = juge(invite(juges, d_fact, registre))
+    coupe = verdict is not None and taille > MAX_FICHES and any(
+        x["note"] == "nulle-part" for x in verdict)
+    if coupe:
+        # Le juge n'a pas tout lu : son « nulle part » ne vaut rien. Un fait
+        # identifiant qu'il a VU dans une fiche partagée, lui, reste vrai.
+        verdict = [x for x in verdict if x["note"] != "nulle-part"]
+        etat["coupe"] = taille
+    else:
+        etat.pop("coupe", None)
     if verdict is None:
         # Deux essais pour les mêmes messages, puis on passe : un juge en panne
         # ne doit pas taxer chaque tour de 25 s.
@@ -368,9 +392,8 @@ def garde(data, d_fact, ed, session, affiche):
         etat["vu"] = dernier
         etat.pop("sig", None)
         _ecris_etat(f, etat)
-        return None
-    s = _sig(*([u for u, _ in juges] + sorted(x["fait"] for x in manquants)
-               + ["!"] + sorted(x["fait"] for x in mal_ranges)))
+        return ("", "B16-coupe", str(taille)) if coupe else None
+    s = _sig(*[u for u, _ in juges])
     if etat.get("sig") == s:
         # Déjà renvoyé pour ce même état : une garde qui mord une fois a fait son
         # travail. Si l'agent juge que ce n'est pas un fait, il l'a dit à l'humain.
@@ -411,6 +434,16 @@ def rappel(ed, session_quelconque=None):
                 "l'humain a écrit — ce qu'il a donné n'a PAS été vérifié. Note-le toi-même, "
                 "et dis-le-lui." % pires)
     return None
+
+
+def trop_de_fiches(d_fact):
+    """Pour le briefing : les fiches de CET agent dépassent-elles ce que le juge lit ?"""
+    t = taille_fiches(d_fact)
+    if t <= MAX_FICHES:
+        return None
+    return ("garde des faits : tes fiches font %d caractères, le juge n'en lit que %d — il ne "
+            "peut plus dire si un fait est déjà noté, et la garde se tait. Allège-les : le "
+            "périmé se remplace, il ne s'empile pas." % (t, MAX_FICHES))
 
 
 MSG_FAITS = (

@@ -32,6 +32,15 @@ class Verrou(unittest.TestCase):
         p.start()
         self.addCleanup(p.stop)
 
+    def test_archi_est_gardien(self):
+        """0.19.16 (décision de l'humain du 18/11) : Archi écrit les CLAUDE.md,
+        comme le CTO et Harness. TÉMOIN : un nom proche reste refusé."""
+        self.en("Archi")
+        self.assertIsNone(consignes.juge(edit("/x/Projet/CLAUDE.md")))
+        self.assertIsNone(consignes.juge(bash("echo x >> CLAUDE.md")))
+        self.en("Archi-bis")
+        self.assertIn("Archi", consignes.juge(edit("/x/Projet/CLAUDE.md")))
+
     def test_un_agent_ne_modifie_pas_ses_consignes(self):
         self.en("Alpha PO")
         for d in (edit("/x/Alpha/agents/Alpha PO/CLAUDE.md"), edit("/x/CLAUDE.md", "Write"),

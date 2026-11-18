@@ -199,9 +199,11 @@ class Apres(unittest.TestCase):
 
     def test_chaque_forme_connue(self):
         for p in ("sbp_", "sb_secret_", "sk_live_", "rk_live_", "sk_test_", "rk_test_", "ghp_",
-                  "dp.st.", "sk-ant-", "sk-proj-", "AIza", "xoxb-", "glpat-", "npm_"):
+                  "dp.st.", "sk-ant-", "sk-proj-", "xoxb-", "glpat-", "npm_"):
             with self.subTest(p=p):
                 self.assertTrue(self.temoin("x=" + _fausse(p)), p)
+        # Une clé Google fait 39 caractères, ni plus ni moins (motif borné, 16/11/2026).
+        self.assertTrue(self.temoin("x=" + _fausse("AIza")[:39] + "\n"), "AIza")
         self.assertTrue(self.temoin("x=AKIA" + "A1B2C3D4E5F6G7H8"), "AWS : majuscules et chiffres")
         self.assertTrue(self.temoin(_jwt("service_role")))
         self.assertTrue(self.temoin("", cmd="doppler secrets set A=" + _fausse("sk_live_")))
@@ -216,6 +218,53 @@ class Apres(unittest.TestCase):
                   "pk_live_" + "A1b2C3d4E5f6G7h8" * 2, _jwt("anon"), "AKIA court", "npm_court"):
             with self.subTest(s=s):
                 self.assertEqual(self.temoin(s), "")
+
+    # ── les images (16/11/2026, signalé par QA) ─────────────────────────────
+    def _image(self, contenu):
+        import base64
+        o = io.StringIO()
+        with contextlib.redirect_stdout(o):
+            coffre.temoin(json.dumps({"tool_name": "Read", "tool_input": {"file_path": "/x/c.png"},
+                                      "tool_response": {"type": "image", "file": {
+                                          "base64": base64.b64encode(contenu).decode(),
+                                          "type": "image/png", "originalSize": 9,
+                                          "dimensions": {"width": 1}}}}))
+        return o.getvalue()
+
+    def _octets_qui_encodent(self, texte):
+        """Des octets dont le base64 porte `texte` en clair (aligné sur 4)."""
+        import base64
+        return base64.b64decode("QUFB" + texte + "QUFB")
+
+    def test_une_image_qui_encode_un_motif_de_cle_se_tait(self):
+        """Le cas mesuré : le base64 d'une capture porte « AKIA » + 16. Le contre-exemple :
+        la même clé, écrite en clair dans une sortie, est signalée."""
+        for faux in ("AKIA" + "A1B2C3D4E5F6G7H8", "AIza" + "Sy" + "A" * 33 + "Q"):
+            with self.subTest(faux=faux[:4]):
+                self.assertEqual(self._image(self._octets_qui_encodent(faux)), "")
+        # Le binaire entier qui a la forme exacte d'une clé : les bornes ne suffisent
+        # pas (les guillemets du JSON la bornent), seul le retrait du binaire la tait.
+        import base64
+        self.assertEqual(self._image(base64.b64decode("AKIA" + "A1B2C3D4E5F6G7H8")), "")
+        self.assertTrue(self.temoin("AWS_ACCESS_KEY_ID=AKIA" + "A1B2C3D4E5F6G7H8\n"))
+
+    def test_une_cle_au_milieu_d_un_texte_encode_se_tait(self):
+        """Lue comme texte (un `cat` de base64), la suite ininterrompue n'est pas une clé ;
+        bornée par un signe, elle en est une."""
+        self.assertEqual(self.temoin("iVBORw0KGgo" + "AKIA" + "A1B2C3D4E5F6G7H8" + "Zm9v"), "")
+        self.assertEqual(self.temoin("iVBORw0KGgo" + "AIza" + "B" * 35 + "Zm9v"), "")
+        self.assertTrue(self.temoin('"AKIA' + 'A1B2C3D4E5F6G7H8"'))
+        self.assertTrue(self.temoin("key=AIza" + "B" * 35 + "&x=1"))
+
+    def test_une_cle_dans_le_texte_d_une_reponse_qui_porte_une_image_est_vue(self):
+        """On ne retire que le binaire : le reste de la réponse est toujours lu."""
+        o = io.StringIO()
+        with contextlib.redirect_stdout(o):
+            coffre.temoin(json.dumps({"tool_name": "mcp__x", "tool_input": {},
+                                      "tool_response": [{"type": "image", "data": "QUFB",
+                                                         "mimeType": "image/png"},
+                                                        {"type": "text", "text": "t=" + _fausse("sbp_")}]}))
+        self.assertIn("Supabase", o.getvalue())
 
 
 if __name__ == "__main__":

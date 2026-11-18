@@ -69,7 +69,7 @@ _CHANTIERS_RE = re.compile(r"^#{1,3}" + _S + r"*chantiers\b.*$", re.I | re.M)
 _IMPORT_RE = re.compile(r"^@(\S+)", re.M)
 # Le `@` doit ouvrir un mot — sinon `root@serveur` serait lu comme un
 # destinataire nommé « serveur ».
-_QUI_RE = re.compile(r"(?:^|(?<=" + _S + r"))@([A-Za-zÀ-ÿ][\w-]*)\b")
+_QUI_RE = re.compile(r"(?:^|(?<=" + _S + r"))@([A-Za-zÀ-ÿ][\w-]*)(?![\w/-]|\.\w)")
 
 
 def lis(p):

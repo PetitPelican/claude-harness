@@ -504,8 +504,10 @@ FORMES = [
     ("Doppler, jeton", r"dp\.(?:st|pt|ct|sa|scim|audit)\.[A-Za-z0-9._-]{20,}"),
     ("Anthropic, clé", r"sk-ant-[A-Za-z0-9_-]{30,}"),
     ("OpenAI, clé", r"sk-(?!ant-)(?:proj-|svcacct-)?[A-Za-z0-9_-]{32,}"),
-    ("AWS, clé d'accès", r"(?:AKIA|ASIA)[0-9A-Z]{16}"),
-    ("Google, clé d'API", r"AIza[0-9A-Za-z_-]{35}"),
+    # Bornées : sans bornes, 20 caractères pris au milieu d'un long texte encodé (une
+    # image, un fichier en base64) passent pour une clé (16/11/2026, QA et Designer).
+    ("AWS, clé d'accès", r"(?<![0-9A-Za-z+/])(?:AKIA|ASIA)[0-9A-Z]{16}(?![0-9A-Za-z+/])"),
+    ("Google, clé d'API", r"(?<![0-9A-Za-z+/_-])AIza[0-9A-Za-z_-]{35}(?![0-9A-Za-z+/_-])"),
     ("Slack, jeton", r"xox[abposr]-[A-Za-z0-9-]{10,}"),
     ("GitLab, jeton", r"glpat-[A-Za-z0-9_-]{20,}"),
     ("npm, jeton", r"npm_[A-Za-z0-9]{36}"),
@@ -558,6 +560,26 @@ def _journal(lignes):
         return None
 
 
+_CHAMPS_BINAIRES = ("base64", "data")
+
+
+def sans_binaire(v):
+    """La réponse d'un outil sans ses contenus binaires encodés : une image, un PDF
+    lus par `Read` arrivent en base64, et le modèle les voit comme image, jamais comme
+    texte. Ce qu'on y trouverait n'est pas une clé passée en clair, c'est le hasard
+    de l'encodage — six captures d'écran sur six, le 16/11/2026, « AWS » à tort."""
+    if isinstance(v, list):
+        return [sans_binaire(x) for x in v]
+    if not isinstance(v, dict):
+        if isinstance(v, str) and v.startswith("data:") and ";base64," in v[:200]:
+            return v[:v.index(";base64,")]
+        return v
+    media = (v.get("type") in ("image", "document", "pdf", "base64")
+             or any(k in v for k in ("mimeType", "media_type", "dimensions", "originalSize")))
+    return {k: ("" if media and k in _CHAMPS_BINAIRES and isinstance(x, str)
+                else sans_binaire(x)) for k, x in v.items()}
+
+
 def temoin(entree):
     """PostToolUse : la clé vue dans la commande ou sa sortie se signale."""
     if not any(m in entree for m in INDICES):
@@ -569,7 +591,8 @@ def temoin(entree):
         return
     if not isinstance(d, dict):
         return
-    texte = json.dumps([d.get("tool_input"), d.get("tool_response")], ensure_ascii=False)
+    texte = json.dumps([d.get("tool_input"), sans_binaire(d.get("tool_response"))],
+                       ensure_ascii=False)
     trouvees = cles(texte)
     if not trouvees:
         return

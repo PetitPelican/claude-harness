@@ -64,6 +64,13 @@ class Essais(unittest.TestCase):
         self.assertEqual(briefing.attentes("- [ ] copier vers root@serveur"), [])
         self.assertNotEqual(briefing.attentes("- [ ] voir @user"), [])
 
+    def test_un_fichier_cite_n_est_pas_un_destinataire(self):
+        """0.19.16 (relevé le 18/11) : « @AGENTS.md » était lu comme une tâche pour AGENTS."""
+        for l in ("- [ ] relire @AGENTS.md", "- [ ] voir @docs/notes", "- [ ] lire @CLAUDE.md."):
+            self.assertEqual(briefing.attentes(l), [], l)
+        for l in ("- [ ] voir @user.", "- [ ] voir @QA, puis lui écrire", "- [ ] @EQ-PO : recette"):
+            self.assertNotEqual(briefing.attentes(l), [], l)
+
     def test_l_entete_ne_retient_que_les_quatre_champs(self):
         e = briefing.entete("---\nmaj: 2026-09-09\ncap: aller là\nautre: ignoré\n---\n\ntexte")
         self.assertEqual(briefing.champ(e, "maj"), "2026-09-09")

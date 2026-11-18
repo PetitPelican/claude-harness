@@ -105,7 +105,7 @@ APPELÉES PAR LE HARNAIS (chacune lit sa charge JSON sur l'entrée standard) :
   carnet    lecture du carnet d'équipe (JSON, pour comparer)
   equipe-amorce  crée le carnet d'équipe — appelé UNE fois, à la conversion
   mind-guard PreToolUse/Bash — garde les faits du projet et la déclaration d'état
-  consignes  PreToolUse — seuls le CTO et Harness écrivent un CLAUDE.md (décision du 14/10)
+  consignes  PreToolUse — seuls le CTO, Harness et Archi écrivent un CLAUDE.md (14/10, 18/11)
   production PreToolUse/Bash — rien ne part en Production sans laissez-passer (0.19)
   coffre       PreToolUse/Bash, Read, Grep — aucun outil n'affiche une valeur de secret (0.19.1)
   coffre-temoin PostToolUse — une clé passée en clair se signale : à refaire (0.19.1)

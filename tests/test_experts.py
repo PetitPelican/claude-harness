@@ -88,6 +88,59 @@ class Essais(unittest.TestCase):
         open(os.path.join(self.d, ".gitignore"), "w").write("brain/local/\n")
         self.assertTrue(experts.ignore_par_git(reg))
 
+    # ── la garde entière, juge simulé ───────────────────────────────────────
+
+    def _garde(self, verdict, taille_fiche=100):
+        fact = os.path.join(self.d, "brain", "fact")
+        os.makedirs(fact, exist_ok=True)
+        with open(os.path.join(fact, "stack.md"), "w", encoding="utf-8") as h:
+            h.write("x" * taille_fiche)
+        ed = os.path.join(self.d, "etat")
+        os.makedirs(ed, exist_ok=True)
+        t = _journal(self.d, [_u("m1", "Metabase a été installé par l'équipe sur le Mac.")])
+        os.environ["HARNAIS_FAITS_SIMULE"] = json.dumps({"faits": verdict})
+        self.addCleanup(os.environ.pop, "HARNAIS_FAITS_SIMULE", None)
+        return experts.garde({"transcript_path": t}, fact, ed, "s", lambda p: p)
+
+    def test_un_juge_qui_reformule_ne_renvoie_pas_deux_fois(self):
+        """21/10, chez le CTO : trois renvois pour les mêmes faits, parce que l'état
+        se signait sur les PHRASES du juge, qui changent à chaque appel. Le
+        contre-exemple : le premier passage, lui, refuse."""
+        v = self._garde([{"fait": "Metabase installé par l'équipe", "note": "nulle-part"}])
+        self.assertEqual(v[1], "B16-faits")
+        v = self._garde([{"fait": "L'équipe a installé Metabase sur le Mac", "note": "nulle-part"}])
+        self.assertIsNone(v)
+
+    def test_des_fiches_coupees_ne_font_pas_refuser(self):
+        """Le juge ne lit que MAX_FICHES caractères : au-delà, son « nulle part »
+        ne prouve rien (21/10 : `stack.md` du CTO jamais envoyé). Le témoin : les
+        mêmes fiches sous le plafond font refuser."""
+        nulle = [{"fait": "Metabase installé", "note": "nulle-part"}]
+        v = self._garde(nulle, taille_fiche=experts.MAX_FICHES + 1)
+        self.assertEqual(v[:2], ("", "B16-coupe"))
+        shutil.rmtree(os.path.join(self.d, "etat"))
+        v = self._garde(nulle, taille_fiche=experts.MAX_FICHES)
+        self.assertEqual(v[1], "B16-faits")
+
+    def test_un_identifiant_vu_dans_une_fiche_partagee_refuse_meme_coupe(self):
+        """Ce que le juge a VU dans une fiche partagée reste vrai, même s'il n'a pas
+        tout lu."""
+        v = self._garde([{"fait": "un numéro de compte", "note": "partage", "identifiant": True},
+                         {"fait": "Metabase installé", "note": "nulle-part"}],
+                        taille_fiche=experts.MAX_FICHES + 1)
+        self.assertEqual(v[1], "B16-faits")
+        self.assertIn("numéro de compte", v[0])
+        self.assertNotIn("Metabase", v[0])
+
+    def test_le_briefing_dit_quand_les_fiches_debordent(self):
+        fact = os.path.join(self.d, "fact")
+        os.makedirs(fact)
+        with open(os.path.join(fact, "a.md"), "w", encoding="utf-8") as h:
+            h.write("é" * experts.MAX_FICHES)
+        self.assertIsNone(experts.trop_de_fiches(fact))
+        with open(os.path.join(fact, "b.md"), "w", encoding="utf-8") as h:
+            h.write("x")
+        self.assertIn("le juge n'en lit que", experts.trop_de_fiches(fact))
 
 if __name__ == "__main__":
     unittest.main()

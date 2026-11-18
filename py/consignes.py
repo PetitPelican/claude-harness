@@ -2,7 +2,7 @@
 """LE VERROU DES CONSIGNES — hook PreToolUse (Edit, Write, MultiEdit, NotebookEdit, Bash).
 
 Décision du 14/10/2026 : les agents ne touchent pas à leur `CLAUDE.md`, sauf le CTO
-et Harness. Les `CLAUDE.md` —
+et Harness ; Archi les rejoint le 18/11/2026 (décision de l'humain). Les `CLAUDE.md` —
 ceux du Mac, de l'atelier, de chaque projet, du rôle de chaque agent — sont lus
 à chaque démarrage : ils disent à l'agent qui il est. Jusqu'ici la règle n'était
 qu'écrite ; elle est désormais tenue.
@@ -22,7 +22,7 @@ comprend pas se fait désactiver.
 import os
 import re
 
-GARDIENS = ("CTO", "Harness")
+GARDIENS = ("CTO", "Harness", "Archi")
 
 NOM = re.compile(r"CLAUDE\.md", re.I)
 
@@ -142,14 +142,14 @@ def juge(d):
     if agent() in GARDIENS:
         return None
     return (
-        "consignes : les CLAUDE.md ne se modifient que par %s (décision du "
-        "14/10/2026 : seuls le CTO et Harness y touchent).\n\n"
+        "consignes : les CLAUDE.md ne se modifient que par %s (décisions du "
+        "14/10 et du 18/11/2026).\n\n"
         "  visé : %s\n\n"
         "Ce fichier dit à chaque agent qui il est ; il ne bouge que sur l'ordre de l'humain. "
         "Si une consigne te semble fausse ou manquante, écris-le dans ton todo, adressé à "
-        "l'humain, avec la phrase que tu proposes — le CTO la posera s'il dit oui. Ta "
+        "l'humain, avec la phrase que tu proposes — un gardien la posera s'il dit oui. Ta "
         "mémoire de travail (état, tâches, faits) n'est pas concernée."
-        % (" et ".join(GARDIENS), cible))
+        % (", ".join(GARDIENS[:-1]) + " et " + GARDIENS[-1], cible))
 
 
 def main(entree):

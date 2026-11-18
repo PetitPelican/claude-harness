@@ -851,7 +851,7 @@ def chantiers(texte):
     tache = _re(r"^\s*[-*]\s*\[( |x|X|>|~)\]\s+(.+?)\s*\Z")
     titre = _re(r"^#{1,3}\s")
     prio = prio_re()
-    qui_re = _re(r"(?:^|(?<=\s))@([A-Za-zÀ-ÿ][\w-]*)\b")
+    qui_re = _re(r"(?:^|(?<=\s))@([A-Za-zÀ-ÿ][\w-]*)(?![\w/-]|\.\w)")
     sep = _re(r"\s{2,}")
     out = []
     for ligne in lignes(source):
@@ -1425,6 +1425,72 @@ def annonces_sans_question(message):
     return [m.group(0).strip()[:90] for m in ANNONCE.finditer(message)]
 
 
+# UNE QUESTION EN CLAIR ALORS QUE LES BOUTONS SONT LÀ (décision du commanditaire,
+# 05/11/2026 : « il n'y a aucun moyen d'obliger les boutons ? », puis oui). Le
+# clair n'est permis que là où les boutons n'ont personne pour répondre : une
+# session relancée sans personne (`sdk-cli`). Une voie : « 1. », « 1) », « 1 → »,
+# ou « 1 oui / 2 non » sur la ligne de la question.
+VOIE_CLAIR = _re(r"^[ \t>*-]*(?:\*\*)?[1-4](?:\*\*)?\s*(?:[.)—:-]|→)")
+VOIES_EN_LIGNE = _re(r"\?[^?\n]*?\b1\b[^/\n]{1,60}/\s*\*{0,2}2\b")
+TETE_DE_REPONSE = _re(r"(?i)^[\W_]*(?:ta|votre|ton|tes|vos)\s+(?:r[ée]ponses?|choix|d[ée]cisions?)[\W_]*$")
+
+
+def questions_en_clair(message):
+    """Les questions que le message pose en clair, voies numérotées comprises,
+    quand le tour ne les a pas posées aux boutons. La tête d'une liste de voies
+    doit porter la question (« ? », une annonce, « Ta réponse : ») : une liste
+    d'étapes n'en est pas une."""
+    message = message or ""
+    if BOUTONS in message:
+        return []
+    ls = lignes(message)
+    out = []
+    for i, l in enumerate(ls):
+        if VOIES_EN_LIGNE.search(l):
+            out.append(l.strip()[:90])
+            continue
+        if not l.strip() or VOIE_CLAIR.search(l):
+            continue
+        suite = [x for x in ls[i + 1:i + 9] if x.strip()]
+        voies = 0
+        for x in suite:
+            if not VOIE_CLAIR.search(x):
+                break
+            voies += 1
+        if voies < 2:
+            continue
+        tete = l.strip()
+        if "?" in tete or ANNONCE.search(tete) or TETE_DE_REPONSE.search(tete):
+            out.append(tete[:90])
+    return out
+
+
+def point_d_entree(data):
+    """Comment la session a été lancée, lu dans son journal : `cli` (quelqu'un
+    devant, ou branché à distance), `sdk-cli` (relancée sans personne). Le
+    dernier relevé fait foi. Illisible → None, et la garde laisse passer."""
+    chemin = data.get("transcript_path")
+    if not isinstance(chemin, str) or not chemin:
+        return None
+    try:
+        with open(chemin, "rb") as f:
+            taille = os.fstat(f.fileno()).st_size
+            f.seek(max(0, taille - 300000))
+            brut = f.read().decode("utf-8", "replace")
+    except (OSError, ValueError):
+        return None
+    vus = _re(r'"entrypoint"\s*:\s*"([^"]+)"').findall(brut)
+    return vus[-1] if vus else None
+
+
+def renvoi_de_garde(contenu):
+    """Ce message est-il le renvoi d'une garde de fin de tour (« Stop hook feedback ») ?"""
+    if isinstance(contenu, list):
+        contenu = "".join(x.get("text", "") for x in contenu
+                          if isinstance(x, dict) and isinstance(x.get("text"), str))
+    return isinstance(contenu, str) and contenu.lstrip().startswith("Stop hook feedback")
+
+
 def dernier_message(data):
     """Le texte que l'agent a écrit depuis le dernier message qui n'est pas de lui
     — ce qu'il s'apprête à rendre. Claude Code le donne parfois directement ;
@@ -1468,10 +1534,13 @@ def dernier_message(data):
             resultat_ = isinstance(contenu, list) and all(
                 isinstance(x, dict) and x.get("type") == "tool_result" for x in contenu)
             # UN RENVOI DE FIN DE TOUR N'OUVRE PAS UN NOUVEAU TOUR (27/09/2026).
-            # Il est marqué `isMeta`. Remettre à zéro dessus faisait oublier ce
-            # que l'agent venait de poser — et le forçait à tout recopier.
-            meta = e.get("isMeta") is True
-            if not resultat_ and not meta:
+            # Remettre à zéro dessus faisait oublier ce que l'agent venait de
+            # poser — et le forçait à tout recopier. Il se reconnaît à son texte,
+            # PAS à `isMeta` : un message de pair et une tâche programmée portent
+            # aussi `isMeta`, et eux ouvrent un tour. Les confondre gardait tout
+            # depuis le dernier message humain : QA, 16/11/2026, repris trois fois
+            # sur une phrase retirée deux tours plus tôt.
+            if not resultat_ and not renvoi_de_garde(contenu):
                 morceaux = []
     # Ce que Claude Code donne directement est le DERNIER message ; le journal,
     # tout le tour. Les deux : le dernier n'y est pas toujours encore écrit.
@@ -1812,7 +1881,7 @@ def main(entree):
                           lambda p: ou_ecrire(racine, p))
         if v is not None:
             texte, quoi, detail = v
-            if quoi == "B16-muet":
+            if quoi in ("B16-muet", "B16-coupe"):
                 journal(quoi, detail)
             else:
                 sortie(2, texte, quoi, detail)
@@ -1833,6 +1902,13 @@ def main(entree):
         annonces = annonces_sans_question(dernier_message(data))
         if annonces:
             sortie(2, MSG_B18.format(annonces[0]), "B18-annonce", str(len(annonces)))
+        # Les boutons OBLIGATOIRES là où quelqu'un peut répondre : une session
+        # lancée sans personne (`sdk-*`) ou d'origine inconnue garde le clair.
+        entree = point_d_entree(data)
+        if entree and not entree.startswith("sdk"):
+            en_clair = questions_en_clair(dernier_message(data))
+            if en_clair:
+                sortie(2, MSG_B19.format(en_clair[0]), "B19-boutons", str(len(en_clair)))
     # LE MÊME ENDROIT RAPPELLE QUE LE MODE AUTO A REFUSÉ UN GESTE : le hook de
     # refus l'a noté (il ne peut pas parler à l'agent, voir `refus_auto`). Le
     # rappel ne part que si le message ne dit pas déjà « mode edit », et le
@@ -2541,6 +2617,16 @@ MSG_B18 = (
     "Si les boutons te manquent, écris la question en entier dans ton message, voies numérotées comprises — jamais « ta réponse est attendue » seule.\n"
     "\n"
     "Je ne te le redemande pas une seconde fois : c'est un avertissement, pas un blocage permanent."
+)
+
+MSG_B19 = (
+    "attente : tu poses une question au commanditaire en clair, alors que les boutons de l'app sont là : « {} ».\n"
+    "\n"
+    "Il a décidé que ses questions se posent AUX BOUTONS (05/11/2026). Pose-la avec l'outil AskUserQuestion : quatre questions au plus par appel, deux à quatre voies chacune, chaque voie disant ce qu'elle déclenche. Puis attends sa réponse. Ne la recopie pas en texte.\n"
+    "\n"
+    "Si ce n'est pas une question qui l'attend (une liste d'étapes, une question déjà tranchée que tu rappelles), reformule pour qu'elle ne se lise plus comme une question à voies.\n"
+    "\n"
+    "Je ne te le redemande pas une seconde fois : si l'outil te manque vraiment, dis-le en une ligne et rends la main."
 )
 
 MSG_B17 = (

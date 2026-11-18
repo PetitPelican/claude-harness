@@ -25,7 +25,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        machine: [windows-latest, macos-14]
+        machine: [windows-latest, macos-15]
         python: ['3.9', '3.13']
     runs-on: ${{ matrix.machine }}
     defaults:
