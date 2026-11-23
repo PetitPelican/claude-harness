@@ -16,7 +16,7 @@ de mise à jour. Pour comprendre ce qu'il fait et pourquoi, lire
 
 | | |
 |---|---|
-| `hooks/hooks.json` | les quinze déclencheurs — briefing d'entrée (deux), garde de commit, garde de la Production, verrou des consignes, garde du coffre et son témoin, garde des sous-agents, garde de l'ouverture de session, journal, compteur d'usage de la mémoire (deux), la note d'un refus du mode auto, la fin de tour qui porte les dix-sept gardes, et celle des tâches Notion (éteinte sauf réglage). Chacun lance le lanceur, rien d'autre |
+| `hooks/hooks.json` | les seize déclencheurs — briefing d'entrée (deux), garde de commit, garde de la Production, verrou des consignes, garde du coffre et son témoin, garde des sous-agents, garde de l'ouverture de session, garde des questions, journal, compteur d'usage de la mémoire (deux), la note d'un refus du mode auto, la fin de tour qui porte les dix-sept gardes, et celle des tâches Notion (éteinte sauf réglage). Chacun lance le lanceur, rien d'autre |
 | `bin/harnais` | le lanceur, un script `sh` : il cherche un vrai Python, lance `py/main.py`, et **dit** quand il n'en trouve pas |
 | `py/` | le programme : du Python (3.9 au moins), bibliothèque standard seule, rien à compiler ni à installer d'autre que Python lui-même |
 | `skills/` | les compétences : `agentic-adopte`, `agentic-agents`, `agentic-team`, `agentic-clean`, `agentic-init`, `project-init`, `publish-docs`, `caveman` |
@@ -167,6 +167,19 @@ l'id de la session à qui écrire. Un dossier sans session passe : la carte de
 l'humain décide. Les sessions ouvertes se lisent dans les fiches que l'app tient
 par session (mesuré sous Windows ; `HARNAIS_SESSIONS_APP` impose leur dossier) ;
 sans fiches, rien n'est refusé.
+
+## Une question sans motif ne part pas
+
+Décision du 28/10/2026 : une question ne parvient à l'humain que si elle dit
+pourquoi elle lui revient, par `Motif → …` pris dans une liste fermée
+(irréversible, production, argent, données, hors du poste, cap, périmètre) ;
+sans motif, l'agent décide seul. La fin de tour ne le vérifiait que dans le todo :
+mesuré sur une semaine, 277 questions posées aux boutons, une seule avec motif.
+Le garde des questions refuse désormais un appel `AskUserQuestion` dont une
+question n'a pas son motif, et dit les deux voies : l'ajouter si elle revient
+vraiment à l'humain, sinon décider, le dire, et continuer. Un agent dont le
+métier est de questionner l'humain (un mentor, un entretien) en est exempté par
+`HARNAIS_QUESTIONS=libres` dans l'`env` de ses réglages.
 
 ## Les tâches Notion restent à jour (sur réglage)
 

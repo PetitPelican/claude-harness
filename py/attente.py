@@ -2543,7 +2543,7 @@ MSG_B8_MOTIF = (
     "\n"
     "Pour chacune, une des deux voies :\n"
     "\n"
-    "1. Elle lui revient vraiment → ajoute sous elle `motif → …`, un seul mot de cette liste : irréversible, production, argent, données, hors du poste, cap, périmètre. Puis pose-la aux boutons de l'app (AskUserQuestion) et attends sa réponse.\n"
+    "1. Elle lui revient vraiment → ajoute sous elle `motif → …`, un seul mot de cette liste : irréversible, production, argent, données, hors du poste, cap, périmètre. Puis pose-la aux boutons de l'app (AskUserQuestion), `Motif → …` dans le texte de la question, et attends sa réponse.\n"
     "2. Aucun de ces motifs ne tient → elle n'est pas pour lui. Décide toi-même, note l'hypothèse dans les décisions, retire la ligne de sa liste, et dis-lui en fin de tour ce que tu as fait et comment le défaire.\n"
     "\n"
     "Si la réponse est un fait que tu peux mesurer (une revue est-elle soumise ? un fichier existe-t-il ?), ce n'est pas une question : mesure-le.\n"
@@ -2622,7 +2622,7 @@ MSG_B18 = (
 MSG_B19 = (
     "attente : tu poses une question au commanditaire en clair, alors que les boutons de l'app sont là : « {} ».\n"
     "\n"
-    "Il a décidé que ses questions se posent AUX BOUTONS (05/11/2026). Pose-la avec l'outil AskUserQuestion : quatre questions au plus par appel, deux à quatre voies chacune, chaque voie disant ce qu'elle déclenche. Puis attends sa réponse. Ne la recopie pas en texte.\n"
+    "Il a décidé que ses questions se posent AUX BOUTONS (05/11/2026). Pose-la avec l'outil AskUserQuestion : quatre questions au plus par appel, deux à quatre voies chacune, chaque voie disant ce qu'elle déclenche, et `Motif → …` (irréversible, production, argent, données, hors du poste, cap, périmètre) dans le texte de chaque question — sans motif, elle ne part pas : décide seul. Puis attends sa réponse. Ne la recopie pas en texte.\n"
     "\n"
     "Si ce n'est pas une question qui l'attend (une liste d'étapes, une question déjà tranchée que tu rappelles), reformule pour qu'elle ne se lise plus comme une question à voies.\n"
     "\n"

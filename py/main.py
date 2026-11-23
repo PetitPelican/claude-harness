@@ -45,6 +45,7 @@ TABLE = {
     "sous-agent":    ("sous_agent", "main", "stdin"),
     "laissez-passer-lot": ("sous_agent", "laissez_passer", "code"),
     "ouverture":     ("ouverture", "main", "stdin"),
+    "questions":     ("questions", "main", "stdin"),
     "carnet":        ("carnet", "main", "args"),
     "carnet-essai":  ("carnet", "essai", "args"),
     "equipe-amorce": ("carnet", "amorce_cli", "code"),
@@ -114,6 +115,8 @@ APPELÉES PAR LE HARNAIS (chacune lit sa charge JSON sur l'entrée standard) :
                lot de plus de 30 éléments sans l'accord de l'humain (0.19.3)
   ouverture    PreToolUse/start_session, hand_off_to_session — un agent qui a déjà une
                session, on lui écrit ; on ne lui en ouvre pas une seconde (0.19.10)
+  questions    PreToolUse/AskUserQuestion — une question sans `Motif → …` de la liste
+               fermée ne part pas : l'agent décide seul (0.19.17)
   versions   la version du harnais chargée par chaque agent à son démarrage
   relecture    lance le juge sur les demandes en attente
   diagnostic   ce que je trouve, ce que je ne trouve pas, et par quel shell

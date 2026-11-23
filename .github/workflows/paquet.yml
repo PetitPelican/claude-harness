@@ -3,11 +3,12 @@ name: paquet
 # Rétablie en 0.19 (16/10/2026) : depuis le passage en Python (0.13.0, 12/10) plus
 # rien du harnais ne tournait sous Windows. Windows est la cible d'un poste neuf du
 # commanditaire ; macOS prouve que rien ne dépend d'elle. 3.9 est le plancher promis.
+#
+# Lancée à la main seulement depuis le 18/11/2026 : GitHub refuse les machines du
+# compte depuis le 15/11 (paiement), et le commanditaire n'y met pas d'argent. La preuve d'une
+# version se fait sur le Mac (essais, contrôles, geste sur le code installé).
 on:
   workflow_dispatch:
-  push:
-    branches: ['main', 'deploiement']
-    tags: ['v*']
 
 permissions:
   contents: read
