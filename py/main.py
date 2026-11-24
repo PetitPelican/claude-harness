@@ -46,6 +46,7 @@ TABLE = {
     "laissez-passer-lot": ("sous_agent", "laissez_passer", "code"),
     "ouverture":     ("ouverture", "main", "stdin"),
     "questions":     ("questions", "main", "stdin"),
+    "envoi":         ("envoi", "main", "stdin"),
     "carnet":        ("carnet", "main", "args"),
     "carnet-essai":  ("carnet", "essai", "args"),
     "equipe-amorce": ("carnet", "amorce_cli", "code"),
@@ -117,6 +118,8 @@ APPELÉES PAR LE HARNAIS (chacune lit sa charge JSON sur l'entrée standard) :
                session, on lui écrit ; on ne lui en ouvre pas une seconde (0.19.10)
   questions    PreToolUse/AskUserQuestion — une question sans `Motif → …` de la liste
                fermée ne part pas : l'agent décide seul (0.19.17)
+  envoi        PreToolUse/Bash, PowerShell — un push, ou un merge vers la branche
+               principale, attend le clic de l'humain ; le commit reste libre (0.19.18)
   versions   la version du harnais chargée par chaque agent à son démarrage
   relecture    lance le juge sur les demandes en attente
   diagnostic   ce que je trouve, ce que je ne trouve pas, et par quel shell

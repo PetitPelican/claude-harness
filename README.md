@@ -16,7 +16,7 @@ de mise à jour. Pour comprendre ce qu'il fait et pourquoi, lire
 
 | | |
 |---|---|
-| `hooks/hooks.json` | les seize déclencheurs — briefing d'entrée (deux), garde de commit, garde de la Production, verrou des consignes, garde du coffre et son témoin, garde des sous-agents, garde de l'ouverture de session, garde des questions, journal, compteur d'usage de la mémoire (deux), la note d'un refus du mode auto, la fin de tour qui porte les dix-sept gardes, et celle des tâches Notion (éteinte sauf réglage). Chacun lance le lanceur, rien d'autre |
+| `hooks/hooks.json` | les dix-sept déclencheurs — briefing d'entrée (deux), garde de commit, garde de la Production, verrou des consignes, garde du coffre et son témoin, garde des sous-agents, garde de l'ouverture de session, garde des questions, garde des envois, journal, compteur d'usage de la mémoire (deux), la note d'un refus du mode auto, la fin de tour qui porte les dix-sept gardes, et celle des tâches Notion (éteinte sauf réglage). Chacun lance le lanceur, rien d'autre |
 | `bin/harnais` | le lanceur, un script `sh` : il cherche un vrai Python, lance `py/main.py`, et **dit** quand il n'en trouve pas |
 | `py/` | le programme : du Python (3.9 au moins), bibliothèque standard seule, rien à compiler ni à installer d'autre que Python lui-même |
 | `skills/` | les compétences : `agentic-adopte`, `agentic-agents`, `agentic-team`, `agentic-clean`, `agentic-init`, `project-init`, `publish-docs`, `caveman` |
@@ -180,6 +180,19 @@ question n'a pas son motif, et dit les deux voies : l'ajouter si elle revient
 vraiment à l'humain, sinon décider, le dire, et continuer. Un agent dont le
 métier est de questionner l'humain (un mentor, un entretien) en est exempté par
 `HARNAIS_QUESTIONS=libres` dans l'`env` de ses réglages.
+
+## Un push ou un merge vers main attend le clic de l'humain
+
+Décision du 24/11/2026 : un agent commite en local sans rien demander ; ce qui
+quitte sa copie de travail, ou entre dans la branche principale, attend le clic
+de l'humain. Le garde des envois demande ce clic (une décision `ask`, jamais un
+refus) pour tout `git push` — sous toutes ses formes, en Bash comme en
+PowerShell, sauf à blanc —, pour un `git merge` dont la branche qui reçoit est
+`main` ou `master`, et pour `gh pr merge` ou une fusion par l'API GitHub. Les
+merges entre branches de travail restent libres. Il ne dépend pas des réglages
+de chaque agent : mesuré sur huit jours, six agents n'avaient pas de règle sur
+le push et aucun sur le merge. Le garde de la Production juge en plus, et lui
+refuse sans laissez-passer.
 
 ## Les tâches Notion restent à jour (sur réglage)
 

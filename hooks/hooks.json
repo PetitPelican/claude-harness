@@ -87,6 +87,16 @@
         "hooks": [
           {
             "type": "command",
+            "command": "b=\"${CLAUDE_PLUGIN_ROOT}/bin/harnais\"; [ -f \"$b\" ] && exec sh \"$b\" envoi; echo \"harnais : le lanceur du paquet manque dans ${CLAUDE_PLUGIN_ROOT}/bin — le garde des envois ne juge pas : un push ou un merge suit les seuls reglages de l'agent. Remettre le paquet en etat : claude plugin update harnais@atelier\" >&2; exit 1",
+            "timeout": 20
+          }
+        ],
+        "matcher": "Bash|PowerShell"
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
             "command": "b=\"${CLAUDE_PLUGIN_ROOT}/bin/harnais\"; [ -f \"$b\" ] && exec sh \"$b\" sous-agent; echo \"harnais : le lanceur du paquet manque dans ${CLAUDE_PLUGIN_ROOT}/bin — la garde des sous-agents ne juge pas : on refuse le lancement plutot que de le laisser passer. Remettre le paquet en etat : claude plugin update harnais@atelier\" >&2; exit 2",
             "timeout": 10
           }
