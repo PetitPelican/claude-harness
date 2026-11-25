@@ -66,6 +66,7 @@ TABLE = {
     "demenage":      ("demenage", "main", "code"),
     "bascule":       ("bascule", "main", "code"),
     "versions":      ("versions", "main", "code"),
+    "aligne":        ("aligne", "main", "code"),
 }
 
 AIDE = """harnais — le socle agentique
@@ -92,6 +93,8 @@ POSER LE HARNAIS SUR UN PROJET — le seul geste à connaître pour démarrer :
   resolution   où vit la mémoire de ce dossier (JSON complet)
   memoire      la même, restreinte — sert à comparer deux versions
   bascule      bascule un projet d'un canal de hooks à l'autre
+  aligne       les agents d'un même dépôt que `claude plugin update` laisse sur l'ancienne
+               version, alignés dans le registre · à blanc par défaut · `--go` (0.19.19)
   version      la version du paquet, et l'état du code qui l'a produite
   laissez-passer  « <le oui de l'humain> » — ouvre la Production à l'agent nommé,
                pour la durée réglée ; journalisé

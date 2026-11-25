@@ -230,6 +230,17 @@ lancement :
 
 Un agent prend la version **à son prochain démarrage**, et seulement alors.
 
+**Une équipe « un dossier par agent »** (`agents/OPS`, `agents/PO`…, un seul
+dépôt) : la commande ne met à jour que le premier dossier ; pour les suivants
+elle répond « déjà à jour » et le registre garde l'ancienne version — un défaut
+de l'outil, pas du paquet. Après la mise à jour du premier, agents arrêtés :
+
+    harnais aligne          ce qui serait aligné, sans rien écrire
+    harnais aligne --go     aligne, après une copie du registre
+
+Seules les inscriptions qui partagent leur dépôt avec une plus récente sont
+touchées, et seulement si le code de celle-ci est en cache.
+
 ## Les deux variables qui décident de tout
 
 - **`CLAUDE_PLUGIN_ROOT`** — où le code est posé. Chemin **absolu**, ce qui
