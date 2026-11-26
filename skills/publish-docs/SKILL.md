@@ -37,7 +37,7 @@ Sans argument : demander lequel des 4 modes lancer (setup / init / refresh / pub
    - Windows : `winget install --id Graphviz.Graphviz -e`
    - macOS : `brew install graphviz`
    - Linux : `sudo apt-get install -y graphviz`
-4. **Valider** : `quarto check` (doit voir Pandoc + Typst) et `dot -V`.
+4. **Valider** : `quarto check` doit nommer Pandoc ET Typst, `dot -V` doit rendre une version. Si l'un manque, s'arrêter là : les autres modes échoueraient plus loin, et moins clairement.
 
 Ne jamais installer en mode silencieux/admin sans confirmation. Typst et Pandoc sont **dans** Quarto : rien à installer en plus.
 
@@ -45,7 +45,9 @@ Ne jamais installer en mode silencieux/admin sans confirmation. Typst et Pandoc 
 
 ## Mode `init` — scaffold + configuration
 
-1. Si `site/` est absent (projet existant), le copier depuis un clone du starter (`cp -r <starter>/site ./site`).
+1. Si `site/` est absent, copier le gabarit. Il n'est **pas** dans le paquet : il vit dans le dépôt du starter, qui est privé (sur l'atelier : `~/Agentic/claude-starter/site`) :
+   `cp -r ~/Agentic/claude-starter/site ./site`, puis `test -f site/build_site.py && test -f site/publish.py` doit réussir.
+   Sans le starter, ce mode ne peut rien monter : le dire, ne rien reconstituer à la main.
 2. Poser / déduire :
    - **titre** (défaut : nom du projet dans CLAUDE.md), **tagline**, **logo_letter** (1 lettre, défaut = initiale du titre),
    - **preset** (défaut = type de projet vu par `project-init` : data-pipeline→`data`, web-app→`web`, API→`api`, sinon `generic`),
@@ -53,7 +55,7 @@ Ne jamais installer en mode silencieux/admin sans confirmation. Typst et Pandoc 
    - **deploy.target** (`zip` par défaut ; `azure`/`ghpages` si l'hébergement est connu — cf. `operations.md`).
 3. Écrire `site/site.config.yml`.
 4. Lancer `setup` si les outils manquent.
-5. Retirer le domaine d'exemple (`_content/example/`) avant le premier `refresh` réel.
+5. Retirer le domaine d'exemple (`_content/example/`) avant le premier `refresh` réel, puis vérifier : `ls site/_content` ne liste plus `example`.
 
 ---
 
@@ -90,16 +92,30 @@ Presets — sections spécifiques en plus du spine :
 - **Ne jamais écrire** de token, clé, secret, mot de passe, IP interne, URL/chemin sensible dans `_content/`.
 - Après écriture : contrôle `grep -rIE '(\.env|BEGIN PRIVATE|SAS|token|secret|[0-9]{1,3}(\.[0-9]{1,3}){3})' site/_content/` → doit être **vide**.
 - **Faire relire le diff `_content/` par l'humain avant `publish`.**
+- Fin de `refresh` : `python site/build_site.py` doit sortir 0, et chaque domaine de `site.config.yml` doit avoir son dossier sous `site/_content/`.
 
 ---
 
 ## Mode `publish`
 
-1. `python site/publish.py --no-deploy` d'abord (vérifier HTML + dossiers Word/PDF).
+1. `python site/publish.py --no-deploy` d'abord. Vérifier que `site/_site/index.html` existe et qu'il y a un Word et un PDF par domaine ; sinon, ne pas passer à l'étape 2.
 2. Puis `python site/publish.py` (déploie selon `deploy.target`) ou `--target <cible>` pour forcer.
 3. Rappeler la cible et l'URL (azure) / la branche (ghpages) / le zip produit.
 
 Pré-condition : l'humain a relu `_content/`. Ne pas déployer une doc non relue.
+
+---
+
+## Quand ça échoue
+
+| ce qu'on voit | cause probable | remède |
+|---|---|---|
+| `site/` absent, starter introuvable | le gabarit n'est pas dans le paquet | demander l'accès au starter ; ne rien reconstituer à la main |
+| `quarto check` sans Typst ou sans Pandoc | Quarto ancien ou incomplet | réinstaller Quarto (mode `setup`), puis revérifier |
+| `dot: command not found` au build | Graphviz absent | `setup`, étape 3 |
+| le contrôle des secrets n'est pas vide | une phrase de la mémoire porte une adresse, une clé ou un nom de fichier privé | retirer la phrase de `_content/`, relancer le contrôle jusqu'au vide ; ne jamais publier avant |
+| `publish.py` sort en erreur sur un `.qmd` | une cellule Python ou un jeton `@@…@@` cassé | lire la ligne citée, corriger dans `_content/`, relancer `--no-deploy` |
+| la cible `azure` ou `ghpages` refuse | droits ou cible absents de `site.config.yml` | publier en `zip`, et demander l'accès à qui tient l'hébergement |
 
 ---
 

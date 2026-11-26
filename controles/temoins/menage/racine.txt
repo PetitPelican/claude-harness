@@ -9,6 +9,13 @@ Cibles : ancien, cerveau, horsgit, memoire, pnpm, propre, pyinst, suivi
    .memory/rules.md                          dit des FAITS ACTUELS : MONTE dans .fact/ ou .mind/, il y a déjà sa place
 
 ══════════════════════════════════════════════════════════════════════════════
+  cerveau
+══════════════════════════════════════════════════════════════════════════════
+
+2. RÉSIDUS — listés seulement, à trancher par l'agent du projet
+   docs/state.md                          dit des FAITS ACTUELS : MONTE dans brain/fact/ ou brain/mind/, il y a déjà sa place
+
+══════════════════════════════════════════════════════════════════════════════
   horsgit
 ══════════════════════════════════════════════════════════════════════════════
 

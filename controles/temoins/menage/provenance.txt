@@ -1,3 +1,10 @@
 6390b69a16466eded70df187cc159d970929b289
 script python : skills/agentic-clean/scripts/agentic-clean.py
 4f3ae9d00330e41f089d6adeedf1ceb32fea2919  skills/agentic-clean/scripts/agentic-clean.py
+
+26/11/2026 (0.19.17) — écart VOULU, et le seul : `racine.txt` gagne le bloc
+« cerveau ». Le Python d'origine cherchait la mémoire d'un projet `brain/` dans
+`.memory/` et ne disait rien de son `docs/state.md` ; le portage avait gardé ce
+défaut à l'octet. Corrigé : un `brain/fact/` lit `docs/`, et le message nomme
+`brain/fact/` et `brain/mind/` au lieu de `.fact/` et `.mind/`. Relu ligne à
+ligne : `diff` ancien/neuf = ce seul bloc ; les autres régimes sont inchangés.

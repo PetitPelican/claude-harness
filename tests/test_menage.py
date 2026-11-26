@@ -52,6 +52,22 @@ class Essais(unittest.TestCase):
         _, sortie = lance(["--projet", d])
         self.assertIn("la plus ancienne entrée datée : 12/05/2026", sortie)
 
+    def test_un_projet_brain_voit_ses_docs_trop_gros(self):
+        # 26/11/2026 : la forme `brain/` (celle de tous les projets) cherchait sa
+        # mémoire dans `.memory/` et taisait un `docs/` de 5 000 lignes.
+        d = self.dossier()
+        os.makedirs(os.path.join(d, "brain/fact"))
+        os.makedirs(os.path.join(d, "docs"))
+        with open(os.path.join(d, "docs/journal.md"), "w") as h:
+            h.write("x\n" * 600)
+        _, sortie = lance(["--projet", d])
+        self.assertIn("docs/journal.md", sortie)
+        # témoin négatif : un journal sous le seuil se tait
+        with open(os.path.join(d, "docs/journal.md"), "w") as h:
+            h.write("x\n" * 10)
+        _, sortie = lance(["--projet", d])
+        self.assertNotIn("docs/journal.md", sortie)
+
     def test_lignes_comme_str_lines_de_rust(self):
         self.assertEqual(menage.lignes("a\r\nb\n"), ["a", "b"])
         self.assertEqual(menage.lignes("a b\n"), ["a b"])

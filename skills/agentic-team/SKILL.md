@@ -94,7 +94,7 @@ verdict, parce que les suivants n'ont pas de sens tant qu'il n'est pas réglé :
 | `BRCH` | rien ne déclare le paquet | `harnais adopte --go` |
 | `HOOK` | câblé par des hooks locaux d'avant le paquet | déclarer le paquet, puis retirer les hooks locaux |
 | `INSC` | déclaré, pas inscrit : il ne se charge pas | `claude plugin install harnais@atelier --scope project`, dans le dossier |
-| `????` | les inscriptions n'ont pas pu être lues | rien n'est conclu — ce n'est pas un « inscrit » |
+| `????` | les inscriptions n'ont pas pu être lues | rien n'est conclu — ce n'est pas un « inscrit ». Lire le fichier des inscriptions : `python3 -m json.tool ~/.claude/plugins/installed_plugins.json > /dev/null` doit sortir 0. S'il échoue, le fichier est abîmé : le restaurer depuis la sauvegarde de la dernière publication, ou réinscrire chaque dossier (`claude plugin install harnais@atelier --scope project`), puis relancer la vue |
 | `SERV` | aucune trace d'entrée | démarrer l'agent, puis relire |
 | `TROP` | un fichier que la mémoire ne prévoit pas | le déplacer vers `docs/` |
 | `DENY` | aucune règle `deny` | déclarer ce qui doit être refusé |

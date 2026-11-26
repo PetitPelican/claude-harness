@@ -50,12 +50,10 @@ harnais menage --apply
 Le programme est celui du paquet, le même sur Mac et sur Windows — le
 briefing d'un projet en donne le chemin exact. Il remplace depuis le 11/09/2026
 le script Python d'avant, qui échouait en silence sur un Windows sans
-interpréteur ; il rend à l'octet ce que rendait ce script. **Limite connue,
-gardée pour ce portage** : le dossier à inspecter pour les familles 2 et 3 se
-déduit de la présence d'un `.fact/` à la racine ; un projet en `brain/` n'en a
-plus, et le script cherche alors dans `.memory/` au lieu de `docs/` — les
-familles 2 et 3 n'y trouvent rien, même si `docs/` est plein. Elle se corrige
-à part, pas en douce ici.
+interpréteur ; il rend à l'octet ce que rendait ce script. Jusqu'au
+26/11/2026, un projet en `brain/` voyait ses familles 2 et 3 cherchées dans
+`.memory/` au lieu de `docs/`, et un `docs/` plein passait pour propre. C'est
+corrigé : `docs/` est lu dès qu'il y a un `brain/fact/` ou un `.fact/`.
 
 **Toujours lire le dry-run avant `--apply`.** Il nomme chaque dossier, son
 poids, et la commande qui le reconstruit : si l'une des trois manque, ne pas
@@ -118,3 +116,18 @@ comme `@<qui>` disparaîtraient sans bruit.
 Le ménage ne touche **jamais** `brain/mind/todo.md`. Les tâches `@<qui>` sont la
 seule colonne qui ne se délègue pas : si elles ont bougé après un `--apply`,
 c'est un bug, et il faut le dire.
+
+Après un `--apply`, deux vérifications :
+1. `git status --short brain/ docs/` doit être vide : le ménage n'écrit jamais là.
+2. Relancer `harnais menage` à blanc : la famille 1 doit annoncer 0 Mo
+   récupérable, et les familles 2 et 3 doivent être identiques à avant.
+
+## Quand ça échoue
+
+| ce qu'on voit | cause probable | remède |
+|---|---|---|
+| la famille 3 ne dit rien alors que `docs/` est gros | une version du paquet d'avant le 26/11 | vérifier la version servie ; compter à la main en attendant : `wc -l docs/*.md` |
+| un cache annoncé « suivi par git » | il est versionné, pas ignoré | corriger le `.gitignore` et retirer le dossier de l'index (`git rm -r --cached`), puis relancer |
+| un dossier annoncé sans commande pour le reconstruire | le script ne sait pas le refaire | ne pas appliquer ; le signaler à Harness |
+| `--apply` laisse un dossier qu'il annonçait | droits, ou fichier ouvert par un serveur en marche | arrêter le serveur, relancer `--apply` ; ne jamais supprimer à la main |
+| une ligne de `todo.md` a changé après `--apply` | un défaut du programme | `git checkout brain/mind/todo.md`, et le signaler à Harness avec la sortie |

@@ -53,6 +53,33 @@ garde une fenêtre à moitié hors sujet.
 Ce n'est **pas** une réponse à « le projet est gros ». Un projet gros mais d'un
 seul tenant se tient très bien à un agent, et la forme mono coûte moins cher.
 
+## Monter une équipe neuve, en six étapes
+
+C'est le chemin de tous les jours ; le reste de ce document l'explique.
+
+1. **Choisir les rôles** avec [`references/roles.md`](references/roles.md), et
+   vérifier qu'aucun nom ne se slugifie comme un autre (`OPS` et `ops`, `A B` et
+   `A-B`) : deux noms pareils partageraient une seule mémoire, pour toujours.
+2. **À blanc**, dans un dossier VIDE qui deviendra la mémoire : `harnais adopte
+   --equipe OPS,PO,QA --modeles ops,po,qa --code <dépôt du code>`. Il n'écrit
+   rien : `ls -A` reste vide.
+3. **Lire le blanc** : un dossier `agents/<nom>/` par rôle, une copie du code
+   chacun, et la Production fermée si un rôle est `ops`. S'il refuse, voir
+   « Quand ça échoue ».
+4. **Écrire** : la même commande avec `--go`. Vérifier : `ls agents/` nomme
+   chaque rôle, et chaque `agents/<nom>/code` est un dépôt git
+   (`git -C agents/<nom>/code status` répond).
+5. **Inscrire le paquet** dans chaque `agents/<nom>/` : `claude plugin install
+   harnais@atelier --scope project`. Vérifier : `harnais equipe-vue --projet
+   <nom>` dit, pour chaque agent, déclaré · inscrit.
+6. **Démarrer chaque agent** dans son dossier : son briefing d'entrée doit
+   s'afficher. Puis `harnais equipe-vue --projet <nom>` doit dire « servi » pour
+   chacun. Un agent sans briefing ne porte aucune garde : ne pas le laisser
+   travailler.
+
+Ensuite viennent les gestes à la main : « Les choses qui restent à la main »,
+plus bas.
+
 ## La forme « un dossier par agent » (0.18.0, décision du 14/10/2026)
 
 Le dossier du projet **est** la mémoire de l'équipe, avec son propre dépôt ; chaque
@@ -240,3 +267,16 @@ taire.
 5. **Relancer les sessions tmux dans les dossiers d'agents**, sous des noms
    slugifiés. L'ancienne session à la racine n'a plus d'agent — le briefing
    l'avertira au lieu de se taire, mais elle ne sert plus à rien.
+
+## Quand ça échoue
+
+| ce qu'on voit | cause | remède |
+|---|---|---|
+| refus : deux noms qui se slugifient pareil | ils partageraient une seule mémoire auto | renommer l'un des deux avant tout `--go` |
+| refus : dossier non vide (équipe neuve) | une équipe ne naît pas par-dessus un code | un dossier vide pour la mémoire, le code par `--code` |
+| refus : hooks locaux d'avant le 04/09/2026 | leur briefing ne verrait pas les faits depuis un dossier d'agent | retirer les hooks locaux, `harnais adopte --go`, puis relancer |
+| `harnais equipe --retire` refuse | du travail non enregistré dans ses copies du code | l'agent enregistre ou abandonne ce travail lui-même ; ne jamais forcer |
+| `demenage` refuse une mémoire logée dans le dépôt du code | pas encore en une commande (mesuré le 16/10/2026) | monter l'équipe neuve à côté et reporter la mémoire à la main, agents arrêtés |
+| un agent démarre sans briefing | paquet déclaré mais pas inscrit dans son dossier | étape 5 ; relancer l'agent |
+| `git commit` refusé dans le dossier d'un agent | il viserait la mémoire, pas le code | `git -C code commit` |
+| `git worktree add` refusé | une copie du code hors de `agents/<nom>/` | la créer sous `agents/<nom>/` ; ` # copie-ok` seulement si l'humain l'a demandé |

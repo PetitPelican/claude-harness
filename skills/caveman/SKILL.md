@@ -12,12 +12,13 @@ Respond terse like smart caveman. All technical substance stay. Only fluff die.
 
 ## NEVER compress these files
 
-**`brain/mind/todo.md` (`.mind/todo.md` in the old layout) and `.logs/*.md` are read by a PROGRAM, not by a human.**
+**Every `todo.md` and `state.md` — whatever the folder: `brain/mind/`, `brain/mind/<agent>/` in a team, `.mind/` in the old layout — and every `.logs/*.md` are read by a PROGRAM, not by a human.**
 Caveman rules merge bullet lists — and the markers `!haut` / `!moyen` / `!bas`
 and `@<qui>` would vanish with them. No error would be raised: the dashboard
 would simply show tasks with no priority and no owner, which is exactly the
-information those files exist to carry. Same for `brain/mind/state.md`, whose
-`---` header is parsed field by field.
+information those files exist to carry. A `state.md` is worse: its `---`
+header is parsed field by field, and a broken one drops the project from the
+dashboard without a word.
 
 Caveman compresses **what you say**, never a file something else re-reads. If
 asked to rewrite, summarise or compress one of those files, decline and say

@@ -45,8 +45,8 @@ Chaque phase teste d'abord si elle est faite — la vérité vient des fichiers 
 |---|---|
 | 0 — harnais | `harnais resolution` ne dit plus `sans-memoire` |
 | 2 — questions | `docs/decisions.md` porte le bloc `## Initialisation` |
-| 3 — faits | plus aucun « À REMPLIR » dans les faits ni dans l'état |
-| 3 — consignes | le CLAUDE.md du projet ne porte plus « À REMPLIR » |
+| 3 — faits | plus aucun « À REMPLIR » dans les faits ni dans l'état : `grep -rl "À REMPLIR" brain/ fact/ agents/*/state.md agents/*/todo.md 2>/dev/null` rend vide (seul ou en équipe, les deux formes sont couvertes) |
+| 3 — consignes | le CLAUDE.md du projet ne porte plus « À REMPLIR » : `grep -l "À REMPLIR" CLAUDE.md agents/*/CLAUDE.md 2>/dev/null` rend vide |
 
 `/project-init --verifier` affiche ce tableau, sans rien écrire.
 
@@ -120,6 +120,11 @@ l'humain, et c'est lui qui vient de répondre) :
 **L'état** : `state.md` (en-tête `maj` / `sante` / `jalon` — un en-tête cassé
 fait sortir le projet du tableau de bord sans un mot) et `todo.md`.
 
+Vérifier avant de passer aux consignes : le commit des faits est accepté par la
+garde (sinon voir « Quand ça échoue »), et `harnais equipe-vue --projet <nom>`
+montre le projet avec son jalon : s'il n'y apparaît pas, l'en-tête de
+`state.md` est cassé.
+
 **Les consignes — proposées, pas écrites.** Le CLAUDE.md du projet (étage 3) et
 les rôles d'agents (étage 4) ne se modifient que par le CTO : le paquet refuse
 les autres. Rédiger le texte proposé (rôle Q2, règles retenues ci-dessous), le
@@ -145,6 +150,17 @@ valeur ; jamais ouvert, cité, résumé ni publié ensuite.
 2. Le MCP ou le CLI à installer, avec sa commande.
 3. La preuve : ouvrir une session dans le dossier de lancement (en équipe,
    `agents/<nom>/`) et voir le briefing servir le cap qu'on vient d'écrire.
+
+## Quand ça échoue
+
+| ce qu'on voit | cause | remède |
+|---|---|---|
+| `harnais resolution` dit encore `sans-memoire` | la structure n'est pas posée | `/agentic-adopte`, puis reprendre en phase 0 |
+| un fichier « non extractible » au scan | PDF scanné, format inconnu | demander à l'humain d'en résumer l'essentiel, et attendre ; ne rien inventer |
+| la garde de commit refuse l'écriture d'un fait | ` # fact-ok` absent du message, ou fait neuf sans ` # fact-neuf` | relire le motif qu'elle donne, corriger le message, recommiter |
+| le projet manque à la vue d'équipe | en-tête de `state.md` cassé | rétablir `maj` / `sante` / `jalon` exactement, puis relancer la vue |
+| la garde refuse le CLAUDE.md | seul le CTO modifie un CLAUDE.md | déposer la proposition dans `docs/`, l'adresser au CTO dans `todo.md` |
+| le briefing ne sert pas le nouveau cap | session ouverte ailleurs, ou paquet non inscrit | ouvrir DANS le dossier de lancement ; `harnais equipe-vue --projet <nom>` doit dire `OK` |
 
 ## Règles
 

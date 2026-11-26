@@ -172,9 +172,11 @@ def est_lien(p):
 
 
 def dossier_memoire(projet):
-    """`docs/` après migration, `.memory/` avant. La FORME décide, jamais la
-    simple présence d'un `docs/`."""
-    if os.path.isdir(os.path.join(projet, ".fact")):
+    """`docs/` après migration (`.fact/` ou `brain/fact/`), `.memory/` avant. La
+    FORME décide, jamais la simple présence d'un `docs/`. Jusqu'au 26/11/2026,
+    seule `.fact/` comptait : un projet `brain/` taisait un `docs/` trop gros."""
+    if os.path.isdir(os.path.join(projet, ".fact")) or \
+            os.path.isdir(os.path.join(projet, "brain", "fact")):
         return os.path.join(projet, "docs")
     return os.path.join(projet, ".memory")
 
@@ -379,6 +381,8 @@ def famille_residus(projet, rap):
     import re
     memoire = dossier_memoire(projet)
     nom_mem = nom_de(memoire)
+    cerveau = os.path.isdir(os.path.join(projet, "brain", "fact")) and \
+        not os.path.isdir(os.path.join(projet, ".fact"))
     if nom_mem == "docs" and os.path.isdir(memoire):
         genere = []
         for f in fichiers_sous(memoire):
@@ -396,12 +400,15 @@ def famille_residus(projet, rap):
             if not os.path.isfile(f) or extension(os.path.basename(f)) != "md":
                 continue
             n = nom_de(f)
+            # La forme `brain/` range ses faits sous `brain/` : nommer l'ancien
+            # `.fact/` à ce projet l'enverrait vers un dossier qui n'existe plus.
+            fa, mi = ("brain/fact/", "brain/mind/") if cerveau else (".fact/", ".mind/")
             if n in MONTENT:
-                rap.residus.append("%s/%s dit des FAITS ACTUELS : MONTE dans .fact/ ou "
-                                   ".mind/, il y a déjà sa place" % (nom_mem, gauche(n, 33)))
+                rap.residus.append("%s/%s dit des FAITS ACTUELS : MONTE dans %s ou "
+                                   "%s, il y a déjà sa place" % (nom_mem, gauche(n, 33), fa, mi))
             elif n in ANCIENS:
                 rap.residus.append("%s/%s taxonomie d'avant le 02/09/2026 : à trier, son "
-                                   "contenu se répartit entre .fact/, .mind/ et docs/" % (nom_mem, gauche(n, 33)))
+                                   "contenu se répartit entre %s, %s et docs/" % (nom_mem, gauche(n, 33), fa, mi))
         archive = os.path.join(memoire, "archive")
         if os.path.isdir(archive):
             fs = fichiers_sous(archive)

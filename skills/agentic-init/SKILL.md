@@ -16,17 +16,25 @@ description: >
 
 ## Avant : la machine (Mac ou Windows)
 
-- **Claude Code**, connecté au compte.
-- **Python 3.9 ou plus** — sous Windows, le vrai (`winget install Python.Python.3.13`
-  ou python.org, « Add to PATH ») : le `python.exe` du Microsoft Store ne compte pas.
-- **Git** — sous Windows, Git pour Windows : il fournit aussi le `sh` qui lance
-  les hooks du paquet.
-- **Le paquet**, depuis le dépôt public `PetitPelican/claude-harness` (aucun accès
-  GitHub nécessaire) :
-  ```
-  claude plugin marketplace add PetitPelican/claude-harness
-  claude plugin install harnais@atelier
-  ```
+Chaque prérequis a sa vérification ; on ne passe au suivant qu'une fois
+celle-ci bonne.
+
+1. **Claude Code**, connecté au compte : `claude --version` rend un numéro, et
+   `/status` dans une session nomme le compte.
+2. **Python 3.9 ou plus** — sous Windows, le vrai (`winget install Python.Python.3.13`
+   ou python.org, « Add to PATH ») : le `python.exe` du Microsoft Store ne compte pas.
+   Vérifier : `python3 -c "import sys; print(sys.version_info >= (3, 9), sys.executable)"`
+   (sous Windows, `python`) rend `True` et un chemin qui ne contient pas `WindowsApps`.
+3. **Git** — sous Windows, Git pour Windows : il fournit aussi le `sh` qui lance
+   les hooks du paquet. Vérifier : `git --version`, et sous Windows `sh -c "echo ok"`
+   rend `ok`.
+4. **Le paquet**, depuis le dépôt public `PetitPelican/claude-harness` (aucun accès
+   GitHub nécessaire) :
+   ```
+   claude plugin marketplace add PetitPelican/claude-harness
+   claude plugin install harnais@atelier
+   ```
+   Vérifier : `claude plugin list` nomme `harnais@atelier`.
 
 ## Ce qu'il monte — les quatre étages de consignes
 
@@ -97,6 +105,17 @@ sortie de programme se lit en diagonale, une phrase de l'agent se lit.
 3. Sur une machine neuve, rejouer le banc du paquet : `python <dossier du
    paquet>/controles/banc-deploiement.py` — atelier, projet seul et équipe
    montés dans un dossier jetable, gardes éprouvés par le lanceur ; 0 échec.
+
+## Quand ça échoue
+
+| ce qu'on voit | cause | remède |
+|---|---|---|
+| le lanceur dit qu'il ne trouve pas Python | Python absent, trop ancien, ou celui du Microsoft Store | prérequis 2, puis rouvrir le terminal (le PATH ne se relit qu'à l'ouverture) |
+| `sh` introuvable sous Windows | Git pour Windows absent | prérequis 3 |
+| `claude plugin marketplace add` refuse | pas de réseau, ou nom de dépôt mal tapé | vérifier le réseau, recopier le nom exact, relancer |
+| `atelier-monte` annonce des fichiers « déjà là » | un atelier existe déjà ici | rien n'est écrasé ; lire la liste, et n'aller plus loin que si c'est voulu |
+| pas de briefing à l'ouverture chez le CTO | paquet non inscrit dans son dossier | « La preuve », étape 1 |
+| le banc rend des échecs | la machine n'a pas tous les prérequis, ou un défaut du paquet | relire la première ligne en échec ; si les prérequis sont bons, l'envoyer à Harness |
 
 ## Règles
 

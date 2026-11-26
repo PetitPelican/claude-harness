@@ -19,14 +19,21 @@ gestes dont deux qu'aucun document ne mentionnait, et rien n'avertissait qu'on
 fabriquait le projet dans l'organisation d'avant. Un atelier qui ne se monte que
 par quelqu'un qui l'a déjà monté n'est pas un outil, c'est un savoir-faire.
 
-## Le geste
+## Le geste, en quatre étapes
 
-```bash
-harnais adopte                     # dit ce qu'il poserait, n'écrit rien
-harnais adopte --go                # écrit
-# une équipe, dans un dossier VIDE qui deviendra sa mémoire :
-harnais adopte --equipe OPS,PO,QA --modeles ops,po,qa --code <dépôt du code> --go
-```
+1. **À blanc** : `harnais adopte` (en équipe, dans un dossier VIDE qui deviendra
+   sa mémoire : `harnais adopte --equipe OPS,PO,QA --modeles ops,po,qa --code
+   <dépôt du code>`). Il n'écrit rien. Vérifier : `git status --short` est
+   inchangé.
+2. **Lire le blanc avant d'aller plus loin.** Il doit annoncer la forme
+   attendue (`brain/` seul, ou « un dossier par agent » en équipe), et chaque
+   fichier existant comme « déjà là ». S'il annonce un refus ou une autre forme,
+   s'arrêter : voir « Quand ça échoue ».
+3. **Écrire** : la même commande avec `--go`. Vérifier : chaque fichier annoncé
+   existe (`ls brain/fact brain/mind docs` seul ; `ls agents/*/` en équipe).
+4. **Relancer à blanc** : `harnais adopte` doit répondre « Ce projet est déjà
+   au harnais. Rien à poser. » Toute autre réponse est un défaut à signaler à
+   Harness.
 
 Le programme est celui du paquet — le briefing d'un projet sans mémoire en donne
 le chemin exact, parce qu'il change à chaque version et qu'un mode d'emploi faux
@@ -121,7 +128,23 @@ manquants) : `harnais mise-a-niveau`, à blanc d'abord.
 
 ## Après
 
-Ouvre une session dans le dossier — en équipe, DANS `agents/<nom>/` : le
-briefing d'entrée s'affiche. Inscrire le paquet dans chaque dossier de lancement
-(`claude plugin install harnais@atelier --scope project`). Ajouter ou retirer un
-agent : `harnais equipe --agents NOM` / `--retire NOM` (`/agentic-agents`).
+1. **Inscrire le paquet** dans chaque dossier de lancement (en équipe, chaque
+   `agents/<nom>/`) : `claude plugin install harnais@atelier --scope project`.
+   Vérifier : `harnais equipe-vue --projet <nom>` ne dit plus `INSC` pour ce
+   dossier.
+2. **Ouvrir une session** dans le dossier. Le briefing d'entrée doit s'afficher
+   avant la première réponse ; s'il manque, le paquet ne se charge pas : ne pas
+   travailler sans, revenir à l'étape 1.
+
+Ajouter ou retirer un agent : `harnais equipe --agents NOM` / `--retire NOM`
+(`/agentic-agents`).
+
+## Quand ça échoue
+
+| ce qu'on voit | cause | remède |
+|---|---|---|
+| « à cheval sur deux organisations de mémoire » | `.fact/` et `brain/` ensemble | `harnais mise-a-niveau` à blanc, trancher ce qu'il nomme, puis relancer l'adoption |
+| la forme d'avant, ou trois faits manquants | projet adopté avant la 0.17.0 | `harnais mise-a-niveau`, à blanc d'abord |
+| une équipe refusée : dossier non vide | une équipe ne naît pas par-dessus un code | créer un dossier vide pour la mémoire, passer le code par `--code` |
+| le lanceur dit qu'il ne trouve pas Python | pas de Python 3.9 ou plus (ou celui du Microsoft Store) | installer un vrai Python, `python3 --version` doit rendre 3.9 ou plus, puis relancer |
+| pas de briefing à l'ouverture | paquet déclaré mais pas inscrit | « Après », étape 1 |
